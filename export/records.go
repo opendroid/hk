@@ -3,10 +3,33 @@ package export
 import (
 	"encoding/xml"
 	"fmt"
+	"sort"
 	"strings"
 )
 
-// MetadataEntry Key/Value used across structures
+// MetadataEntry Key/Value used across structures.
+// Examples of MetadataEntry with Record.SourceName
+//   AppleWatch: <MetadataEntry key="HKMetadataKeyHeartRateMotionContext" value="1"/>
+//   MyFitnessPal: <MetadataEntry key="meal" value="Lunch"/>
+//   MyFitnessPal: <MetadataEntry key="meal" value="Dinner"/>
+//   MyFitnessPal: <MetadataEntry key="Meal" value="Dinner"/>
+//   MyFitnessPal: <MetadataEntry key="Meal" value="Snacks"/>
+//   AppleWatch: <MetadataEntry key="HKMetadataKeySyncVersion" value="1"/>
+//   AppleWatch: <MetadataEntry key="HKMetadataKeySyncIdentifier" value="3:1B17A065-24BD-4C42-88C4-2185852AC39B:613580458.67789:613580909.63101:89"/>
+//   AppleWatch: <MetadataEntry key="HKVO2MaxTestType" value="2"/>
+//   AutoSleep: <MetadataEntry key="Recharge" value="100"/>
+//   AutoSleep: <MetadataEntry key="Asleep" value="19020"/>
+//   AutoSleep: <MetadataEntry key="Average HR" value="49.63"/>
+//   AutoSleep: <MetadataEntry key="Rating" value="11.97"/>
+//   AutoSleep: <MetadataEntry key="Daytime HR" value="68.35"/>
+//   AutoSleep: <MetadataEntry key="Deep Sleep" value="1020"/>
+//   AutoSleep: <MetadataEntry key="Lights" value="NO"/>
+//   AutoSleep: <MetadataEntry key="Energy Threshold" value="1200"/>
+//   AutoSleep: <MetadataEntry key="Nap" value="YES"/>
+//   AutoSleep: <MetadataEntry key="Tags" value="1"/>
+//   AutoSleep: <MetadataEntry key="Edit Slots" value="0415,0630,0500,0445,0530,0615,0430,0645,0515,0600,0545"/>
+//   Sleep++ and Clock: <MetadataEntry key="HKTimeZone" value="America/Los_Angeles"/>
+//   iPhone: <MetadataEntry key="HKMetadataKeyAppleDeviceCalibrated" value="1"/>
 type MetadataEntry struct {
 	Key   string `xml:"key,attr"`
 	Value string `xml:"value,attr"`
@@ -133,6 +156,7 @@ type Workout struct {
 	Routes          []WorkoutRoute  `xml:"WorkoutRoute"`
 }
 
+// ActivitySummary daily work summary.
 type ActivitySummary struct {
 	XMLName xml.Name `xml:"ActivitySummary"`
 	// Attributes
@@ -410,13 +434,26 @@ func (h *HealthData) DescribeRecords() {
 		t[r.SourceName] += len(r.MetadataEntries)
 	}
 	printStringInts("Records Metadata Entries SourceName:", t)
+	h.DescribeRecordsSourceName()
+}
 
-	// Print Metadata keys by SourceName
+// DescribeRecordsSourceName Metadata Keys. Sorts keys by alphanumeric
+func (h *HealthData) DescribeRecordsSourceName() {
+	// Get all Metadata keys and stores them in a map whose key is SourceName
+	// [SourceName] = Map {"key-1": 5, "key-2": 10}
 	md := make(map[string]map[string]int)
+	sm := make(map[string]int) // SourceName count of r.MetadataEntries map
 	for _, r := range h.Records {
 		if _, ok := md[r.SourceName]; !ok {
-			md[r.SourceName] = make(map[string]int)
+			md[r.SourceName] = make(map[string]int) // Create map if a new key is seen
 		}
+		// Count all occurrences of a "key-1"
+		if _, ok := sm[r.SourceName]; !ok {
+			sm[r.SourceName] = len(r.MetadataEntries)
+		} else {
+			sm[r.SourceName] += len(r.MetadataEntries)
+		}
+		// Create map of r.MetadataEntries
 		for _, m := range r.MetadataEntries {
 			if _, ok := md[r.SourceName][m.Key]; !ok {
 				md[r.SourceName][m.Key] = 1
@@ -425,9 +462,16 @@ func (h *HealthData) DescribeRecords() {
 			}
 		}
 	}
-	for k, v := range md {
-		for dk, dv := range v {
-			fmt.Printf("%q:%q:%d\n", k, dk, dv)
-		}
+	// Convert sm to []KeyCount
+	// snmc: SourceName metadata entries count: # of 'r.MetadataEntries' for 'SourceName'
+	snmc := make(KeyCounts, 0, len(sm))
+	for k, v := range sm {
+		snmc = append(snmc, KeyCount{Key: k, Count: v})
+	}
+	// Sort 'SourceName' that  has highest count of 'MetadataEntries' first
+	sort.Sort(snmc)
+	for _, s := range snmc {
+		h := fmt.Sprintf("MetadataEntries (%d) recorded by %q", s.Count, s.Key)
+		printStringInts(h, md[s.Key])
 	}
 }

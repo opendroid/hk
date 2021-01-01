@@ -244,26 +244,3 @@ var RecordKnownSourcesTypes = map[RecordSource]RecordTypes{
 		MindfulSession, HandwashingEvent, FlightsClimbed, RestingHeartRate, WalkingHeartRateAverage, AppleStandTime},
 }
 
-// Examples of MetadataEntry with Record.SourceName
-//   AppleWatch: <MetadataEntry key="HKMetadataKeyHeartRateMotionContext" value="1"/>
-//   MyFitnessPal: <MetadataEntry key="meal" value="Lunch"/>
-//   MyFitnessPal: <MetadataEntry key="meal" value="Dinner"/>
-//   MyFitnessPal: <MetadataEntry key="Meal" value="Dinner"/>
-//   MyFitnessPal: <MetadataEntry key="Meal" value="Snacks"/>
-//   AppleWatch: <MetadataEntry key="HKMetadataKeySyncVersion" value="1"/>
-//   AppleWatch: <MetadataEntry key="HKMetadataKeySyncIdentifier" value="3:1B17A065-24BD-4C42-88C4-2185852AC39B:613580458.67789:613580909.63101:89"/>
-//   AppleWatch: <MetadataEntry key="HKVO2MaxTestType" value="2"/>
-//   AutoSleep: <MetadataEntry key="Recharge" value="100"/>
-//   AutoSleep: <MetadataEntry key="Asleep" value="19020"/>
-//   AutoSleep: <MetadataEntry key="Average HR" value="49.63"/>
-//   AutoSleep: <MetadataEntry key="Rating" value="11.97"/>
-//   AutoSleep: <MetadataEntry key="Daytime HR" value="68.35"/>
-//   AutoSleep: <MetadataEntry key="Deep Sleep" value="1020"/>
-//   AutoSleep: <MetadataEntry key="Lights" value="NO"/>
-//   AutoSleep: <MetadataEntry key="Energy Threshold" value="1200"/>
-//   AutoSleep: <MetadataEntry key="Nap" value="YES"/>
-//   AutoSleep: <MetadataEntry key="Tags" value="1"/>
-//   AutoSleep: <MetadataEntry key="Edit Slots" value="0415,0630,0500,0445,0530,0615,0430,0645,0515,0600,0545"/>
-//   Sleep++ and Clock: <MetadataEntry key="HKTimeZone" value="America/Los_Angeles"/>
-//   iPhone: <MetadataEntry key="HKMetadataKeyAppleDeviceCalibrated" value="1"/>
-//

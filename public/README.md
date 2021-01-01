@@ -4,7 +4,7 @@ Here is sample health kit data points.
 
 ```text
 Export date: 2020-12-06
-Me: DOB:1972-06-19, Sex:Male, BloodType:NotSet, SkinType:NotSet, Medication:None
+Me: DOB:2020-12-06, Sex:Male, BloodType:NotSet, SkinType:NotSet, Medication:None
 Records: 1856310, #Metadata: 325430, #HRV: 4145
 Clinical: 392
 Correlations: 0, #Metadata: 0, #Records: 0
@@ -15,7 +15,12 @@ ActivitiesSummary: 780
 There are approximately 2 million (1,856,310) *Records* over a period of 4 years.
 
 ## Records
-
+Various apps like MyFitnessPal or Clock save data in Apple HealthKit using "Record". These records have format
+as shown in `Record` data-type. The main fields in `Record` are:
+- **Type:** Shows type of record eg: Height or HeartRate
+- **SourceName:** Source that entered this record
+- **MetadataEntries:** a `[]` of `Key`/`Value` pairs
+- **HRVMetadata:** a `[]` of `Key`/`Value` pairs related to HRV-BPM (Beats Per Minute)
 
 ### Record Types
 When the records are broken by the count, the histogram looks like:
@@ -80,9 +85,10 @@ The histogram of Record by source is:
 | Clock |  4  |
 | **Total** | **1,856,310** |
 
-### SourceName Metadata entries
+### Record's SourceName Metadata entries
 
-Records Metadata Entries SourceName:
+This histogram is count of all `[]MetadataEntry` entries associated with a `SourceName`.
+For example: `AppleWatch` has `268,156 MetadataEntry` elements. 
 
 | SourceName | Count of Metadata |
 |------------|------------------:|
@@ -99,6 +105,10 @@ Records Metadata Entries SourceName:
 | **Total** |  **325,430** |
 
 ### SourceName MetaData key types
+
+The `[]MetadataEntry` for a given `SourceName` comprises these counts of 
+`MetadataEntry.Key`. That mean **AppleWatch** stored _257,488_ records of _HKMetadataKeyHeartRateMotionContext_, 
+and _4,837_ Records of _HKMetadataKeySyncVersion_,
 
 | SourceName | Metadata Key | Count of Metadata Key |
 |------------|---------------|----------------------:|
@@ -123,3 +133,13 @@ Records Metadata Entries SourceName:
 | AutoSleep | "Edit Slots" | 2 |
 | AutoSleep | Tags | 1 |
 
+### Record HRV 
+The example of Record of type `HKQuantityTypeIdentifierHeartRateVariabilitySDNN` is:
+```xml
+ <Record type="HKQuantityTypeIdentifierHeartRateVariabilitySDNN" sourceName="🕛🕐🕑🕒" sourceVersion="5.0.1" device="&lt;&lt;HKDevice: 0x28347bac0&gt;, name:Apple Watch, manufacturer:Apple, model:Watch, hardware:Watch4,2, software:5.0.1&gt;" unit="ms" creationDate="2018-10-29 10:18:22 -0800" startDate="2018-10-29 10:17:16 -0800" endDate="2018-10-29 10:18:21 -0800" value="49.4602">
+  <HeartRateVariabilityMetadataList>
+   <InstantaneousBeatsPerMinute bpm="80" time="11:17:20.53 AM"/>
+   <InstantaneousBeatsPerMinute bpm="80" time="11:17:21.29 AM"/>
+  </HeartRateVariabilityMetadataList>
+</Record>
+```
