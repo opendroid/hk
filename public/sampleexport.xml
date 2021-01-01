@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HealthData [
+        <!-- HealthKit Export Version: 11 -->
+        <!ELEMENT HealthData (ExportDate,Me,(Record|Correlation|Workout|ActivitySummary|ClinicalRecord)*)>
+        <!ATTLIST HealthData
+                locale CDATA #REQUIRED
+                >
+        <!ELEMENT ExportDate EMPTY>
+        <!ATTLIST ExportDate
+                value CDATA #REQUIRED
+                >
+        <!ELEMENT Me EMPTY>
+        <!ATTLIST Me
+                HKCharacteristicTypeIdentifierDateOfBirth         CDATA #REQUIRED
+                HKCharacteristicTypeIdentifierBiologicalSex       CDATA #REQUIRED
+                HKCharacteristicTypeIdentifierBloodType           CDATA #REQUIRED
+                HKCharacteristicTypeIdentifierFitzpatrickSkinType CDATA #REQUIRED
+                HKCharacteristicTypeIdentifierCardioFitnessMedicationsUse CDATA #IMPLIED
+                >
+        <!ELEMENT Record ((MetadataEntry|HeartRateVariabilityMetadataList)*)>
+        <!ATTLIST Record
+                type          CDATA #REQUIRED
+                unit          CDATA #IMPLIED
+                value         CDATA #IMPLIED
+                sourceName    CDATA #REQUIRED
+                sourceVersion CDATA #IMPLIED
+                device        CDATA #IMPLIED
+                creationDate  CDATA #IMPLIED
+                startDate     CDATA #REQUIRED
+                endDate       CDATA #REQUIRED
+                >
+        <!-- Note: Any Records that appear as children of a correlation also appear as top-level records in this document. -->
+        <!ELEMENT Correlation ((MetadataEntry|Record)*)>
+        <!ATTLIST Correlation
+                type          CDATA #REQUIRED
+                sourceName    CDATA #REQUIRED
+                sourceVersion CDATA #IMPLIED
+                device        CDATA #IMPLIED
+                creationDate  CDATA #IMPLIED
+                startDate     CDATA #REQUIRED
+                endDate       CDATA #REQUIRED
+                >
+        <!ELEMENT Workout ((MetadataEntry|WorkoutEvent|WorkoutRoute)*)>
+        <!ATTLIST Workout
+                workoutActivityType   CDATA #REQUIRED
+                duration              CDATA #IMPLIED
+                durationUnit          CDATA #IMPLIED
+                totalDistance         CDATA #IMPLIED
+                totalDistanceUnit     CDATA #IMPLIED
+                totalEnergyBurned     CDATA #IMPLIED
+                totalEnergyBurnedUnit CDATA #IMPLIED
+                sourceName            CDATA #REQUIRED
+                sourceVersion         CDATA #IMPLIED
+                device                CDATA #IMPLIED
+                creationDate          CDATA #IMPLIED
+                startDate             CDATA #REQUIRED
+                endDate               CDATA #REQUIRED
+                >
+        <!ELEMENT WorkoutEvent EMPTY>
+        <!ATTLIST WorkoutEvent
+                type         CDATA #REQUIRED
+                date         CDATA #REQUIRED
+                duration     CDATA #IMPLIED
+                durationUnit CDATA #IMPLIED
+                >
+        <!ELEMENT WorkoutRoute ((MetadataEntry|FileReference)*)>
+        <!ATTLIST WorkoutRoute
+                sourceName    CDATA #REQUIRED
+                sourceVersion CDATA #IMPLIED
+                device        CDATA #IMPLIED
+                creationDate  CDATA #IMPLIED
+                startDate     CDATA #REQUIRED
+                endDate       CDATA #REQUIRED
+                >
+        <!ELEMENT FileReference EMPTY>
+        <!ATTLIST FileReference
+                path CDATA #REQUIRED
+                >
+        <!ELEMENT ActivitySummary EMPTY>
+        <!ATTLIST ActivitySummary
+                dateComponents           CDATA #IMPLIED
+                activeEnergyBurned       CDATA #IMPLIED
+                activeEnergyBurnedGoal   CDATA #IMPLIED
+                activeEnergyBurnedUnit   CDATA #IMPLIED
+                appleMoveTime            CDATA #IMPLIED
+                appleMoveTimeGoal        CDATA #IMPLIED
+                appleExerciseTime        CDATA #IMPLIED
+                appleExerciseTimeGoal    CDATA #IMPLIED
+                appleStandHours          CDATA #IMPLIED
+                appleStandHoursGoal      CDATA #IMPLIED
+                >
+        <!ELEMENT MetadataEntry EMPTY>
+        <!ATTLIST MetadataEntry
+                key   CDATA #REQUIRED
+                value CDATA #REQUIRED
+                >
+        <!-- Note: Heart Rate Variability records captured by Apple Watch may include an associated list of instantaneous beats-per-minute readings. -->
+        <!ELEMENT HeartRateVariabilityMetadataList (InstantaneousBeatsPerMinute*)>
+        <!ELEMENT InstantaneousBeatsPerMinute EMPTY>
+        <!ATTLIST InstantaneousBeatsPerMinute
+                bpm  CDATA #REQUIRED
+                time CDATA #REQUIRED
+                >
+        <!ELEMENT ClinicalRecord EMPTY>
+        <!ATTLIST ClinicalRecord
+                type              CDATA #REQUIRED
+                identifier        CDATA #REQUIRED
+                sourceName        CDATA #REQUIRED
+                sourceURL         CDATA #REQUIRED
+                fhirVersion       CDATA #REQUIRED
+                receivedDate      CDATA #REQUIRED
+                resourceFilePath  CDATA #REQUIRED
+                >
+        <!ELEMENT Audiogram EMPTY>
+        <!ATTLIST Audiogram
+                type          CDATA #REQUIRED
+                sourceName    CDATA #REQUIRED
+                sourceVersion CDATA #IMPLIED
+                device        CDATA #IMPLIED
+                creationDate  CDATA #IMPLIED
+                startDate     CDATA #REQUIRED
+                endDate       CDATA #REQUIRED
+                >
+        <!ELEMENT SensitivityPoint EMPTY>
+        <!ATTLIST SensitivityPoint
+                frequencyValue   CDATA #REQUIRED
+                frequencyUnit    CDATA #REQUIRED
+                leftEarValue     CDATA #IMPLIED
+                leftEarUnit      CDATA #IMPLIED
+                rightEarValue    CDATA #IMPLIED
+                rightEarUnit     CDATA #IMPLIED
+                >
+        ]>
+<HealthData locale="en_US">
+    <ExportDate value="2020-12-06 20:24:55 -0800"/>
+    <Me HKCharacteristicTypeIdentifierDateOfBirth="1990-12-06"
+        HKCharacteristicTypeIdentifierBiologicalSex="HKBiologicalSexMale"
+        HKCharacteristicTypeIdentifierBloodType="HKBloodTypeNotSet"
+        HKCharacteristicTypeIdentifierFitzpatrickSkinType="HKFitzpatrickSkinTypeNotSet"
+        HKCharacteristicTypeIdentifierCardioFitnessMedicationsUse="None"/>
+    <Record type="HKQuantityTypeIdentifierBodyMassIndex" sourceName="Renpho" sourceVersion="4" unit="count"
+            creationDate="2020-04-19 06:53:41 -0800" startDate="2020-04-18 05:52:26 -0800"
+            endDate="2020-04-18 05:52:26 -0800" value="22.4"/>
+    <Record type="HKQuantityTypeIdentifierBodyMassIndex" sourceName="Renpho" sourceVersion="4" unit="count"
+            creationDate="2020-04-19 06:53:41 -0800" startDate="2020-04-17 05:57:55 -0800"
+            endDate="2020-04-17 05:57:55 -0800" value="22.6"/>
+    <Record type="HKQuantityTypeIdentifierBodyMassIndex" sourceName="Renpho" sourceVersion="4" unit="count"
+            creationDate="2020-04-19 06:53:44 -0800" startDate="2020-04-15 05:58:55 -0800"
+            endDate="2020-04-15 05:58:55 -0800" value="22.4"/>
+    <Record type="HKQuantityTypeIdentifierBodyMassIndex" sourceName="Renpho" sourceVersion="4" unit="count"
+            creationDate="2020-04-19 06:53:45 -0800" startDate="2020-04-14 14:48:12 -0800"
+            endDate="2020-04-14 14:48:12 -0800" value="22.2"/>
+    <ClinicalRecord type="Procedure" identifier="TkxvzAawHeQb3Fi8PI60qLcpVWSuan8Gk1dSZsdZkm.YB"
+                    sourceName="Sutter Health"
+                    sourceURL="https://apiservices.sutterhealth.org/ifs/api/FHIR/DSTU2/Procedure/TkxvzAawHeQb3Fi8PI60qLcpVWSuan8Gk1dSZsdZkm.YB"
+                    fhirVersion="1.0.2" receivedDate="2020-12-06 20:24:28 -0800"
+                    resourceFilePath="/clinical-records/Procedure-488D59AE-81D4-4597-8FBB-713DE1CEF228.json"/>
+    <ClinicalRecord type="Procedure" identifier="Tu.9MGYy8koq4Z8.LtMbhLYYsDN0RNAhf1mAYIP3B5ewB"
+                    sourceName="Sutter Health"
+                    sourceURL="https://apiservices.sutterhealth.org/ifs/api/FHIR/DSTU2/Procedure/Tu.9MGYy8koq4Z8.LtMbhLYYsDN0RNAhf1mAYIP3B5ewB"
+                    fhirVersion="1.0.2" receivedDate="2020-12-06 20:24:28 -0800"
+                    resourceFilePath="/clinical-records/Procedure-B4F159B1-E990-49D5-AEAD-CB6C01F99D08.json"/>
+    <ClinicalRecord type="Procedure" identifier="T2WHl11o4AsRpxTDldMctQkrGO7gKJJRgpshqYFrMngsB"
+                    sourceName="Sutter Health"
+                    sourceURL="https://apiservices.sutterhealth.org/ifs/api/FHIR/DSTU2/Procedure/T2WHl11o4AsRpxTDldMctQkrGO7gKJJRgpshqYFrMngsB"
+                    fhirVersion="1.0.2" receivedDate="2020-12-06 20:24:28 -0800"
+                    resourceFilePath="/clinical-records/Procedure-750A37FB-42CB-463A-BAAD-8730AE96FD1D.json"/>
+    <ClinicalRecord type="Immunization" identifier="Tdot1l.AKI5tXy3lOznArzgB" sourceName="Sutter Health"
+                    sourceURL="https://apiservices.sutterhealth.org/ifs/api/FHIR/DSTU2/Immunization/Tdot1l.AKI5tXy3lOznArzgB"
+                    fhirVersion="1.0.2" receivedDate="2020-12-06 20:24:29 -0800"
+                    resourceFilePath="/clinical-records/Immunization-FD9A852A-4601-494A-B97F-F5CF7A4082E4.json"/>
+    <ClinicalRecord type="DiagnosticReport" identifier="T18EOBCL62BP9Ym5ddQzK9XS4fVSCMjR2n6K-7k8eOesB"
+                    sourceName="Sutter Health"
+                    sourceURL="https://apiservices.sutterhealth.org/ifs/api/FHIR/DSTU2/DiagnosticReport/T18EOBCL62BP9Ym5ddQzK9XS4fVSCMjR2n6K-7k8eOesB"
+                    fhirVersion="1.0.2" receivedDate="2020-08-06 05:01:22 -0800"
+                    resourceFilePath="/clinical-records/DiagnosticReport-F011639A-7CDB-4E7F-B195-E4DFF6D2FB76.json"/>
+    <ClinicalRecord type="Patient" identifier="T.2KQWgolUTU7Mj4P37ABZ5DQ.8nOC4KyM5szJtBRJW4B" sourceName="Sutter Health"
+                    sourceURL="https://apiservices.sutterhealth.org/ifs/api/FHIR/DSTU2/Patient/T.2KQWgolUTU7Mj4P37ABZ5DQ.8nOC4KyM5szJtBRJW4B"
+                    fhirVersion="1.0.2" receivedDate="2020-12-06 20:24:30 -0800"
+                    resourceFilePath="/clinical-records/Patient-6221D445-19F5-4DBB-A995-84FCAFF6F3B5.json"/>
+
+    <Workout workoutActivityType="HKWorkoutActivityTypeWalking" duration="53.05183674693107" durationUnit="min"
+             totalDistance="2.985843180268872" totalDistanceUnit="mi" totalEnergyBurned="259.191938540603"
+             totalEnergyBurnedUnit="Cal" sourceName="🕛🕐🕑🕒" sourceVersion="5.1.2"
+             device="&lt;&lt;HKDevice: 0x2835f0aa0&gt;, name:Apple Watch, manufacturer:Apple, model:Watch, hardware:Watch4,2, software:5.1.2&gt;"
+             creationDate="2018-12-17 08:48:03 -0800" startDate="2018-12-17 07:54:59 -0800"
+             endDate="2018-12-17 08:48:02 -0800">
+        <MetadataEntry key="HKIndoorWorkout" value="0"/>
+        <WorkoutEvent type="HKWorkoutEventTypeSegment" date="2018-12-17 07:54:59 -0800" duration="11.80219223300616"
+                      durationUnit="min"/>
+        <WorkoutEvent type="HKWorkoutEventTypeSegment" date="2018-12-17 07:54:59 -0800" duration="17.86551037430763"
+                      durationUnit="min"/>
+        <WorkoutEvent type="HKWorkoutEventTypeSegment" date="2018-12-17 08:06:47 -0800" duration="10.07729632655779"
+                      durationUnit="min"/>
+        <WorkoutEvent type="HKWorkoutEventTypeSegment" date="2018-12-17 08:12:51 -0800" duration="17.20985964139303"
+                      durationUnit="min"/>
+        <WorkoutEvent type="HKWorkoutEventTypeSegment" date="2018-12-17 08:16:51 -0800" duration="10.97524305184682"
+                      durationUnit="min"/>
+        <WorkoutEvent type="HKWorkoutEventTypeSegment" date="2018-12-17 08:27:50 -0800" duration="10.93215700984001"
+                      durationUnit="min"/>
+        <WorkoutEvent type="HKWorkoutEventTypeSegment" date="2018-12-17 08:30:03 -0800" duration="17.89234066009521"
+                      durationUnit="min"/>
+        <WorkoutEvent type="HKWorkoutEventTypeSegment" date="2018-12-17 08:38:46 -0800" duration="9.180822054545084"
+                      durationUnit="min"/>
+        <WorkoutRoute sourceName="🕛🕐🕑🕒" sourceVersion="7.1" creationDate="2020-12-06 15:03:11 -0800" startDate="2020-12-06 13:13:52 -0800" endDate="2020-12-06 15:02:58 -0800">
+            <MetadataEntry key="HKMetadataKeySyncVersion" value="2"/>
+            <MetadataEntry key="HKMetadataKeySyncIdentifier" value="242FD852-9322-43FE-8A2D-B6416872C73D"/>
+            <FileReference path="/workout-routes/route_2020-12-06_3.02pm.gpx"/>
+        </WorkoutRoute>
+
+    </Workout>
+    <Record type="HKQuantityTypeIdentifierHeartRateVariabilitySDNN" sourceName="🕛🕐🕑🕒" sourceVersion="7.1"
+            device="&lt;&lt;HKDevice: 0x28347b340&gt;, name:Apple Watch, manufacturer:Apple Inc., model:Watch, hardware:Watch4,2, software:7.1&gt;"
+            unit="ms" creationDate="2020-12-06 11:27:05 -0800" startDate="2020-12-06 11:26:00 -0800"
+            endDate="2020-12-06 11:27:05 -0800" value="26.467">
+        <HeartRateVariabilityMetadataList>
+            <InstantaneousBeatsPerMinute bpm="58" time="11:26:02.34 AM"/>
+            <InstantaneousBeatsPerMinute bpm="58" time="11:26:03.37 AM"/>
+            <InstantaneousBeatsPerMinute bpm="58" time="11:26:04.41 AM"/>
+            <InstantaneousBeatsPerMinute bpm="59" time="11:26:05.42 AM"/>
+            <InstantaneousBeatsPerMinute bpm="59" time="11:26:06.44 AM"/>
+            <InstantaneousBeatsPerMinute bpm="60" time="11:26:07.44 AM"/>
+            <InstantaneousBeatsPerMinute bpm="59" time="11:26:08.46 AM"/>
+            <InstantaneousBeatsPerMinute bpm="58" time="11:26:09.49 AM"/>
+            <InstantaneousBeatsPerMinute bpm="61" time="11:26:10.48 AM"/>
+            <InstantaneousBeatsPerMinute bpm="57" time="11:26:11.52 AM"/>
+        </HeartRateVariabilityMetadataList>
+    </Record>
+
+    <ActivitySummary dateComponents="2020-11-20" activeEnergyBurned="487.231" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="74" appleExerciseTimeGoal="30" appleStandHours="16" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-11-21" activeEnergyBurned="551.951" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="79" appleExerciseTimeGoal="30" appleStandHours="16" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-11-22" activeEnergyBurned="534.026" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="80" appleExerciseTimeGoal="30" appleStandHours="18" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-11-23" activeEnergyBurned="585.547" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="83" appleExerciseTimeGoal="30" appleStandHours="17" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-11-24" activeEnergyBurned="604.823" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="83" appleExerciseTimeGoal="30" appleStandHours="19" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-11-25" activeEnergyBurned="606.726" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="85" appleExerciseTimeGoal="30" appleStandHours="18" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-11-26" activeEnergyBurned="599.972" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="88" appleExerciseTimeGoal="30" appleStandHours="18" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-11-27" activeEnergyBurned="648.394" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="100" appleExerciseTimeGoal="30" appleStandHours="18" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-11-28" activeEnergyBurned="758.974" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="141" appleExerciseTimeGoal="30" appleStandHours="18" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-11-29" activeEnergyBurned="585.901" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="102" appleExerciseTimeGoal="30" appleStandHours="19" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-11-30" activeEnergyBurned="695.816" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="109" appleExerciseTimeGoal="30" appleStandHours="19" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-12-01" activeEnergyBurned="655.492" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="95" appleExerciseTimeGoal="30" appleStandHours="16" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-12-02" activeEnergyBurned="634.471" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="90" appleExerciseTimeGoal="30" appleStandHours="18" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-12-03" activeEnergyBurned="659.84" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="96" appleExerciseTimeGoal="30" appleStandHours="17" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-12-04" activeEnergyBurned="647.78" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="93" appleExerciseTimeGoal="30" appleStandHours="18" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-12-05" activeEnergyBurned="583.725" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="91" appleExerciseTimeGoal="30" appleStandHours="16" appleStandHoursGoal="11"/>
+    <ActivitySummary dateComponents="2020-12-06" activeEnergyBurned="610.788" activeEnergyBurnedGoal="300" activeEnergyBurnedUnit="Cal" appleMoveTime="0" appleMoveTimeGoal="0" appleExerciseTime="113" appleExerciseTimeGoal="30" appleStandHours="14" appleStandHoursGoal="11"/>
+</HealthData>
