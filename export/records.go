@@ -3,6 +3,7 @@ package export
 import (
 	"encoding/xml"
 	"fmt"
+	"io"
 	"sort"
 	"strings"
 )
@@ -435,6 +436,8 @@ func (h *HealthData) DescribeRecords() {
 	}
 	printStringInts("Records Metadata Entries SourceName:", t)
 	h.DescribeRecordsSourceName()
+	h.DescribeRecordsTypesBySourceName()
+	h.DescribeRecordsSourceNameByTypes()
 }
 
 // DescribeRecordsSourceName Metadata Keys. Sorts keys by alphanumeric
@@ -471,7 +474,143 @@ func (h *HealthData) DescribeRecordsSourceName() {
 	// Sort 'SourceName' that  has highest count of 'MetadataEntries' first
 	sort.Sort(snmc)
 	for _, s := range snmc {
-		h := fmt.Sprintf("MetadataEntries (%d) recorded by %q", s.Count, s.Key)
-		printStringInts(h, md[s.Key])
+		if s.Count > 0 {
+			h := fmt.Sprintf("MetadataEntries (%d) recorded by %q", s.Count, s.Key)
+			printStringInts(h, md[s.Key])
+		}
+	}
+}
+
+// DescribeRecordsTypesBySourceName lists all types reported by a source
+func (h *HealthData) DescribeRecordsTypesBySourceName() {
+	if h == nil {
+		return
+	}
+	// Record SourceName Type Map of ["MyFitnessPal"] = Map {"type-1": 10, "type-2": 12 }
+	rstm := make(map[string]map[string]int)
+	rs := make(map[string]int) // How many types w/ each SourceName
+	for _, r := range h.Records {
+		if _, ok := rstm[r.SourceName]; !ok { // Create map for a unseen type
+			rstm[r.SourceName] = make(map[string]int)
+		}
+		if _, ok := rs[r.SourceName]; !ok {
+			rs[r.SourceName] = 1
+		} else {
+			rs[r.SourceName]++ // Another SourceName seen
+		}
+		if _, ok := rstm[r.SourceName][r.Type]; !ok { // Add new type seen
+			rstm[r.SourceName][r.Type] = 1
+		} else {
+			rstm[r.SourceName][r.Type]++
+		}
+	}
+	// Sort SourceName with highest types first
+	snc := make(KeyCounts, 0, len(rs))
+	for k, v := range rs {
+		snc = append(snc, KeyCount{Key: k, Count: v})
+	}
+	sort.Sort(snc)
+	for _, s := range snc {
+		if s.Count > 0 {
+			h := fmt.Sprintf("Types (%d) by SourceName %q", s.Count, s.Key)
+			printStringInts(h, rstm[s.Key])
+		}
+	}
+}
+
+// DescribeRecordsSourceNameByTypes lists all Sources that provided a specific type.
+func (h *HealthData) DescribeRecordsSourceNameByTypes() {
+	if h == nil {
+		return
+	}
+	// Record Type SourceName Map of ["BodyMass"] = Map {"MyFitnessPal": 10, "Renpho": 12 }
+	rtsm := make(map[string]map[string]int)
+	rt := make(map[string]int) // How many types w/ each Type
+	for _, r := range h.Records {
+		if _, ok := rtsm[r.Type]; !ok { // Create map for a unseen type
+			rtsm[r.Type] = make(map[string]int)
+		}
+		if _, ok := rt[r.Type]; !ok {
+			rt[r.Type] = 1
+		} else {
+			rt[r.Type]++ // Another Type seen
+		}
+		if _, ok := rtsm[r.Type][r.SourceName]; !ok { // Add new SourceName seen
+			rtsm[r.Type][r.SourceName] = 1
+		} else {
+			rtsm[r.Type][r.SourceName]++
+		}
+	}
+	// Sort SourceName with highest types first
+	snc := make(KeyCounts, 0, len(rt))
+	for k, v := range rt {
+		snc = append(snc, KeyCount{Key: k, Count: v})
+	}
+	sort.Sort(snc)
+	for _, s := range snc {
+		if s.Count > 0 {
+			h := fmt.Sprintf("SourceName (%d) by Type %q", len(rtsm[s.Key]), s.Key)
+			printStringInts(h, rtsm[s.Key])
+		}
+	}
+}
+
+// DescribeRecordsTable writes a summary to a ioWrite
+// Type .. device .. key .. count
+func (h *HealthData) DescribeRecordsTable(w io.Writer, sep string) {
+	if h == nil {
+		return
+	}
+
+	// cm, combined type map for Type -> SourceName -> MetaDataEntry -> Count
+	cm := make(map[string]map[string]map[string]int)
+	tm := make(map[string]int)             // [Type] map for  sorting by Highest to Lowest
+	tsm := make(map[string]map[string]int) // [Type][SourceName] map for  sorting by Highest to Lowest
+	for _, r := range h.Records {
+		t, s := r.Type, r.SourceName
+		if _, ok := cm[t]; !ok { // Is cm['Type'] entry not seen
+			cm[r.Type] = make(map[string]map[string]int) // Create a  map
+		}
+		if _, ok := cm[t][s]; !ok { // Is cm['Type']['sourceName'] entry not seen
+			cm[t][s] = make(map[string]int) // Create a map
+		}
+		if _, ok := tsm[t]; !ok {
+			tsm[t] = make(map[string]int)
+		}
+		if _, ok := cm[t][s]; !ok { // Is key seen before
+			cm[t][s] = make(map[string]int)
+		}
+		// Go through Metadata Entries
+		if len(r.MetadataEntries) == 0 {
+			tm[t]++
+			tsm[t][s]++
+			cm[t][s]["-"]++
+			continue
+		}
+		for _, md := range r.MetadataEntries {
+			k := md.Key
+			cm[t][s][k]++
+			tm[t]++
+			tsm[t][s]++
+		}
+	}
+
+	tms, err := maps2SortedSlice(tm) // Sort from highest count of MDKeys to lowest #
+	if err != nil {
+		return
+	}
+
+	for _, v := range tms {
+		tsms, err := maps2SortedSlice(tsm[v.Key])
+		if err != nil {
+			continue
+		}
+		for _, s := range tsms {
+			if len(cm[v.Key][s.Key]) == 0 { //  No MetadataEntry with this [t][s]
+				_, _ = fmt.Fprintf(w, "%s%s%s%s%s%s%d\n", shortenHKKey(v.Key), sep, shortenHKKey(s.Key), sep, "-", sep, s.Count)
+				continue
+			}
+			writeSortedRows(w, v.Key, s.Key, cm[v.Key][s.Key], sep)
+		}
 	}
 }

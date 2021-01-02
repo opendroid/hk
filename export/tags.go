@@ -243,4 +243,3 @@ var RecordKnownSourcesTypes = map[RecordSource]RecordTypes{
 		ActiveEnergyBurned, VO2Max, EnvironmentalAudioExposure, BasalEnergyBurned, AppleExerciseTime,
 		MindfulSession, HandwashingEvent, FlightsClimbed, RestingHeartRate, WalkingHeartRateAverage, AppleStandTime},
 }
-

@@ -42,6 +42,7 @@ func main() {
 	} else {
 		health.Describe()
 		health.UnseenCheck()
+		health.DescribeRecordsTable(os.Stdout, " | ")
 	}
 
 	// Save profile

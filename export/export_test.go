@@ -56,6 +56,18 @@ func ExampleParse() {
 	// 	Renpho: 0
 	// 	🕛🕐🕑🕒: 0
 	// Total Count: 0
+	// Types (4) by SourceName "Renpho"
+	// 	BodyMassIndex: 4
+	// Total Count: 4
+	// Types (1) by SourceName "🕛🕐🕑🕒"
+	// 	HeartRateVariabilitySDNN: 1
+	// Total Count: 1
+	// SourceName (1) by Type "HKQuantityTypeIdentifierBodyMassIndex"
+	// 	Renpho: 4
+	// Total Count: 4
+	// SourceName (1) by Type "HKQuantityTypeIdentifierHeartRateVariabilitySDNN"
+	// 	🕛🕐🕑🕒: 1
+	// Total Count: 1
 	// Clinical: 6
 	// Correlations: 0, #Metadata: 0, #Records: 0
 	// Workouts: 1, #Metadata: 1, #Events: 8, Routes: 1

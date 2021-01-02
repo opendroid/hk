@@ -2,6 +2,7 @@ package export
 
 import (
 	"fmt"
+	"io"
 	"sort"
 	"strings"
 	"time"
@@ -20,6 +21,13 @@ func yyyymmdd(t string) string {
 		y, m, d := t.Date()
 		return fmt.Sprintf("%4d-%02d-%02d", y, m, d)
 	}
+}
+
+func shortenHKKey(k string) string {
+	sk := strings.Replace(k, "HKCategoryTypeIdentifier", "", 1)
+	sk = strings.Replace(sk, "HKQuantityTypeIdentifier", "", 1)
+	sk = strings.Replace(sk, "HKMetadataKey", "", 1)
+	return sk
 }
 
 // printUnknownKeys prints slice of strings with a prefix message "m"
@@ -57,6 +65,20 @@ func printUnknownSourcesTypes(m string, u map[string][]string) {
 	}
 }
 
+// maps2SortedSlice: Convert map to []KeyCount sorted highest to lowest
+func maps2SortedSlice(sim map[string]int) (KeyCounts, error) {
+	if len(sim) <= 0 {
+		return nil, fmt.Errorf("nothing to process")
+	}
+	// Convert map to []KeyCounts so we can sort and print highest to lowest
+	kv := make(KeyCounts, 0, len(sim))
+	for k, v := range sim {
+		kv = append(kv, KeyCount{Key: k, Count: v})
+	}
+	sort.Sort(kv)
+	return kv, nil
+}
+
 // printStringInts a map with highest count to lowest count.
 func printStringInts(m string, sim map[string]int) {
 	if len(sim) <= 0 {
@@ -65,21 +87,33 @@ func printStringInts(m string, sim map[string]int) {
 	if m != "" {
 		fmt.Println(m)
 	}
-	// Convert map to []KeyCounts so we can sort and print highest to lowest
-	kv := make(KeyCounts, 0, len(sim))
-	for k, v := range sim {
-		kv = append(kv, KeyCount{Key: k, Count: v})
+	kv, err := maps2SortedSlice(sim)
+	if err != nil {
+		return
 	}
-	sort.Sort(kv)
 	total := 0
 	for _, v := range kv {
 		// Remove long prefixes
-		k := strings.Replace(v.Key, "HKCategoryTypeIdentifier", "", 1)
-		k = strings.Replace(k, "HKQuantityTypeIdentifier", "", 1)
-		fmt.Printf("\t%s: %d\n", k, v.Count)
+		fmt.Printf("\t%s: %d\n", shortenHKKey(v.Key), v.Count)
 		total += v.Count
 	}
 	fmt.Printf("Total Count: %d\n", total)
+}
+
+// writeSortedRows
+func writeSortedRows(w io.Writer, c1 string, c2 string, sim map[string]int, sep string) {
+	if len(sim) <= 0 {
+		return
+	}
+	// Convert map to []KeyCounts so we can sort and print highest to lowest
+	kv, err := maps2SortedSlice(sim)
+	if err != nil {
+		return
+	}
+	for _, v := range kv {
+		_, _ = fmt.Fprintf(w, "%s%s%s%s%s%s%d\n", shortenHKKey(c1), sep, shortenHKKey(c2), sep, shortenHKKey(v.Key), sep, v.Count)
+	}
+
 }
 
 // workoutKeys
