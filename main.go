@@ -20,6 +20,7 @@ const _ = "./export/sampleexport.xml" // Example to test
 var cpuProfile = flag.String("cpuprofile", "", "write cpu profile to `file`")
 var memProfile = flag.String("memprofile", "", "write memory profile to `file`")
 var file = flag.String("file", "public/sampleexport.xml", "Apple health kit exported data")
+var _ = flag.String("record", "StepCount", "export a record csv to a `file`")
 
 // main enter the program here
 func main() {

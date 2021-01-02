@@ -8,6 +8,18 @@ import (
 	"time"
 )
 
+// HKDateTime converts a HK date string '2006-01-02 15:04:05 -0700' to Golang date
+func HKDateTime(hkt string) (time.Time, error) {
+	if hkt == "" {
+		return time.Now(), fmt.Errorf("nothing to coonvert")
+	}
+	if t, err := time.Parse("2006-01-02 15:04:05 -0700", hkt); err != nil {
+		return time.Now(), fmt.Errorf("error converting %q: %v", hkt, err)
+	} else {
+		return t, nil
+	}
+}
+
 // yyyymmdd converts a APPLE time stamp "2020-04-19 06:53:41 -0800" to Golang time
 // returns yyyy-mm-dd
 func yyyymmdd(t string) string {
@@ -23,6 +35,7 @@ func yyyymmdd(t string) string {
 	}
 }
 
+// shortenHKKey remove prefixes from a Key name.
 func shortenHKKey(k string) string {
 	sk := strings.Replace(k, "HKCategoryTypeIdentifier", "", 1)
 	sk = strings.Replace(sk, "HKQuantityTypeIdentifier", "", 1)

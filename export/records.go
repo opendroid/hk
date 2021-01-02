@@ -555,13 +555,12 @@ func (h *HealthData) DescribeRecordsSourceNameByTypes() {
 	}
 }
 
-// DescribeRecordsTable writes a summary to a ioWrite
-// Type .. device .. key .. count
+// DescribeRecordsTable writes a summary to a ioWrite, in table columns as
+// Type .. device .. metadata tag .. count
 func (h *HealthData) DescribeRecordsTable(w io.Writer, sep string) {
 	if h == nil {
 		return
 	}
-
 	// cm, combined type map for Type -> SourceName -> MetaDataEntry -> Count
 	cm := make(map[string]map[string]map[string]int)
 	tm := make(map[string]int)             // [Type] map for  sorting by Highest to Lowest
