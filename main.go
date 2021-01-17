@@ -3,30 +3,33 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"github.com/opendroid/hk/export"
+	"github.com/opendroid/hk/server"
 	"log"
 	"os"
 	"runtime"
 	"runtime/pprof"
 )
 
-const _ = "./export/sampleexport.xml" // Example to test
+const (
+	_ = "./export/sampleexport.xml" // Example to test
+)
 
 // go tool pprof -http=:8080 /Users/ajayt/Downloads/mem.prof
 // Example from https://golang.org/pkg/runtime/pprof/
 
 // cpuProfile name of output CPU Profile file name
-var cpuProfile = flag.String("cpuprofile", "", "write cpu profile to `file`")
-var memProfile = flag.String("memprofile", "", "write memory profile to `file`")
-var file = flag.String("file", "public/sampleexport.xml", "Apple health kit exported data")
-var _ = flag.String("record", "StepCount", "export a record csv to a `file`")
+var (
+	cpuProfile = flag.String("cpuprofile", "", "write cpu profile to `file`")
+	memProfile = flag.String("memprofile", "", "write memory profile to `file`")
+	file       = flag.String("file", "public/sampleexport.xml", "Apple health kit exported data")
+	_          = flag.String("record", "StepCount", "export a record csv to a `file`")
+	port       = flag.Int("port", 8080, "Http server port")
+)
 
 // main enter the program here
 func main() {
-	// Get profile
 	flag.Parse()
-	if *cpuProfile != "" {
+	if *cpuProfile != "" { // Save CPU  profile
 		f, err := os.Create(*cpuProfile)
 		if err != nil {
 			log.Fatal("could not create CPU profile: ", err)
@@ -37,16 +40,8 @@ func main() {
 		}
 		defer pprof.StopCPUProfile()
 	}
-	// Read XML file
-	if health, err := export.Parse(*file); err != nil {
-		fmt.Printf("Error parsing %q, %v\n", *file, err)
-	} else {
-		health.Describe()
-		health.UnseenCheck()
-		health.DescribeRecordsTable(os.Stdout, " | ")
-	}
 
-	// Save profile
+	// Save memory profile
 	if *memProfile != "" {
 		f, err := os.Create(*memProfile)
 		if err != nil {
@@ -58,4 +53,5 @@ func main() {
 			log.Fatal("could not write memory profile: ", err)
 		}
 	}
+	server.Start(*port, *file) // Start the http server
 }

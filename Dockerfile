@@ -32,4 +32,4 @@ COPY --from=builder /app/public /public
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["/hk", "-file=/public/sampleexport.xml"]
+CMD ["/hk", "-port=8080"]

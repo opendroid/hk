@@ -1,0 +1,15 @@
+{{/* Nav Secondary */}}
+{{define "navsecondary"}}
+    <!-- Secondary navigation -->
+    <nav id="nav-secondary" class="ns secondary-light">
+        <!-- Nav Secondary  Un-numbered list  -->
+        <ul class="nsu">
+            <!-- HK app: Nav Secondary: Unnumbered list: List Item -->
+            {{range $, $li := .}}
+                <li class="nsul{{if (eq $li.Active true)}} active{{end}}">
+                    <a class="nsula{{if (eq $li.Active true)}} active{{end}}" href="#"> {{$li.Name}}</a>
+                </li>
+            {{end}}
+        </ul>
+    </nav>
+{{end}}
