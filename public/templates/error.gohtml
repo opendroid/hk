@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HK</title>
+    <title>HK - Error</title>
     {{template "favicon"}}
     {{template "css"}}
-    <link rel="stylesheet" href="/public/css/main.css">
+    <link rel="stylesheet" href="/public/css/errors.css">
     {{template "js"}}
 </head>
 <body>
@@ -16,10 +16,9 @@
 <!-- The main body -->
 <main id="hk-main" class="hk-main">
     <article class="info">
-        Preparing your health data. Check your <a href="/records">Records</a> in a few minutes.
-        Data is will be deleted when you close the browser tab. Your temporary user ID is {{.UserID}}.
+    {{.Error}}
     </article>
-    <img class="gopher" src="/public/images/gopher.png" alt="Gopher logo">
+    <img class="gopher-error" src="/public/images/gopher-error.png" alt="Gopher logo">
 </main>
 </body>
 </html>

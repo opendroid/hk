@@ -13,14 +13,7 @@ type userData struct {
 	health *export.HealthData
 }
 
-func healthData(user string) *export.HealthData {
-	if u, ok := users[user]; !ok {
-		return u.health
-	}
-	return nil
-}
-
-func saveHD(uID string) {
+func processHealthData(uID string) {
 	// Read XML file
 	start := time.Now()
 	if health, err := export.Parse(file); err != nil {

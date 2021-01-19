@@ -62,10 +62,10 @@ func ExampleParse() {
 	// Types (1) by SourceName "🕛🕐🕑🕒"
 	// 	HeartRateVariabilitySDNN: 1
 	// Total Count: 1
-	// SourceName (1) by Type "HKQuantityTypeIdentifierBodyMassIndex"
+	// SourceName (1) by Type "BodyMassIndex"
 	// 	Renpho: 4
 	// Total Count: 4
-	// SourceName (1) by Type "HKQuantityTypeIdentifierHeartRateVariabilitySDNN"
+	// SourceName (1) by Type "HeartRateVariabilitySDNN"
 	// 	🕛🕐🕑🕒: 1
 	// Total Count: 1
 	// Clinical: 6

@@ -48,8 +48,8 @@ func (r RecordSources) Swap(i, j int) { r[i], r[j] = r[j], r[i] }
 
 // keyCount helper to sort data in decreasing order
 type KeyCount struct {
-	Key   string
-	Count int
+	Key   string `json:"key"`
+	Count int    `json:"count"`
 }
 type KeyCounts []KeyCount
 
@@ -61,3 +61,22 @@ func (k KeyCounts) Less(i, j int) bool { return k[i].Count > k[j].Count }
 
 // Swap two KeyCounts sort interface
 func (k KeyCounts) Swap(i, j int) { k[i], k[j] = k[j], k[i] }
+
+// NameTypeKeyCount helper for containing Named KeyCounts
+type NameTypeKeyCount struct {
+	Name     string `json:"name,omitempty"`
+	Type     string `json:"type,omitempty"`
+	KeyCount `json:"data,omitempty"`
+}
+
+// NameKeyCounts container for a "name" KeyCounts data
+type NameTypeKeyCounts []NameTypeKeyCount
+
+// Len of NameKeyCounts for sort
+func (k NameTypeKeyCounts) Len() int { return len(k) }
+
+// Less of NameKeyCounts for sort in decreasing order of who has less Data Count
+func (k NameTypeKeyCounts) Less(i, j int) bool { return k[i].Count > k[j].Count }
+
+// Swap two NameKeyCounts sort interface
+func (k NameTypeKeyCounts) Swap(i, j int) { k[i], k[j] = k[j], k[i] }

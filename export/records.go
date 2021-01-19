@@ -32,155 +32,195 @@ import (
 //   Sleep++ and Clock: <MetadataEntry key="HKTimeZone" value="America/Los_Angeles"/>
 //   iPhone: <MetadataEntry key="HKMetadataKeyAppleDeviceCalibrated" value="1"/>
 type MetadataEntry struct {
-	Key   string `xml:"key,attr"`
-	Value string `xml:"value,attr"`
+	Key   string `xml:"key,attr" json:"key"`
+	Value string `xml:"value,attr" json:"value"`
 }
 
 // InstantaneousBeatsPerMinute Heart rate
 type InstantaneousBeatsPerMinute struct {
-	BPM  string `xml:"bpm,attr"`
-	Time string `xml:"time,attr"`
+	BPM  string `xml:"bpm,attr" json:"bpm"`
+	Time string `xml:"time,attr" json:"time"`
 }
 
 // HeartRateVariabilityMetadataList  BPM, not like Metadata above
 type HeartRateVariabilityMetadataList struct {
-	BPM []InstantaneousBeatsPerMinute `xml:"InstantaneousBeatsPerMinute"`
+	BPM []InstantaneousBeatsPerMinute `xml:"InstantaneousBeatsPerMinute" json:"instantaneous_bpm"`
 }
 
 // Date a Export Date element
 type Date struct {
-	XMLName xml.Name `xml:"ExportDate"`
-	Value   string   `xml:"value,attr"`
+	XMLName xml.Name `xml:"ExportDate" json:"-"`
+	Value   string   `xml:"value,attr" json:"value"`
 }
 
 // FileReference relative path where a WorkoutRoute data is stored
 type FileReference struct {
-	XMLName xml.Name `xml:"FileReference"`
-	Path    string   `xml:"path,attr"`
+	XMLName xml.Name `xml:"FileReference" json:"-"`
+	Path    string   `xml:"path,attr" json:"path"`
 }
 
 // Me XML element
 type Me struct { // `xml:""`
-	XMLName xml.Name `xml:"Me"`
+	XMLName xml.Name `xml:"Me" json:"-"`
 	// Attributes
-	DateOfBirth   string `xml:"HKCharacteristicTypeIdentifierDateOfBirth,attr"`
-	BiologicalSex string `xml:"HKCharacteristicTypeIdentifierBiologicalSex,attr"`
-	BloodType     string `xml:"HKCharacteristicTypeIdentifierBloodType,attr"`
-	SkinType      string `xml:"HKCharacteristicTypeIdentifierFitzpatrickSkinType,attr"`
-	MedicationUse string `xml:"HKCharacteristicTypeIdentifierCardioFitnessMedicationsUse,attr"`
+	DateOfBirth   string `xml:"HKCharacteristicTypeIdentifierDateOfBirth,attr" json:"dob"`
+	BiologicalSex string `xml:"HKCharacteristicTypeIdentifierBiologicalSex,attr" json:"biological_sex"`
+	BloodType     string `xml:"HKCharacteristicTypeIdentifierBloodType,attr" json:"blood_type"`
+	SkinType      string `xml:"HKCharacteristicTypeIdentifierFitzpatrickSkinType,attr" json:"skin_type"`
+	MedicationUse string `xml:"HKCharacteristicTypeIdentifierCardioFitnessMedicationsUse,attr,omitempty" json:"medication_use,omitempty"`
 }
 
 // Record a typical record saved by various devices. A example is:
 //   <Record type="HKQuantityTypeIdentifierBodyMassIndex" sourceName="Renpho" sourceVersion="4" unit="count" creationDate="2020-04-19 06:53:46 -0800" startDate="2020-04-14 05:51:27 -0800" endDate="2020-04-14 05:51:27 -0800" value="22.6"/>
 type Record struct {
-	XMLName xml.Name `xml:"Record"`
+	XMLName xml.Name `xml:"Record" json:"-"`
 	// Attributes
-	Type          string `xml:"type,attr"`
-	Unit          string `xml:"unit,attr"`
-	Value         string `xml:"value,attr"`
-	SourceName    string `xml:"sourceName,attr"`
-	SourceVersion string `xml:"sourceVersion,attr"`
-	Device        string `xml:"device,attr"`
-	CreationDate  string `xml:"creationDate,attr"`
-	StartDate     string `xml:"startDate,attr"`
-	EndDate       string `xml:"endDate,attr"`
+	Type          string `xml:"type,attr" json:"type"`
+	Unit          string `xml:"unit,attr,omitempty" json:"unit,omitempty"`
+	Value         string `xml:"value,attr,omitempty" json:"value,omitempty"`
+	SourceName    string `xml:"sourceName,attr" json:"source_name"`
+	SourceVersion string `xml:"sourceVersion,attr,omitempty" json:"source_version,omitempty"`
+	Device        string `xml:"device,attr,omitempty" json:"device,omitempty"`
+	CreationDate  string `xml:"creationDate,attr,omitempty" json:"creation_date,omitempty"`
+	StartDate     string `xml:"startDate,attr" json:"start_date"`
+	EndDate       string `xml:"endDate,attr" json:"end_date"`
 	// Elements
-	MetadataEntries []MetadataEntry                    `xml:"MetadataEntry"`
-	HRV             []HeartRateVariabilityMetadataList `xml:"HeartRateVariabilityMetadataList"`
+	MetadataEntries []MetadataEntry                    `xml:"MetadataEntry,omitempty" json:"metadata,omitempty"`
+	HRV             []HeartRateVariabilityMetadataList `xml:"HeartRateVariabilityMetadataList,omitempty"  json:"hrv,omitempty"`
+}
+
+// Audiogram records
+type Audiogram struct {
+	XMLName xml.Name `xml:"Audiogram" json:"-"`
+	// Attributes
+	Type          string `xml:"type,attr" json:"type"`
+	SourceName    string `xml:"sourceName,attr" json:"source_name"`
+	SourceVersion string `xml:"sourceVersion,attr,omitempty" json:"source_version,omitempty"`
+	Device        string `xml:"device,attr,omitempty" json:"device,omitempty"`
+	CreationDate  string `xml:"creationDate,attr,omitempty" json:"creation_date,omitempty"`
+	StartDate     string `xml:"startDate,attr" json:"start_date"`
+	EndDate       string `xml:"endDate,attr" json:"end_date"`
+}
+
+// SensitivityPoint microphone data
+type SensitivityPoint struct {
+	XMLName xml.Name `xml:"SensitivityPoint" json:"-"`
+	// Attributes
+	FrequencyValue string `xml:"frequencyValue" json:"frequency_value"`
+	FrequencyUnit  string `xml:"frequencyUnit" json:"frequency_unit"`
+	LeftEarValue   string `xml:"leftEarValue,omitempty" json:"left_ear_value,omitempty"`
+	LeftEarUnit    string `xml:"leftEarUnit,omitempty" json:"left_ear_unit,omitempty"`
+	RightEarValue  string `xml:"rightEarValue,omitempty" json:"right_ear_value,omitempty"`
+	RightEarUnit   string `xml:"rightEarUnit,omitempty" json:"right_ear_unit,omitempty"`
 }
 
 // ClinicalRecord element data. Contains Source, URL and FilePath data provided.
 type ClinicalRecord struct {
-	XMLName xml.Name `xml:"ClinicalRecord"`
+	XMLName xml.Name `xml:"ClinicalRecord" json:"-"`
 	// Attributes
-	Type         string `xml:"type,attr"`
-	ID           string `xml:"identifier,attr"`
-	SourceName   string `xml:"sourceName,attr"`
-	SourceURL    string `xml:"sourceURL,attr"`
-	FHIRVersion  string `xml:"fhirVersion,attr"`
-	ReceivedDate string `xml:"receivedDate,attr"`
-	FilePath     string `xml:"resourceFilePath,attr"`
+	Type         string `xml:"type,attr" json:"type"`
+	ID           string `xml:"identifier,attr" json:"id"`
+	SourceName   string `xml:"sourceName,attr" json:"source_name"`
+	SourceURL    string `xml:"sourceURL,attr" json:"source_url"`
+	FHIRVersion  string `xml:"fhirVersion,attr" json:"fhir_version"`
+	ReceivedDate string `xml:"receivedDate,attr" json:"received_date"`
+	FilePath     string `xml:"resourceFilePath,attr" json:"file_path"`
 }
 
 // Correlation element groups correlated Records.
 type Correlation struct {
-	XMLName xml.Name `xml:"Correlation"`
+	XMLName xml.Name `xml:"Correlation" json:"-"`
 	// Attributes
-	Type          string `xml:"type,attr"`
-	SourceName    string `xml:"sourceName,attr"`
-	SourceVersion string `xml:"sourceVersion,attr,omitempty"`
-	Device        string `xml:"device,attr,omitempty"`
-	CreationDate  string `xml:"creationDate,attr,omitempty"`
-	StartDate     string `xml:"startDate,attr"`
-	EndDate       string `xml:"endDate,attr"`
+	Type          string `xml:"type,attr" json:"type"`
+	SourceName    string `xml:"sourceName,attr" json:"source_name"`
+	SourceVersion string `xml:"sourceVersion,attr,omitempty" json:"source_version,omitempty"`
+	Device        string `xml:"device,attr,omitempty" json:"device,omitempty"`
+	CreationDate  string `xml:"creationDate,attr,omitempty" json:"creation_date,omitempty"`
+	StartDate     string `xml:"startDate,attr" json:"start_date"`
+	EndDate       string `xml:"endDate,attr" json:"end_date"`
 	// Elements
-	MetadataEntries []MetadataEntry `xml:"MetadataEntry"`
-	Records         []Record        `xml:"Record"`
+	MetadataEntries []MetadataEntry `xml:"MetadataEntry" json:"metadata"`
+	Records         []Record        `xml:"Record" json:"records"`
 }
 
 // WorkoutEvent element outlines the Type and Duration of workout
 type WorkoutEvent struct {
-	XMLName xml.Name `xml:"WorkoutEvent"`
+	XMLName xml.Name `xml:"WorkoutEvent" json:"-"`
 	// Attributes
-	Type         string `xml:"type,attr"`
-	Date         string `xml:"date,attr"`
-	Duration     string `xml:"duration,attr"`
-	DurationUnit string `xml:"durationUnit,attr"`
+	Type         string `xml:"type,attr" json:"type"`
+	Date         string `xml:"date,attr" json:"date"`
+	Duration     string `xml:"duration,attr,omitempty" json:"duration,omitempty"`
+	DurationUnit string `xml:"durationUnit,attr,omitempty" json:"duration_unit,omitempty"`
 }
 
 // WorkoutRoute gpx data file name with the route
 type WorkoutRoute struct {
-	MetadataEntries []MetadataEntry `xml:"MetadataEntry"`
-	FileReference   []FileReference `xml:"FileReference"`
+	XMLName xml.Name `xml:"WorkoutRoute" json:"-"`
+	// Attributes
+	SourceName    string `xml:"sourceName,attr" json:"source_name"`
+	SourceVersion string `xml:"sourceVersion,attr,omitempty" json:"source_version,omitempty"`
+	Device        string `xml:"device,attr,omitempty" json:"device,omitempty"`
+	CreationDate  string `xml:"creationDate,attr,omitempty" json:"creation_date,omitempty"`
+	StartDate     string `xml:"startDate,attr" json:"start_date"`
+	EndDate       string `xml:"endDate,attr" json:"end_date"`
+	// Elements
+	MetadataEntries []MetadataEntry `xml:"MetadataEntry" json:"metadata"`
+	FileReference   []FileReference `xml:"FileReference" json:"file_reference"`
 }
 
 // Workout key workout element.
 type Workout struct {
-	XMLName xml.Name `xml:"Workout"`
+	XMLName xml.Name `xml:"Workout"  json:"-"`
 	// attributes
-	ActivityType          string `xml:"workoutActivityType,attr"`
-	Duration              string `xml:"duration,attr"`
-	DurationUnit          string `xml:"durationUnit,attr"`
-	TotalDistance         string `xml:"totalDistance,attr"`
-	TotalDistanceUnit     string `xml:"totalDistanceUnit,attr"`
-	TotalEnergyBurned     string `xml:"totalEnergyBurned,attr"`
-	TotalEnergyBurnedUnit string `xml:"totalEnergyBurnedUnit,attr"`
-	SourceName            string `xml:"sourceName,attr"`
-	SourceVersion         string `xml:"sourceVersion,attr"`
-	Device                string `xml:"device,attr"`
-	CreationDate          string `xml:"creationDate,attr"`
-	StartDate             string `xml:"startDate,attr"`
-	EndDate               string `xml:"endDate,attr"`
+	ActivityType          string `xml:"workoutActivityType,attr" json:"activity_type"`
+	Duration              string `xml:"duration,attr,omitempty" json:"duration,omitempty"`
+	DurationUnit          string `xml:"durationUnit,attr,omitempty" json:"duration_unit,omitempty"`
+	TotalDistance         string `xml:"totalDistance,attr,omitempty" json:"total_distance,omitempty"`
+	TotalDistanceUnit     string `xml:"totalDistanceUnit,attr,omitempty" json:"total_distance_unit,omitempty"`
+	TotalEnergyBurned     string `xml:"totalEnergyBurned,attr,omitempty" json:"total_energy_burned,omitempty"`
+	TotalEnergyBurnedUnit string `xml:"totalEnergyBurnedUnit,attr,omitempty" json:"total_energy_burned_unit,omitempty"`
+	SourceName            string `xml:"sourceName,attr" json:"source_name"`
+	SourceVersion         string `xml:"sourceVersion,attr,omitempty" json:"source_version,omitempty"`
+	Device                string `xml:"device,attr,omitempty" json:"device,omitempty"`
+	CreationDate          string `xml:"creationDate,attr,omitempty" json:"creation_date,omitempty"`
+	StartDate             string `xml:"startDate,attr" json:"start_date"`
+	EndDate               string `xml:"endDate,attr" json:"end_date"`
 	// Elements
-	MetadataEntries []MetadataEntry `xml:"MetadataEntry"`
-	Events          []WorkoutEvent  `xml:"WorkoutEvent"`
-	Routes          []WorkoutRoute  `xml:"WorkoutRoute"`
+	MetadataEntries []MetadataEntry `xml:"MetadataEntry,omitempty" json:"metadata,omitempty"`
+	Events          []WorkoutEvent  `xml:"WorkoutEvent,omitempty" json:"events,omitempty"`
+	Routes          []WorkoutRoute  `xml:"WorkoutRoute,omitempty" json:"routes,omitempty"`
 }
 
 // ActivitySummary daily work summary.
 type ActivitySummary struct {
-	XMLName xml.Name `xml:"ActivitySummary"`
+	XMLName xml.Name `xml:"ActivitySummary" json:"-"`
 	// Attributes
-	YYYYMMDD         string `xml:"dateComponents,attr"`
-	EnergyBurned     string `xml:"activeEnergyBurned,attr"`
-	EnergyBurnedGoal string `xml:"activeEnergyBurnedGoal,attr"`
-	EnergyBurnedUnit string `xml:"activeEnergyBurnedUnit,attr"`
-	MoveTime         string `xml:"appleMoveTime,attr"`
-	MoveTimeGoal     string `xml:"appleMoveTimeGoal,attr"`
-	ExerciseTime     string `xml:"appleExerciseTime,attr"`
-	ExerciseTimeGoal string `xml:"appleExerciseTimeGoal,attr"`
-	StandHours       string `xml:"appleStandHours,attr"`
-	StandHoursGoal   string `xml:"appleStandHoursGoal,attr"`
+	YYYYMMDD         string `xml:"dateComponents,attr,omitempty" json:"yyyymmdd,omitempty"`
+	EnergyBurned     string `xml:"activeEnergyBurned,attr,omitempty" json:"energy_burned,omitempty"`
+	EnergyBurnedGoal string `xml:"activeEnergyBurnedGoal,attr,omitempty" json:"energy_burned_goal,omitempty"`
+	EnergyBurnedUnit string `xml:"activeEnergyBurnedUnit,attr,omitempty" json:"energy_burned_unit,omitempty"`
+	MoveTime         string `xml:"appleMoveTime,attr,omitempty" json:"move_time,omitempty"`
+	MoveTimeGoal     string `xml:"appleMoveTimeGoal,attr,omitempty" json:"move_time_goal,omitempty"`
+	ExerciseTime     string `xml:"appleExerciseTime,attr,omitempty" json:"exercise_time,omitempty"`
+	ExerciseTimeGoal string `xml:"appleExerciseTimeGoal,attr,omitempty" json:"exercise_time_goal,omitempty"`
+	StandHours       string `xml:"appleStandHours,attr,omitempty" json:"stand_hours,omitempty"`
+	StandHoursGoal   string `xml:"appleStandHoursGoal,attr,omitempty" json:"stand_hours_goal,omitempty"`
 }
 
+// HealthData is composite of exports.xml
 type HealthData struct {
-	Exported          Date              `xml:"ExportDate"`
-	Me                Me                `xml:"Me"`
-	Records           []Record          `xml:"Record"`
-	ClinicalRecords   []ClinicalRecord  `xml:"ClinicalRecord"`
-	Correlations      []Correlation     `xml:"Correlation"`
-	Workouts          []Workout         `xml:"Workout"`
-	ActivitiesSummary []ActivitySummary `xml:"ActivitySummary"`
+	// Attribute
+	Locale string `xml:"locale,attr" json:"locate"`
+	// Elements
+	Exported          Date               `xml:"ExportDate" json:"exported_date"`
+	Me                Me                 `xml:"Me" json:"me"`
+	Records           []Record           `xml:"Record"  json:"records,omitempty"`
+	ClinicalRecords   []ClinicalRecord   `xml:"ClinicalRecord" json:"clinical_records,omitempty"`
+	Correlations      []Correlation      `xml:"Correlation" json:"correlations,omitempty"`
+	Workouts          []Workout          `xml:"Workout" json:"workouts,omitempty"`
+	ActivitiesSummary []ActivitySummary  `xml:"ActivitySummary" json:"activities_summary,omitempty"`
+	Audiograms        []Audiogram        `xml:"Audiogram,omitempty,omitempty"  json:"audiograms,omitempty"`
+	SensitivityPoints []SensitivityPoint `xml:"SensitivityPoint,omitempty" json:"sensitivity_points,omitempty"`
 }
 
 // String describes ActivitySummary
@@ -549,7 +589,7 @@ func (h *HealthData) DescribeRecordsSourceNameByTypes() {
 	sort.Sort(snc)
 	for _, s := range snc {
 		if s.Count > 0 {
-			h := fmt.Sprintf("SourceName (%d) by Type %q", len(rtsm[s.Key]), s.Key)
+			h := fmt.Sprintf("SourceName (%d) by Type %q", len(rtsm[s.Key]), shortenHKKey(s.Key))
 			printStringInts(h, rtsm[s.Key])
 		}
 	}

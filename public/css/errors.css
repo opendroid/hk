@@ -6,7 +6,7 @@ main.hk-main {
     width: 80%;
     color: #000062;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     border: 1px dotted hotpink;
 }
@@ -21,26 +21,24 @@ main.hk-main .info {
     line-height: 2rem;
     width: 40%;
     font-weight: 400;
-    border: 1px dotted hotpink;
+    text-align: center;
 }
 
-main.hk-main .gopher {
+main.hk-main .gopher-error {
     width: 64px;
-    height: 64px;
-    align-self: center;
-    margin-bottom: 1rem;
     /* Animation */
-    animation-name: rotate;
-    animation-duration: 40s;
-    animation-timing-function: linear;
-    animation-direction: normal;
+    animation-duration: 5s;
+    animation-name: step;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
 }
 
-@keyframes rotate {
+@keyframes step {
     0% {
-        transform: rotate(0deg)
+        transform: rotate(-45deg);
     }
     100% {
-        transform: rotate(14400deg)
+        transform: rotate(45deg);
     }
 }

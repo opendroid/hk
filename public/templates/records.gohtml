@@ -5,6 +5,7 @@
     <title>Records</title>
     {{template "favicon"}}
     {{template "css"}}
+    <link rel="stylesheet" href="/public/css/records.css">
     {{template "js"}}
 </head>
 <body>
@@ -14,6 +15,21 @@
 
 <!-- The main body -->
 <main id="hk-main" class="hk-main">
+    <table class="records-summary sortable">
+        <tr>
+            <th>Source</th>
+            <th>Type</th>
+            <th>Metadata Key</th>
+            <th>Count</th>
+        </tr>
+        {{range $, $values := .Records}}
+        <tr>
+            <td>{{$values.Name}}</td>
+            <td>{{$values.Type}}</td>
+            <td>{{$values.Key}}</td>
+            <td>{{$values.Count}}</td>
+        </tr>{{end}}
+    </table>
 </main>
 </body>
 </html>

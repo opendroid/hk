@@ -1,0 +1,230 @@
+/*
+ Material pallet:
+ Primary-Dark: #000063
+ Primary: #311b92
+ Primary-light: #6746c3
+*/
+
+/* Keep it all fit */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Material theme colors */
+.primary {
+    background-color: #311b92;
+}
+
+.primary-light {
+    background-color: #6746c3;
+}
+
+.primary-dark {
+    background-color: #000063;
+}
+
+.secondary {
+    background-color: #311a91;
+}
+
+.secondary-light {
+    background-color: #311a91;
+}
+
+.secondary-dark {
+    background-color: #000062;
+}
+
+/* HTB: Headline top bar Style  */
+section.htb {
+    position: fixed;
+    display: flex;
+    height: 3rem;
+    justify-content: space-between;
+    align-content: center;
+    width: 100%;
+    z-index: 10;
+}
+
+/* Headline top bar: icon Style */
+svg.htbi {
+    margin-left: 1rem;
+    align-self: center;
+    height: 32px;
+    width: 32px;
+    fill: white;
+    border: 2px solid #000063;
+}
+
+/* Headline top bar: icon hover Style */
+svg.htbi:hover {
+    opacity: 0.8;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+/* Headline top bar: title */
+h3.htbt {
+    text-align: center;
+    align-self: center;
+    font-weight: 300;
+}
+
+/* Headline top bar: anchor */
+a.htba {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    height: 3rem;
+    line-height: 3rem;
+}
+
+/* Headline top bar: anchor image */
+img.htbai {
+    border: 2px solid #000063;
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+    margin-right: 1rem;
+    align-self: center;
+}
+
+img.htbai:hover {
+    border: 2px solid white;
+}
+
+/* HK app: Nav primary */
+nav.np {
+    position: fixed;
+    width: 12rem;
+    top: 3rem; /* same as section.htb */
+    bottom: 0;
+    background-color: #EAECEE;
+    border-right: 2px solid #EAECEE;
+    z-index: 10;
+}
+
+#nav-primary.hide {
+    display: none;
+}
+
+/* Nav Primary:  Un-numbered list */
+ul.npu {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.npu li.active {
+    background-color: white;
+    pointer-events: none;
+    border-bottom: 1px solid #EAECEE;
+    border-top: 1px solid #EAECEE;
+}
+
+/* Nav Primary:  Un-numbered list-item */
+li.npul {
+    width: 100%;
+    height: 2rem;
+    margin: 0;
+}
+
+/* Nav Primary:  Un-numbered list-item - Anchor */
+a.npula {
+    display: flex;
+    text-decoration: none;
+    height: 100%;
+    align-content: center;
+}
+
+a.npula:hover {
+    background-color: white;
+}
+
+/* Nav Primary:  Un-numbered list-item - Anchor SVG Icon */
+svg.npulas {
+    height: 32px;
+    width: 32px;
+    fill: #000063;
+    margin-left: 1rem;
+}
+
+a.npula svg.active {
+    fill: #6746c3;
+}
+
+/* Nav Primary:  Un-numbered list-item - Anchor SVG Heading */
+h4.npulah {
+    color: #000063;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 1rem;
+    align-self: center;
+}
+
+a.npula h4.active {
+    color: #6746c3;
+}
+
+/* HK app: Nav Secondary */
+nav.ns {
+    position: fixed;
+    height: 2rem;
+    width: 100%;
+    margin-top: 3rem;
+    margin-left: 12rem; /* same as width of 'section.hk-nav' */
+    z-index: 10;
+}
+
+/* Class to toggle secondary nav */
+#nav-secondary.no-margin {
+    margin-left: 0;
+}
+
+/* HK app: Nav Secondary: Unnumbered list */
+.nsu {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    height: 2rem;
+    border-bottom: 1px solid #6746c3;
+}
+
+ul.nsu .active {
+    background-color: #EAECEE;
+    pointer-events: none;
+    color: #6746c3;
+}
+
+/* HK app: Nav Secondary: Unnumbered list: List Item */
+li.nsul {
+    text-align: center;
+    width: 8rem;
+    height: 2rem;
+    margin-left: 1rem;
+}
+
+a.nsula {
+    height: 2rem;
+    width: 8rem;
+    line-height: 2rem;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+li.nsul:hover {
+    background-color: #EAECEE;
+}
+
+li.nsul:hover > a.nsula {
+    color: #6746c3;
+}

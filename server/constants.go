@@ -28,7 +28,14 @@ const (
 
 // User cookie
 const (
-	sessionIDKey = "user"
+	sessionIDKey = "user" // User UUID is stored in this scoped request
 	dayHrs       = 1 * 24 * time.Hour
 	daySeconds   = int(dayHrs) * 3600
+)
+
+// User Messages in case of error
+const (
+	wmNoError      = "Dont worry be happy"
+	umNoData       = "Sorry could not find your data"
+	umNotProcessed = "Sorry your data is not processed yet"
 )
