@@ -14,7 +14,7 @@ var (
 // provides logger
 func init() {
 	var err error
-	logger, err = zap.NewDevelopment()
+	logger, err = zap.NewProduction()
 	if err != nil {
 		log.Fatalf("Zap logger not initialized. %v", err)
 	}
