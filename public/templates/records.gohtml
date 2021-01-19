@@ -15,21 +15,47 @@
 
 <!-- The main body -->
 <main id="hk-main" class="hk-main">
-    <table class="records-summary sortable">
+    <h3 id="records-devices" >Amount Data captured by each Source</h3>
+    <table class="records">
+        <tr>
+            <th>Source</th>
+            <th>Count</th>
+        </tr>
+        {{if .Devices}}{{range $, $values := .Devices}}
+            <tr>
+                <td>{{$values.Key}}</td>
+                <td>{{numWithComma $values.Count}}</td>
+            </tr>{{end}}{{end}}
+    </table>
+    <h3 id="records-type">Type of data captured</h3>
+    <table class="records">
+        <tr>
+            <th>Source</th>
+            <th>Count</th>
+        </tr>
+        {{if .Types}}{{range $, $values := .Types}}
+            <tr>
+                <td>{{$values.Key}}</td>
+                <td>{{numWithComma $values.Count}}</td>
+            </tr>{{end}}{{end}}
+    </table>
+    <h3 id="records-type">Data Summary with Type and Metadata </h3>
+    <table id="records-all" class="records">
         <tr>
             <th>Source</th>
             <th>Type</th>
             <th>Metadata Key</th>
             <th>Count</th>
         </tr>
-        {{range $, $values := .Records}}
+        {{if .Records}}{{range $, $values := .Records}}
         <tr>
             <td>{{$values.Name}}</td>
             <td>{{$values.Type}}</td>
             <td>{{$values.Key}}</td>
-            <td>{{$values.Count}}</td>
-        </tr>{{end}}
+            <td>{{numWithComma $values.Count}}</td>
+        </tr>{{end}}{{end}}
     </table>
+
 </main>
 </body>
 </html>

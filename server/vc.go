@@ -1,9 +1,11 @@
 package server
 
 import (
+	"fmt"
 	"github.com/opendroid/hk/logger"
 	"go.uber.org/zap"
 	"html/template"
+	"math"
 	"net/http"
 )
 
@@ -17,7 +19,8 @@ var (
 
 // init initializes the templates
 func init() {
-	html = template.Must(template.ParseGlob(htmlGlob))
+	helpers := template.FuncMap{"numWithComma": numWithComma}
+	html = template.Must(template.New(root).Funcs(helpers).ParseGlob(htmlGlob))
 	users = make(map[string]userData)
 }
 
@@ -29,7 +32,13 @@ func index(w http.ResponseWriter, r *http.Request) {
 		displayErrorMessage(w, umNoData)
 		return
 	}
-	logger.Debug("User found", zap.String("user", user))
+
+	// If data exists return. No need to re-analyze
+	if _, ok := users[user]; ok {
+		logger.Debug("User data exists", zap.String("user", user))
+		records(w, r)
+		return
+	}
 	go processHealthData(user) // Do it in parallel
 	index := getIndexPageData(user)
 	if err := html.ExecuteTemplate(w, "index.gohtml", index); err != nil {
@@ -53,6 +62,7 @@ func records(w http.ResponseWriter, r *http.Request) {
 		displayErrorMessage(w, umNotProcessed)
 		return
 	}
+
 	if err := html.ExecuteTemplate(w, "records.gohtml", records); err != nil {
 		logger.Error(err.Error(), zap.String("page", "records.gohtml"))
 		_, _ = w.Write([]byte(err.Error()))
@@ -74,4 +84,25 @@ func displayErrorMessage(w http.ResponseWriter, info string) {
 		_, _ = w.Write([]byte(err.Error()))
 		return
 	}
+}
+
+// numWithComma a template helper function
+func numWithComma(n int) string {
+	c := "" // String with ,
+	orig := n
+	for n != 0 {
+		r := int(math.Abs(float64(n % 1000)))
+		n /= 1000
+		s := ""
+		if n != 0 {
+			s = fmt.Sprintf(",%03d", r) // Middle part of number
+		} else {
+			s = fmt.Sprintf("%d", r)
+		}
+		c = s + c
+	}
+	if orig < 0 {
+		c = "-" + c
+	}
+	return c
 }

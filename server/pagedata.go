@@ -6,16 +6,17 @@ import (
 	"go.uber.org/zap"
 )
 
-// NameActive a tuple that saves name and is a section is active.
-type NameActive struct {
+// NameActiveHREF a tuple that saves name and is a section is active.
+type NameActiveHREF struct {
 	Name   string
 	Active bool
+	HREF   string
 }
 
 type PageHeader struct {
 	Title  string
 	Active string // Nav Primary data
-	NS     []NameActive
+	NS     []NameActiveHREF
 }
 
 // RecordsPage data for Page records
@@ -35,18 +36,24 @@ type RecordsPage struct {
 	PageHeader
 	*export.Me
 	Records export.NameTypeKeyCounts
+	Devices export.KeyCounts
+	Types   export.KeyCounts
 }
+
+var (
+	defaultSecondaryNav = []NameActiveHREF{
+		{Name: "Devices", Active: false, HREF: recordsDevicesHREF},
+		{Name: "Types", Active: false, HREF: recordsTypesHREF},
+		{Name: "All", Active: false, HREF: recordsAllHREF},
+	}
+)
 
 // getRecordsData gets template data for page "Records - data"
 func getIndexPageData(userID string) *IndexPage {
 	return &IndexPage{
 		PageHeader: PageHeader{
 			Title: "Your Health Records",
-			NS: []NameActive{
-				{Name: "Devices", Active: false},
-				{Name: "Types", Active: false},
-				{Name: "Metadata", Active: false},
-			},
+			NS: defaultSecondaryNav,
 		},
 		UserID: userID,
 	}
@@ -58,11 +65,7 @@ func getRecordsPageData(userID string) *RecordsPage {
 		PageHeader: PageHeader{
 			Title:  "Your records data",
 			Active: "records",
-			NS: []NameActive{
-				{Name: "Devices", Active: true},
-				{Name: "Types", Active: false},
-				{Name: "Metadata", Active: false},
-			},
+			NS: defaultSecondaryNav,
 		},
 	}
 	u, ok := users[userID]
@@ -70,7 +73,9 @@ func getRecordsPageData(userID string) *RecordsPage {
 		logger.Error("No user data", zap.String("user", userID))
 		return nil
 	}
-	d.Records = u.health.RecordsSummary()
+	d.Records = u.summary
+	d.Devices = u.sources
+	d.Types = u.recordTypes
 	return &d
 }
 
@@ -79,11 +84,7 @@ func getErrorPageData(err string) *ErrorPage {
 	return &ErrorPage{
 		PageHeader: PageHeader{
 			Title: "System Error Message",
-			NS: []NameActive{
-				{Name: "Devices", Active: false},
-				{Name: "Types", Active: false},
-				{Name: "Metadata", Active: false},
-			},
+			NS: defaultSecondaryNav,
 		},
 		Error: err,
 	}

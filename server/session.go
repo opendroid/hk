@@ -26,6 +26,7 @@ func NewSessionHandler(h http.Handler) *sessionHandler {
 
 // ServeHTTP wraps handlers to set "user" Cookie and logging
 func (s *sessionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	start := time.Now()
 	user := "unknown"
 	newSession := false
 	cookie, err := r.Cookie("user")
@@ -42,16 +43,18 @@ func (s *sessionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// If path contains "/public/images" set cache enable
 	enableImageCache(w, r.URL.Path)
 
+	ctx := context.WithValue(r.Context(), "user", user)
+	rc := r.WithContext(ctx)
+	s.handler.ServeHTTP(w, rc)
+	end := time.Since(start)
 	logger.Info("Request",
 		zap.String("method", r.Method),
 		zap.String("path", r.URL.Path),
 		zap.String("user", user),
 		zap.String("host", r.Host),
 		zap.String("IP", r.RemoteAddr),
-		zap.Bool("new", newSession))
-	ctx := context.WithValue(r.Context(), "user", user)
-	rc := r.WithContext(ctx)
-	s.handler.ServeHTTP(w, rc)
+		zap.Bool("new", newSession),
+		zap.Int64("ms", end.Milliseconds()))
 }
 
 // newUserCookie

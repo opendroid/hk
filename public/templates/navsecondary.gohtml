@@ -7,7 +7,7 @@
             <!-- HK app: Nav Secondary: Unnumbered list: List Item -->
             {{range $, $li := .}}
                 <li class="nsul{{if (eq $li.Active true)}} active{{end}}">
-                    <a class="nsula{{if (eq $li.Active true)}} active{{end}}" href="#"> {{$li.Name}}</a>
+                    <a class="nsula{{if (eq $li.Active true)}} active{{end}}"{{if $li.HREF}} href="{{$li.HREF}}"{{end}}> {{$li.Name}}</a>
                 </li>
             {{end}}
         </ul>

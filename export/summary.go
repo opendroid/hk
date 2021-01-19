@@ -29,12 +29,16 @@ func (h *HealthData) RecordsSummary() NameTypeKeyCounts {
 			d[v.SourceName][v.Type][mdKey]++
 			entries++
 		}
+		hrvCount := 0
 		if len(v.HRV) > 0 {
 			for _, h := range v.HRV {
 				d[v.SourceName][v.Type]["HRV"] += len(h.BPM)
 				entries++
+				hrvCount += len(h.BPM)
 			}
-		} else if len(v.MetadataEntries) == 0 {
+		}
+
+		if len(v.MetadataEntries) == 0 && hrvCount == 0 {
 			d[v.SourceName][v.Type]["-"]++
 			entries++
 		}
@@ -60,5 +64,76 @@ func (h *HealthData) RecordsSummary() NameTypeKeyCounts {
 	sort.Sort(rs) // Sort each type by decreasing order
 	// Add total as last element
 	rs = append(rs, NameTypeKeyCount{"Total", "-", KeyCount{"-", total}})
+	return rs
+}
+
+// RecordsSources returns summary of all Record by SourceName
+func (h *HealthData) RecordsSources() KeyCounts {
+	if h == nil {
+		return nil
+	}
+	// d holds map of summary data
+	d := make(map[string]int)
+	entries := 0
+	for _, v := range h.Records {
+		d[v.SourceName] += len(v.MetadataEntries) // Add all metadata entries
+		entries += len(v.MetadataEntries)
+		hrvCount := 0
+		for _, hrv := range v.HRV {
+			d[v.SourceName] += len(hrv.BPM)
+			entries += len(hrv.BPM)
+			hrvCount += len(hrv.BPM)
+		}
+		if len(v.MetadataEntries) == 0 && hrvCount == 0 {
+			entries++
+			d[v.SourceName]++ // Yet another records
+		}
+	}
+	// Convert map to an array NameTypeKeyCounts{{Name, Type, Key, Count},{}}
+	rs, err := maps2SortedSlice(d)
+	if err != nil {
+		logger.Error("RecordsSources maps2SortedSlice error",
+			zap.String("info", err.Error()),
+			zap.Int("entries", entries))
+		return nil
+	}
+	sort.Sort(rs)
+	rs = append(rs, KeyCount{"Total", entries})
+	return rs
+}
+
+// RecordsSources returns summary of all Record by SourceName
+func (h *HealthData) RecordsTypes() KeyCounts {
+	if h == nil {
+		return nil
+	}
+	// d holds map of summary data
+	d := make(map[string]int)
+	entries := 0
+	for _, v := range h.Records {
+		t := shortenHKKey(v.Type)
+		d[t] += len(v.MetadataEntries) // Add all metadata entries
+		entries += len(v.MetadataEntries)
+		hrvCount := 0
+		for _, hrv := range v.HRV {
+			d[t] += len(hrv.BPM)
+			entries += len(hrv.BPM)
+			hrvCount += len(hrv.BPM)
+		}
+		if len(v.MetadataEntries) == 0 && hrvCount == 0 {
+			entries++
+			d[t]++ // Yet another records
+		}
+	}
+	// Convert map to an array NameTypeKeyCounts{{Name, Type, Key, Count},{}}
+	rs, err := maps2SortedSlice(d)
+	if err != nil {
+		logger.Error("RecordsTypes maps2SortedSlice error",
+			zap.String("info", err.Error()),
+			zap.Int("entries", entries))
+		return nil
+	}
+	sort.Sort(rs)
+	rs = append(rs, KeyCount{"Total", entries})
 	return rs
 }

@@ -5,6 +5,7 @@ import (
 )
 
 const (
+	root      = "root"          // Root template name
 	css       = "public/css"    // CSS directory
 	images    = "public/images" // images directory
 	js        = "public/js"     // javascript directory
@@ -17,6 +18,12 @@ const (
 	imagesAbs    = "/" + images
 	templatesAbs = "/" + templates
 	jsAbs        = "/" + js
+)
+
+const (
+	recordsDevicesHREF = "#records-devices"
+	recordsTypesHREF   = "#records-type"
+	recordsAllHREF     = "#records-all"
 )
 
 const (
