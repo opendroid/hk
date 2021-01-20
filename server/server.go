@@ -23,7 +23,13 @@ func Start(port int, f string) {
 	// URL handlers
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/records", records)
+	mux.HandleFunc("/records-xhr-sources", recordsXHRSources)
+	mux.HandleFunc("/records-xhr-types", recordsXHRTypes)
 	mux.HandleFunc("/error", errorsPage)
+
+	// APIs
+	mux.HandleFunc("/v1/recordsSummary", recordsSummary)
+	mux.HandleFunc("/v1/recordsTypes", recordsTypes)
 	n := NewSessionHandler(mux) // Wrapper mux
 	address := fmt.Sprintf(":%d", port)
 	log.Fatal(http.ListenAndServe(address, n))

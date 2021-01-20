@@ -2,7 +2,7 @@
 main.hk-main {
     display: flex;
     margin-left: 12rem; /* same as width of 'section.hk-nav' */
-    margin-top: 5rem;
+    padding-top: 5rem;
     width: 80%;
     color: #000062;
     flex-direction: column;

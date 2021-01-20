@@ -42,7 +42,7 @@ type RecordsPage struct {
 
 var (
 	defaultSecondaryNav = []NameActiveHREF{
-		{Name: "Devices", Active: false, HREF: recordsDevicesHREF},
+		{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
 		{Name: "Types", Active: false, HREF: recordsTypesHREF},
 		{Name: "All", Active: false, HREF: recordsAllHREF},
 	}
@@ -53,7 +53,7 @@ func getIndexPageData(userID string) *IndexPage {
 	return &IndexPage{
 		PageHeader: PageHeader{
 			Title: "Your Health Records",
-			NS: defaultSecondaryNav,
+			NS:    defaultSecondaryNav,
 		},
 		UserID: userID,
 	}
@@ -65,7 +65,7 @@ func getRecordsPageData(userID string) *RecordsPage {
 		PageHeader: PageHeader{
 			Title:  "Your records data",
 			Active: "records",
-			NS: defaultSecondaryNav,
+			NS:     defaultSecondaryNav,
 		},
 	}
 	u, ok := users[userID]
@@ -84,7 +84,7 @@ func getErrorPageData(err string) *ErrorPage {
 	return &ErrorPage{
 		PageHeader: PageHeader{
 			Title: "System Error Message",
-			NS: defaultSecondaryNav,
+			NS:    defaultSecondaryNav,
 		},
 		Error: err,
 	}

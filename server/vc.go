@@ -70,6 +70,56 @@ func records(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// recordsXHRSources
+func recordsXHRSources(w http.ResponseWriter, r *http.Request) {
+	_, ok := r.Context().Value(sessionIDKey).(string)
+	if !ok {
+		logger.Error("User not found", zap.String("page", "records-xhr-sources"))
+		displayErrorMessage(w, umNotProcessed)
+		return
+	}
+	// Get user data
+	menu := PageHeader{
+		Title: "Your Health Records Sources",
+		NS: []NameActiveHREF{
+			{Name: "Sources", Active: true, HREF: recordsDevicesHREF},
+			{Name: "Types", Active: false, HREF: recordsTypesHREF},
+			{Name: "All", Active: false, HREF: recordsAllHREF},
+		},
+	}
+
+	if err := html.ExecuteTemplate(w, "records-xhr-sources.gohtml", menu); err != nil {
+		logger.Error(err.Error(), zap.String("page", "records-xhr-sources.gohtml"))
+		_, _ = w.Write([]byte(err.Error()))
+		return
+	}
+}
+
+// recordsXHRTypes
+func recordsXHRTypes(w http.ResponseWriter, r *http.Request) {
+	_, ok := r.Context().Value(sessionIDKey).(string)
+	if !ok {
+		logger.Error("User not found", zap.String("page", "records-xhr-types"))
+		displayErrorMessage(w, umNotProcessed)
+		return
+	}
+	// Get user data
+	menu := PageHeader{
+		Title: "Your Health Records Types",
+		NS: []NameActiveHREF{
+			{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
+			{Name: "Types", Active: true, HREF: recordsTypesHREF},
+			{Name: "All", Active: false, HREF: recordsAllHREF},
+		},
+	}
+
+	if err := html.ExecuteTemplate(w, "records-xhr-types.gohtml", menu); err != nil {
+		logger.Error(err.Error(), zap.String("page", "records-xhr-types.gohtml"))
+		_, _ = w.Write([]byte(err.Error()))
+		return
+	}
+}
+
 // errorsPage page handler
 func errorsPage(w http.ResponseWriter, _ *http.Request) {
 	displayErrorMessage(w, wmNoError)

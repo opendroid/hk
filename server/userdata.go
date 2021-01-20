@@ -11,7 +11,7 @@ import (
 // userData saves health data summary for the user.
 type userData struct {
 	health      *export.HealthData
-	summary    export.NameTypeKeyCounts
+	summary     export.NameTypeKeyCounts
 	sources     export.KeyCounts
 	recordTypes export.KeyCounts
 }

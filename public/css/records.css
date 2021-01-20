@@ -1,7 +1,7 @@
 /* Main content box. */
 main.hk-main {
     display: flex;
-    margin-top: 12rem; /* same as width of 'section.hk-nav' */
+    margin-left: 12rem; /* same as width of 'section.hk-nav' */
     padding-top: 5rem;
     width: 80%;
     color: #000062;

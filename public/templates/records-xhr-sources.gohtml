@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Records</title>
+    {{template "favicon"}}
+    {{template "css"}}
+    <link rel="stylesheet" href="/public/css/records.css">
+    {{template "js"}}
+    <script type="text/javascript" src="/public/js/records.js"></script>
+</head>
+<body>
+{{template "headlinetopbar" .Title}}
+{{template "navprimary" .Active}}
+{{template "navsecondary" .NS}}
+
+<!-- The main body -->
+<main id="hk-main" class="hk-main">
+    <h3 id="records-source" >Amount Data captured by each Source</h3>
+    <table id="records-source-table" class="records">
+    </table>
+
+</main>
+{{/*  Use JS to create rows/columns */}}
+<script type="text/javascript">recordsSummary("records-source-table");</script>
+</body>
+</html>
