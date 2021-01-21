@@ -21,9 +21,17 @@ const (
 )
 
 const (
-	recordsDevicesHREF = "#records-devices"
-	recordsTypesHREF   = "#records-type"
-	recordsAllHREF     = "#records-all"
+	recordsDevicesHREF = "/records-xhr-sources" // Relative template Records URLs
+	recordsTypesHREF   = "/records-xhr-types"
+	recordsAllHREF     = "/records-xhr-all"
+)
+
+type RecordsDataCategory string
+
+const (
+	RecordsSource RecordsDataCategory = "source"
+	RecordsTypes  RecordsDataCategory = "types"
+	RecordsAll    RecordsDataCategory = "all"
 )
 
 const (

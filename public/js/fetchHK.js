@@ -17,8 +17,16 @@ function fetchHK(url) {
                         reject({status: req.status, err: `${e}`, text: req.responseText});
                     }
                 }
+                if (req.status === 400) { // On a 400 response, pass rejection.
+                    try {
+                        const res = JSON.parse(req.responseText);
+                        reject(res)
+                    } catch (e) {
+                        reject({status: req.status, err: `${e}`, text: req.responseText});
+                    }
+                }
             };
-            req.onerror =  () => {
+            req.onerror = () => {
                 reject({
                     status: req.status,
                     text: req.statusText,

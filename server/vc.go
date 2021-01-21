@@ -70,53 +70,21 @@ func records(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// recordsXHRSources
-func recordsXHRSources(w http.ResponseWriter, r *http.Request) {
-	_, ok := r.Context().Value(sessionIDKey).(string)
-	if !ok {
-		logger.Error("User not found", zap.String("page", "records-xhr-sources"))
-		displayErrorMessage(w, umNotProcessed)
-		return
-	}
-	// Get user data
-	menu := PageHeader{
-		Title: "Your Health Records Sources",
-		NS: []NameActiveHREF{
-			{Name: "Sources", Active: true, HREF: recordsDevicesHREF},
-			{Name: "Types", Active: false, HREF: recordsTypesHREF},
-			{Name: "All", Active: false, HREF: recordsAllHREF},
-		},
-	}
+// recordsPage Executes similar looking "tplName" templates with "menu" PageHeader data.
+func recordsPage(menu PageHeader, tplName string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		_, ok := r.Context().Value(sessionIDKey).(string)
+		if !ok {
+			logger.Error("User not found", zap.String("page", tplName))
+			displayErrorMessage(w, umNotProcessed)
+			return
+		}
 
-	if err := html.ExecuteTemplate(w, "records-xhr-sources.gohtml", menu); err != nil {
-		logger.Error(err.Error(), zap.String("page", "records-xhr-sources.gohtml"))
-		_, _ = w.Write([]byte(err.Error()))
-		return
-	}
-}
-
-// recordsXHRTypes
-func recordsXHRTypes(w http.ResponseWriter, r *http.Request) {
-	_, ok := r.Context().Value(sessionIDKey).(string)
-	if !ok {
-		logger.Error("User not found", zap.String("page", "records-xhr-types"))
-		displayErrorMessage(w, umNotProcessed)
-		return
-	}
-	// Get user data
-	menu := PageHeader{
-		Title: "Your Health Records Types",
-		NS: []NameActiveHREF{
-			{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
-			{Name: "Types", Active: true, HREF: recordsTypesHREF},
-			{Name: "All", Active: false, HREF: recordsAllHREF},
-		},
-	}
-
-	if err := html.ExecuteTemplate(w, "records-xhr-types.gohtml", menu); err != nil {
-		logger.Error(err.Error(), zap.String("page", "records-xhr-types.gohtml"))
-		_, _ = w.Write([]byte(err.Error()))
-		return
+		if err := html.ExecuteTemplate(w, tplName, menu); err != nil {
+			logger.Error(err.Error(), zap.String("page", tplName))
+			_, _ = w.Write([]byte(err.Error()))
+			return
+		}
 	}
 }
 
@@ -136,7 +104,8 @@ func displayErrorMessage(w http.ResponseWriter, info string) {
 	}
 }
 
-// numWithComma a template helper function
+// numWithComma a template helper function. Converts -1234567890 to -1,234,567,890.
+// Used to print pretty on webpage
 func numWithComma(n int) string {
 	c := "" // String with ,
 	orig := n

@@ -13,6 +13,7 @@ type NameActiveHREF struct {
 	HREF   string
 }
 
+// PageHeader defines the Title of a page and Name of  Active Primary Nav page. One of "records", "activity" or "summary"
 type PageHeader struct {
 	Title  string
 	Active string // Nav Primary data
@@ -40,8 +41,36 @@ type RecordsPage struct {
 	Types   export.KeyCounts
 }
 
+// Default data for template pages
 var (
-	defaultSecondaryNav = []NameActiveHREF{
+	recordsSourcesNav = PageHeader{ // For record-xhr-sources.gohtml page
+		Title: "Your Health Records Sources",
+		NS: []NameActiveHREF{
+			{Name: "Sources", Active: true, HREF: recordsDevicesHREF},
+			{Name: "Types", Active: false, HREF: recordsTypesHREF},
+			{Name: "All", Active: false, HREF: recordsAllHREF},
+		},
+	}
+
+	recordsTypesNav = PageHeader{ // For record-xhr-types.gohtml page
+		Title: "Your Health Records Types",
+		NS: []NameActiveHREF{
+			{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
+			{Name: "Types", Active: true, HREF: recordsTypesHREF},
+			{Name: "All", Active: false, HREF: recordsAllHREF},
+		},
+	}
+
+	recordsAllNav = PageHeader{ // For record-xhr-all.gohtml page
+		Title: "All Your Health Records",
+		NS: []NameActiveHREF{
+			{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
+			{Name: "Types", Active: false, HREF: recordsTypesHREF},
+			{Name: "All", Active: true, HREF: recordsAllHREF},
+		},
+	}
+
+	defaultSecondaryNav = []NameActiveHREF{ // Default
 		{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
 		{Name: "Types", Active: false, HREF: recordsTypesHREF},
 		{Name: "All", Active: false, HREF: recordsAllHREF},

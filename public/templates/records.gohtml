@@ -14,8 +14,9 @@
 {{template "navsecondary" .NS}}
 
 <!-- The main body -->
+{{/* Deprecated, User records-xhr- instead. They use JS to load data and diaply or make graphs. */}}
 <main id="hk-main" class="hk-main">
-    <h3 id="records-devices" >Amount Data captured by each Source</h3>
+    <h3 id="records-devices">Amount Data captured by each Source</h3>
     <table class="records">
         <tr>
             <th>Source</th>
@@ -48,12 +49,12 @@
             <th>Count</th>
         </tr>
         {{if .Records}}{{range $, $values := .Records}}
-        <tr>
-            <td>{{$values.Name}}</td>
-            <td>{{$values.Type}}</td>
-            <td>{{$values.Key}}</td>
-            <td>{{numWithComma $values.Count}}</td>
-        </tr>{{end}}{{end}}
+            <tr>
+                <td>{{$values.Name}}</td>
+                <td>{{$values.Type}}</td>
+                <td>{{$values.Key}}</td>
+                <td>{{numWithComma $values.Count}}</td>
+            </tr>{{end}}{{end}}
     </table>
 
 </main>

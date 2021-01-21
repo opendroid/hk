@@ -23,13 +23,15 @@ func Start(port int, f string) {
 	// URL handlers
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/records", records)
-	mux.HandleFunc("/records-xhr-sources", recordsXHRSources)
-	mux.HandleFunc("/records-xhr-types", recordsXHRTypes)
+	mux.HandleFunc("/records-xhr-sources", recordsPage(recordsSourcesNav, "records-xhr-sources.gohtml"))
+	mux.HandleFunc("/records-xhr-types", recordsPage(recordsTypesNav, "records-xhr-types.gohtml"))
+	mux.HandleFunc("/records-xhr-all", recordsPage(recordsAllNav, "records-xhr-all.gohtml"))
 	mux.HandleFunc("/error", errorsPage)
 
-	// APIs
-	mux.HandleFunc("/v1/recordsSummary", recordsSummary)
-	mux.HandleFunc("/v1/recordsTypes", recordsTypes)
+	// v1 records APIs. The inout is in HTTP only cookie called "user"
+	mux.HandleFunc("/v1/recordsSources", recordsData(RecordsSource))
+	mux.HandleFunc("/v1/recordsTypes", recordsData(RecordsTypes))
+	mux.HandleFunc("/v1/recordsAll", recordsData(RecordsAll))
 	n := NewSessionHandler(mux) // Wrapper mux
 	address := fmt.Sprintf(":%d", port)
 	log.Fatal(http.ListenAndServe(address, n))
