@@ -100,6 +100,9 @@ type Audiogram struct {
 	CreationDate  string `xml:"creationDate,attr,omitempty" json:"creation_date,omitempty"`
 	StartDate     string `xml:"startDate,attr" json:"start_date"`
 	EndDate       string `xml:"endDate,attr" json:"end_date"`
+	// Elements
+	MetadataEntries   []MetadataEntry    `xml:"MetadataEntry,omitempty" json:"metadata,omitempty"`
+	SensitivityPoints []SensitivityPoint `xml:"SensitivityPoint,omitempty" json:"sensitivity_points,omitempty"`
 }
 
 // SensitivityPoint microphone data
@@ -212,15 +215,14 @@ type HealthData struct {
 	// Attribute
 	Locale string `xml:"locale,attr" json:"locate"`
 	// Elements
-	Exported          Date               `xml:"ExportDate" json:"exported_date"`
-	Me                Me                 `xml:"Me" json:"me"`
-	Records           []Record           `xml:"Record"  json:"records,omitempty"`
-	ClinicalRecords   []ClinicalRecord   `xml:"ClinicalRecord" json:"clinical_records,omitempty"`
-	Correlations      []Correlation      `xml:"Correlation" json:"correlations,omitempty"`
-	Workouts          []Workout          `xml:"Workout" json:"workouts,omitempty"`
-	ActivitiesSummary []ActivitySummary  `xml:"ActivitySummary" json:"activities_summary,omitempty"`
-	Audiograms        []Audiogram        `xml:"Audiogram,omitempty,omitempty"  json:"audiograms,omitempty"`
-	SensitivityPoints []SensitivityPoint `xml:"SensitivityPoint,omitempty" json:"sensitivity_points,omitempty"`
+	Exported          Date              `xml:"ExportDate" json:"exported_date"`
+	Me                Me                `xml:"Me" json:"me"`
+	Records           []Record          `xml:"Record"  json:"records,omitempty"`
+	ClinicalRecords   []ClinicalRecord  `xml:"ClinicalRecord" json:"clinical_records,omitempty"`
+	Correlations      []Correlation     `xml:"Correlation" json:"correlations,omitempty"`
+	Workouts          []Workout         `xml:"Workout" json:"workouts,omitempty"`
+	ActivitiesSummary []ActivitySummary `xml:"ActivitySummary" json:"activities_summary,omitempty"`
+	Audiograms        []Audiogram       `xml:"Audiogram,omitempty,omitempty"  json:"audiograms,omitempty"`
 }
 
 // String describes ActivitySummary

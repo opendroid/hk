@@ -14,11 +14,10 @@ var (
 // provides logger
 func init() {
 	var err error
-	logger, err = zap.NewProduction()
+	logger, err = zap.NewDevelopment()
 	if err != nil {
 		log.Fatalf("Zap logger not initialized. %v", err)
 	}
-
 }
 
 // Info wrapper for zap.Info

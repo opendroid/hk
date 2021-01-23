@@ -44,7 +44,8 @@ type RecordsPage struct {
 // Default data for template pages
 var (
 	recordsSourcesNav = PageHeader{ // For record-xhr-sources.gohtml page
-		Title: "Your Health Records Sources",
+		Title:  "Your Health Records Sources",
+		Active: "records",
 		NS: []NameActiveHREF{
 			{Name: "Sources", Active: true, HREF: recordsDevicesHREF},
 			{Name: "Types", Active: false, HREF: recordsTypesHREF},
@@ -53,7 +54,8 @@ var (
 	}
 
 	recordsTypesNav = PageHeader{ // For record-xhr-types.gohtml page
-		Title: "Your Health Records Types",
+		Title:  "Your Health Records Types",
+		Active: "records",
 		NS: []NameActiveHREF{
 			{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
 			{Name: "Types", Active: true, HREF: recordsTypesHREF},
@@ -62,11 +64,30 @@ var (
 	}
 
 	recordsAllNav = PageHeader{ // For record-xhr-all.gohtml page
-		Title: "All Your Health Records",
+		Title:  "All Your Health Records",
+		Active: "records",
 		NS: []NameActiveHREF{
 			{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
 			{Name: "Types", Active: false, HREF: recordsTypesHREF},
 			{Name: "All", Active: true, HREF: recordsAllHREF},
+		},
+	}
+
+	summaryTableNav = PageHeader{ // For summary.gohtml page
+		Title:  "Activity Summary Table",
+		Active: "summary",
+		NS: []NameActiveHREF{
+			{Name: "Table", Active: true, HREF: summaryTableHREF},
+			{Name: "Graph", Active: false, HREF: summaryGraphHREF},
+		},
+	}
+
+	summaryGraphNav = PageHeader{ // For summary.gohtml page
+		Title:  "Your Activity Graph",
+		Active: "summary",
+		NS: []NameActiveHREF{
+			{Name: "Table", Active: false, HREF: summaryTableHREF},
+			{Name: "Graph", Active: true, HREF: summaryGraphHREF},
 		},
 	}
 

@@ -15,13 +15,6 @@ main.hk-main {
     margin-left: 0;
 }
 
-main.hk-main .info {
-    margin: 2rem;
-    line-height: 2rem;
-    width: 40%;
-    font-weight: 400;
-}
-
 main.hk-main .gopher {
     width: 64px;
     height: 64px;

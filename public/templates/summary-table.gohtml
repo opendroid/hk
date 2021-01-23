@@ -5,10 +5,11 @@
     <title>Records</title>
     {{template "favicon"}}
     {{template "css"}}
-    <link rel="stylesheet" href="/public/css/records.css">
+    <link rel="stylesheet" href="/public/css/summary.css">
     {{template "js"}}
     <script type="text/javascript" src="/public/js/misc.js"></script>
-    <script type="text/javascript" src="/public/js/records.js"></script>
+    <script type="text/javascript" src="/public/js/summary.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 {{template "headlinetopbar" .Title}}
@@ -17,12 +18,10 @@
 
 <!-- The main body -->
 <main id="hk-main" class="hk-main">
-    <h3 id="records-source">All records captured</h3>
-    <table id="records-all-table" class="records">
-    </table>
-
+    <h3 id="summary-heading">Your summary</h3>
+    <div id="summary-gtable"></div>
 </main>
 {{/*  Use JS to create rows/columns */}}
-<script type="text/javascript">recordsAll("records-all-table", "records-source");</script>
+<script type="text/javascript">summaryGTable("summary-gtable", "summary-heading");</script>
 </body>
 </html>

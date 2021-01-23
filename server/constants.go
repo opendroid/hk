@@ -24,14 +24,17 @@ const (
 	recordsDevicesHREF = "/records-xhr-sources" // Relative template Records URLs
 	recordsTypesHREF   = "/records-xhr-types"
 	recordsAllHREF     = "/records-xhr-all"
+	summaryTableHREF   = "/summary-table" // Relative template Summary URLs
+	summaryGraphHREF   = "/summary-graph"
 )
 
 type RecordsDataCategory string
 
 const (
-	RecordsSource RecordsDataCategory = "source"
-	RecordsTypes  RecordsDataCategory = "types"
-	RecordsAll    RecordsDataCategory = "all"
+	recordsSource   RecordsDataCategory = "source"
+	recordsTypes    RecordsDataCategory = "types"
+	recordsAll      RecordsDataCategory = "all"
+	activitySummary RecordsDataCategory = "summary"
 )
 
 const (
@@ -50,7 +53,7 @@ const (
 
 // User Messages in case of error
 const (
-	wmNoError      = "Dont worry be happy"
+	umNoError      = "Dont worry be happy"
 	umNoData       = "Sorry could not find your data"
 	umNotProcessed = "Sorry your data is not processed yet"
 )

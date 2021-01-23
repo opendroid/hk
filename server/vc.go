@@ -70,8 +70,8 @@ func records(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// recordsPage Executes similar looking "tplName" templates with "menu" PageHeader data.
-func recordsPage(menu PageHeader, tplName string) http.HandlerFunc {
+// execTemplate Executes similar looking "tplName" templates with "menu" PageHeader data.
+func execTemplate(menu PageHeader, tplName string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		_, ok := r.Context().Value(sessionIDKey).(string)
 		if !ok {
@@ -90,7 +90,7 @@ func recordsPage(menu PageHeader, tplName string) http.HandlerFunc {
 
 // errorsPage page handler
 func errorsPage(w http.ResponseWriter, _ *http.Request) {
-	displayErrorMessage(w, wmNoError)
+	displayErrorMessage(w, umNoError)
 }
 
 // displayErrorMessage helper to display a error message

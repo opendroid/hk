@@ -137,3 +137,14 @@ func (h *HealthData) RecordsTypes() KeyCounts {
 	rs = append(rs, KeyCount{"Total", entries})
 	return rs
 }
+
+// Summary returns a sorted []ActivitySummary data
+func (h *HealthData) Summary() []ActivitySummary {
+	if h == nil {
+		return nil
+	}
+	d := make([]ActivitySummary, len(h.ActivitiesSummary))
+	copy(d, h.ActivitiesSummary) // Copy slice
+	sort.Slice(d, func(i, j int) bool { return d[i].YYYYMMDD < d[j].YYYYMMDD })
+	return d
+}

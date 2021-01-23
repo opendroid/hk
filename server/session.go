@@ -52,9 +52,11 @@ func (s *sessionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		zap.String("path", r.URL.Path),
 		zap.String("user", user),
 		zap.String("host", r.Host),
+		zap.String("accept", r.Header.Get("Accept-Encoding")),
 		zap.String("IP", r.RemoteAddr),
 		zap.Bool("new", newSession),
 		zap.Int64("ms", end.Milliseconds()))
+	// r.Header.Get("Accept-Encoding")
 }
 
 // newUserCookie

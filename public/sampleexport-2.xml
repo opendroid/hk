@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HealthData [
+        <!-- HealthKit Export Version: 11 -->
+        <!ELEMENT HealthData (ExportDate,Me,(Record|Correlation|Workout|Audiogram|ActivitySummary|ClinicalRecord)*)>
+        <!ATTLIST HealthData
+                locale CDATA #REQUIRED
+                >
+        <!ELEMENT ExportDate EMPTY>
+        <!ATTLIST ExportDate
+                value CDATA #REQUIRED
+                >
+        <!ELEMENT Me EMPTY>
+        <!ATTLIST Me
+                HKCharacteristicTypeIdentifierDateOfBirth         CDATA #REQUIRED
+                HKCharacteristicTypeIdentifierBiologicalSex       CDATA #REQUIRED
+                HKCharacteristicTypeIdentifierBloodType           CDATA #REQUIRED
+                HKCharacteristicTypeIdentifierFitzpatrickSkinType CDATA #REQUIRED
+                HKCharacteristicTypeIdentifierCardioFitnessMedicationsUse CDATA #REQUIRED
+                >
+        <!ELEMENT Record ((MetadataEntry|HeartRateVariabilityMetadataList)*)>
+        <!ATTLIST Record
+                type          CDATA #REQUIRED
+                unit          CDATA #IMPLIED
+                value         CDATA #IMPLIED
+                sourceName    CDATA #REQUIRED
+                sourceVersion CDATA #IMPLIED
+                device        CDATA #IMPLIED
+                creationDate  CDATA #IMPLIED
+                startDate     CDATA #REQUIRED
+                endDate       CDATA #REQUIRED
+                >
+        <!-- Note: Any Records that appear as children of a correlation also appear as top-level records in this document. -->
+        <!ELEMENT Correlation ((MetadataEntry|Record)*)>
+        <!ATTLIST Correlation
+                type          CDATA #REQUIRED
+                sourceName    CDATA #REQUIRED
+                sourceVersion CDATA #IMPLIED
+                device        CDATA #IMPLIED
+                creationDate  CDATA #IMPLIED
+                startDate     CDATA #REQUIRED
+                endDate       CDATA #REQUIRED
+                >
+        <!ELEMENT Workout ((MetadataEntry|WorkoutEvent|WorkoutRoute)*)>
+        <!ATTLIST Workout
+                workoutActivityType   CDATA #REQUIRED
+                duration              CDATA #IMPLIED
+                durationUnit          CDATA #IMPLIED
+                totalDistance         CDATA #IMPLIED
+                totalDistanceUnit     CDATA #IMPLIED
+                totalEnergyBurned     CDATA #IMPLIED
+                totalEnergyBurnedUnit CDATA #IMPLIED
+                sourceName            CDATA #REQUIRED
+                sourceVersion         CDATA #IMPLIED
+                device                CDATA #IMPLIED
+                creationDate          CDATA #IMPLIED
+                startDate             CDATA #REQUIRED
+                endDate               CDATA #REQUIRED
+                >
+        <!ELEMENT WorkoutEvent EMPTY>
+        <!ATTLIST WorkoutEvent
+                type         CDATA #REQUIRED
+                date         CDATA #REQUIRED
+                duration     CDATA #IMPLIED
+                durationUnit CDATA #IMPLIED
+                >
+        <!ELEMENT WorkoutRoute ((MetadataEntry|FileReference)*)>
+        <!ATTLIST WorkoutRoute
+                sourceName    CDATA #REQUIRED
+                sourceVersion CDATA #IMPLIED
+                device        CDATA #IMPLIED
+                creationDate  CDATA #IMPLIED
+                startDate     CDATA #REQUIRED
+                endDate       CDATA #REQUIRED
+                >
+        <!ELEMENT FileReference EMPTY>
+        <!ATTLIST FileReference
+                path CDATA #REQUIRED
+                >
+        <!ELEMENT ActivitySummary EMPTY>
+        <!ATTLIST ActivitySummary
+                dateComponents           CDATA #IMPLIED
+                activeEnergyBurned       CDATA #IMPLIED
+                activeEnergyBurnedGoal   CDATA #IMPLIED
+                activeEnergyBurnedUnit   CDATA #IMPLIED
+                appleMoveTime            CDATA #IMPLIED
+                appleMoveTimeGoal        CDATA #IMPLIED
+                appleExerciseTime        CDATA #IMPLIED
+                appleExerciseTimeGoal    CDATA #IMPLIED
+                appleStandHours          CDATA #IMPLIED
+                appleStandHoursGoal      CDATA #IMPLIED
+                >
+        <!ELEMENT MetadataEntry EMPTY>
+        <!ATTLIST MetadataEntry
+                key   CDATA #REQUIRED
+                value CDATA #REQUIRED
+                >
+        <!-- Note: Heart Rate Variability records captured by Apple Watch may include an associated list of instantaneous beats-per-minute readings. -->
+        <!ELEMENT HeartRateVariabilityMetadataList (InstantaneousBeatsPerMinute*)>
+        <!ELEMENT InstantaneousBeatsPerMinute EMPTY>
+        <!ATTLIST InstantaneousBeatsPerMinute
+                bpm  CDATA #REQUIRED
+                time CDATA #REQUIRED
+                >
+        <!ELEMENT ClinicalRecord EMPTY>
+        <!ATTLIST ClinicalRecord
+                type              CDATA #REQUIRED
+                identifier        CDATA #REQUIRED
+                sourceName        CDATA #REQUIRED
+                sourceURL         CDATA #REQUIRED
+                fhirVersion       CDATA #REQUIRED
+                receivedDate      CDATA #REQUIRED
+                resourceFilePath  CDATA #REQUIRED
+                >
+        <!ELEMENT Audiogram ((MetadataEntry|SensitivityPoint)*)>
+        <!ATTLIST Audiogram
+                type          CDATA #REQUIRED
+                sourceName    CDATA #REQUIRED
+                sourceVersion CDATA #IMPLIED
+                device        CDATA #IMPLIED
+                creationDate  CDATA #IMPLIED
+                startDate     CDATA #REQUIRED
+                endDate       CDATA #REQUIRED
+                >
+        <!ELEMENT SensitivityPoint EMPTY>
+        <!ATTLIST SensitivityPoint
+                frequencyValue   CDATA #REQUIRED
+                frequencyUnit    CDATA #REQUIRED
+                leftEarValue     CDATA #IMPLIED
+                leftEarUnit      CDATA #IMPLIED
+                rightEarValue    CDATA #IMPLIED
+                rightEarUnit     CDATA #IMPLIED
+                >
+        ]>
+<HealthData locale="en_US">
+    <ExportDate value="2021-01-22 17:37:58 -0800"/>
+    <Me HKCharacteristicTypeIdentifierDateOfBirth="1971-07-09"
+        HKCharacteristicTypeIdentifierBiologicalSex="HKBiologicalSexMale"
+        HKCharacteristicTypeIdentifierBloodType="HKBloodTypeNotSet"
+        HKCharacteristicTypeIdentifierFitzpatrickSkinType="HKFitzpatrickSkinTypeNotSet"
+        HKCharacteristicTypeIdentifierCardioFitnessMedicationsUse="None"/>
+    <Record type="HKQuantityTypeIdentifierHeight" sourceName="Khushhal’s Apple Watch" sourceVersion="4.1" unit="ft"
+            creationDate="2018-01-24 15:54:24 -0800" startDate="2018-01-24 15:54:24 -0800"
+            endDate="2018-01-24 15:54:24 -0800" value="5.75"/>
+    <Record type="HKQuantityTypeIdentifierBodyMass" sourceName="Lose It!" sourceVersion="2" unit="lb"
+            creationDate="2016-02-10 12:04:30 -0800" startDate="2016-02-09 23:59:59 -0800"
+            endDate="2016-02-09 23:59:59 -0800" value="181">
+        <MetadataEntry key="HKExternalUUID" value="73C2DEEC-B13D-4C54-AF3A-28CFA5064EA5"/>
+    </Record>
+    <Workout workoutActivityType="HKWorkoutActivityTypeWalking" duration="38.35598726669947" durationUnit="min"
+             totalDistance="2.169559267617529" totalDistanceUnit="mi" totalEnergyBurned="158.7939999999999"
+             totalEnergyBurnedUnit="Cal" sourceName="Khushhal’s Apple Watch" sourceVersion="4.1"
+             creationDate="2018-02-01 08:25:21 -0800" startDate="2018-02-01 07:46:59 -0800"
+             endDate="2018-02-01 08:25:21 -0800">
+        <MetadataEntry key="HKTimeZone" value="America/Los_Angeles"/>
+        <MetadataEntry key="HKWeatherTemperature" value="49 degF"/>
+        <MetadataEntry key="HKWeatherHumidity" value="7100 %"/>
+        <WorkoutRoute sourceName="Khushhal’s Apple Watch" sourceVersion="11.2.2"
+                      creationDate="2018-02-01 08:29:11 -0800" startDate="2018-02-01 07:47:00 -0800"
+                      endDate="2018-02-01 08:25:20 -0800">
+            <MetadataEntry key="HKMetadataKeySyncVersion" value="2"/>
+            <MetadataEntry key="HKMetadataKeySyncIdentifier" value="9DE9DCC1-B97B-41FC-A758-E89819C93860"/>
+            <FileReference path="/workout-routes/route_2018-02-01_8.25am.gpx"/>
+        </WorkoutRoute>
+    </Workout>
+    <Workout workoutActivityType="HKWorkoutActivityTypeWalking" duration="30" durationUnit="min" totalDistance="0"
+             totalDistanceUnit="mi" totalEnergyBurned="138" totalEnergyBurnedUnit="Cal" sourceName="Lose It!"
+             sourceVersion="2" creationDate="2016-02-25 14:07:46 -0800" startDate="2016-02-24 17:59:48 -0800"
+             endDate="2016-02-24 17:59:48 -0800">
+        <MetadataEntry key="HKExternalUUID" value="CD17BFF8-BE6D-4588-AA78-724556D252FE"/>
+    </Workout>
+    <Workout workoutActivityType="HKWorkoutActivityTypeCrossTraining" duration="30" durationUnit="min" totalDistance="0"
+             totalDistanceUnit="mi" totalEnergyBurned="323" totalEnergyBurnedUnit="Cal" sourceName="Lose It!"
+             sourceVersion="2" creationDate="2016-02-26 06:15:21 -0800" startDate="2016-02-25 22:44:01 -0800"
+             endDate="2016-02-25 22:44:01 -0800">
+        <MetadataEntry key="HKExternalUUID" value="689D5CBD-2EEE-4B87-9C3B-35D62A0B8FBF"/>
+    </Workout>
+    <Workout workoutActivityType="HKWorkoutActivityTypeWalking" duration="20" durationUnit="min" totalDistance="0"
+             totalDistanceUnit="mi" totalEnergyBurned="92" totalEnergyBurnedUnit="Cal" sourceName="Lose It!"
+             sourceVersion="2" creationDate="2016-02-26 06:15:21 -0800" startDate="2016-02-25 22:44:12 -0800"
+             endDate="2016-02-25 22:44:12 -0800">
+        <MetadataEntry key="HKExternalUUID" value="03629F88-D354-45B8-BD06-5ACB6AD6CCEC"/>
+    </Workout>
+    <Workout workoutActivityType="HKWorkoutActivityTypeWalking" duration="204.681023834149" durationUnit="min"
+             totalDistance="7.818211779985165" totalDistanceUnit="mi" totalEnergyBurned="1091.486999999997"
+             totalEnergyBurnedUnit="Cal" sourceName="Khushhal’s Apple Watch" sourceVersion="4.1"
+             creationDate="2018-02-10 14:25:27 -0800" startDate="2018-02-10 10:50:10 -0800"
+             endDate="2018-02-10 14:25:27 -0800">
+        <MetadataEntry key="HKTimeZone" value="America/Los_Angeles"/>
+        <MetadataEntry key="HKWeatherTemperature" value="69 degF"/>
+        <MetadataEntry key="HKWeatherHumidity" value="3500 %"/>
+        <WorkoutEvent type="HKWorkoutEventTypePause" date="2018-02-10 12:34:32 -0800"/>
+        <WorkoutEvent type="HKWorkoutEventTypeResume" date="2018-02-10 12:45:08 -0800"/>
+        <WorkoutRoute sourceName="Khushhal’s Apple Watch" sourceVersion="11.2.5"
+                      creationDate="2018-02-10 14:26:16 -0800" startDate="2018-02-10 10:50:10 -0800"
+                      endDate="2018-02-10 14:25:26 -0800">
+            <MetadataEntry key="HKMetadataKeySyncVersion" value="2"/>
+            <MetadataEntry key="HKMetadataKeySyncIdentifier" value="8B784398-F371-4BCB-AFC1-8966FF8E176E"/>
+            <FileReference path="/workout-routes/route_2018-02-10_2.25pm.gpx"/>
+        </WorkoutRoute>
+    </Workout>
+    <Record type="HKQuantityTypeIdentifierBodyMass" sourceName="🔜" sourceVersion="14.2" unit="lb"
+            creationDate="2020-10-05 12:02:41 -0800" startDate="2020-10-05 12:02:41 -0800"
+            endDate="2020-10-05 12:02:41 -0800" value="140"/>
+    <Record type="HKQuantityTypeIdentifierBodyMass" sourceName="🔜" sourceVersion="10.1.1" unit="lb"
+            creationDate="2016-12-08 20:06:35 -0800" startDate="2016-12-08 20:06:35 -0800"
+            endDate="2016-12-08 20:06:35 -0800" value="180"/>
+    <Record type="HKQuantityTypeIdentifierBodyMass" sourceName="Renpho" sourceVersion="4" unit="lb" creationDate="2020-04-19 06:53:41 -0800" startDate="2020-04-18 05:52:26 -0800" endDate="2020-04-18 05:52:26 -0800" value="138"/>
+    <Record type="HKQuantityTypeIdentifierBodyMass" sourceName="Renpho" sourceVersion="4" unit="lb" creationDate="2020-04-19 06:53:41 -0800" startDate="2020-04-17 05:57:55 -0800" endDate="2020-04-17 05:57:55 -0800" value="138.8"/>
+    <Record type="HKQuantityTypeIdentifierBodyMass" sourceName="MyFitnessPal" sourceVersion="22314" unit="lb" creationDate="2019-01-02 18:30:53 -0800" startDate="2018-12-27 18:30:00 -0800" endDate="2018-12-27 18:30:00 -0800" value="195"/>
+    <Record type="HKQuantityTypeIdentifierBodyMass" sourceName="MyFitnessPal" sourceVersion="22314" unit="lb" creationDate="2019-01-03 20:39:09 -0800" startDate="2019-01-02 20:39:00 -0800" endDate="2019-01-02 20:39:00 -0800" value="188.826"/>
+
+    <Audiogram type="HKDataTypeIdentifierAudiogram" sourceName="Hearing Test" sourceVersion="3092"
+               creationDate="2021-01-22 20:31:37 -0800" startDate="2021-01-22 20:30:50 -0800"
+               endDate="2021-01-22 20:30:50 -0800">
+        <MetadataEntry key="HKMetadataKeySyncVersion" value="1"/>
+        <MetadataEntry key="HKExternalUUID" value="479728a4-8e83-4de1-bb71-f75f5a691a6c"/>
+        <MetadataEntry key="HKMetadataKeySyncIdentifier" value="479728a4-8e83-4de1-bb71-f75f5a691a6c"/>
+        <SensitivityPoint frequencyValue="250" frequencyUnit="Hz" leftEarValue="35.0459" leftEarUnit="dBHL"
+                          rightEarValue="20.0452" rightEarUnit="dBHL"/>
+        <SensitivityPoint frequencyValue="500" frequencyUnit="Hz" leftEarValue="29.6554" leftEarUnit="dBHL"
+                          rightEarValue="17.6095" rightEarUnit="dBHL"/>
+    </Audiogram>
+</HealthData>
