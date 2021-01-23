@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/public/css/summary.css">
     {{template "js"}}
     <script type="text/javascript" src="/public/js/misc.js"></script>
-    <script type="text/javascript" src="/public/js/summary.js"></script>
+    <script type="text/javascript" src="/public/js/exposure.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
@@ -18,17 +18,14 @@
 
 <!-- The main body -->
 <main id="hk-main" class="hk-main">
-    <h3 id="summary-heading">Daily Energy Burned</h3>
-    <div id="summary-energy-graph"></div>
-    <h3 id="summary-heading">Daily Exercise Minutes</h3>
-    <div id="summary-exercise-graph"></div>
-    <h3 id="summary-heading">Daily Stand Hours</h3>
-    <div id="summary-stand-graph"></div>
+    <h3 id="summary-heading">Audio Exposure</h3>
+    <div id="summary-exposure-graph"></div>
+
 </main>
 {{/*  Use JS to create graph the data */}}
 <script type="text/javascript">
     google.charts.load('current', {'packages': ['corechart']}); // Load google charts
-    drawGraphs("summary-energy-graph", "summary-exercise-graph", "summary-stand-graph", "summary-heading"); // Draw charts
+    drawExposureGraphs("summary-exposure-graph", "summary-heading"); // Draw charts
 </script>
 </body>
 </html>

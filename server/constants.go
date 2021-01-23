@@ -21,11 +21,13 @@ const (
 )
 
 const (
-	recordsDevicesHREF = "/records-xhr-sources" // Relative template Records URLs
-	recordsTypesHREF   = "/records-xhr-types"
-	recordsAllHREF     = "/records-xhr-all"
-	summaryTableHREF   = "/summary-table" // Relative template Summary URLs
-	summaryGraphHREF   = "/summary-graph"
+	recordsDevicesHREF  = "/records-xhr-sources" // Relative template Records URLs
+	recordsTypesHREF    = "/records-xhr-types"
+	recordsAllHREF      = "/records-xhr-all"
+	summaryTableHREF    = "/summary-table" // Relative template Summary URLs
+	summaryActivityHREF = "/summary-activity"
+	summaryBodyMassHREF = "/summary-mass"
+	summaryExposureHREF = "/summary-exposure"
 )
 
 type RecordsDataCategory string
@@ -35,6 +37,8 @@ const (
 	recordsTypes    RecordsDataCategory = "types"
 	recordsAll      RecordsDataCategory = "all"
 	activitySummary RecordsDataCategory = "summary"
+	bodyMass        RecordsDataCategory = "mass"
+	exposure        RecordsDataCategory = "exposure"
 )
 
 const (

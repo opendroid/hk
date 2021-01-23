@@ -10,10 +10,12 @@ import (
 
 // userData saves health data summary for the user.
 type userData struct {
-	health      *export.HealthData
-	summary     export.NameTypeKeyCounts
-	sources     export.KeyCounts
-	recordTypes export.KeyCounts
+	health        *export.HealthData
+	summary       export.NameTypeKeyCounts
+	sources       export.KeyCounts
+	recordTypes   export.KeyCounts
+	mass          *export.BodyMassComposition
+	audioExposure *export.AudioExposure
 }
 
 func processHealthData(uID string) {
@@ -25,7 +27,16 @@ func processHealthData(uID string) {
 		summary := health.RecordsSummary() // Pre-process data
 		sources := health.RecordsSources()
 		recordTypes := health.RecordsTypes()
-		users[uID] = userData{health, summary, sources, recordTypes}
+		mass := health.BodyMassData()
+		ae := health.AudioExposure()
+		users[uID] = userData{
+			health:        health,
+			summary:       summary,
+			sources:       sources,
+			recordTypes:   recordTypes,
+			mass:          mass,
+			audioExposure: ae,
+		}
 	}
 	end := time.Since(start)
 	logger.Debug("Analysis done", zap.String("user", uID), zap.Int64("ms", end.Milliseconds()))

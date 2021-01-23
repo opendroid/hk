@@ -55,16 +55,31 @@ function drawSummaryTable(tableID, summary) {
 }
 
 // energyGraph Fetches records summary
-function drawGraphs(eDivID, exDivID, sDivID, errElementID) {
+function drawSummaryGraphs(eDivID, exDivID, sDivID, errElementID) {
     fetchHK("/v1/activitySummary")
-        .then(d => readyEnenrgyCharts(eDivID, d))
+        .then(d => filterBadDatesData(d))
+        .then(d => readyEnergyCharts(eDivID, d))
         .then(d => readyExerciseCharts(exDivID, d))
         .then(d => readyStandCharts(sDivID, d))
         .catch(e => displayError(errElementID, e));
 }
 
+// filterBadDatesData removes dates before 2000, Apple watch has some bad data.
+function filterBadDatesData(data) {
+    if (data && Array.isArray(data) && data.length) {
+        return data.filter(d => {
+            try {
+                const yyyymmdd = d.yyyymmdd.split("-");
+                return  parseInt(yyyymmdd[0]) > 2000;
+            } catch (e) {
+                return false
+            }
+        })
+    }
+    return [];
+}
 // Draws energy graphs
-function readyEnenrgyCharts(divID, d) {
+function readyEnergyCharts(divID, d) {
     google.charts.setOnLoadCallback(() => drawEnergyGraph(divID, d));
     return d;
 }

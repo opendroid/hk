@@ -208,7 +208,14 @@
     <Record type="HKQuantityTypeIdentifierBodyMass" sourceName="Renpho" sourceVersion="4" unit="lb" creationDate="2020-04-19 06:53:41 -0800" startDate="2020-04-17 05:57:55 -0800" endDate="2020-04-17 05:57:55 -0800" value="138.8"/>
     <Record type="HKQuantityTypeIdentifierBodyMass" sourceName="MyFitnessPal" sourceVersion="22314" unit="lb" creationDate="2019-01-02 18:30:53 -0800" startDate="2018-12-27 18:30:00 -0800" endDate="2018-12-27 18:30:00 -0800" value="195"/>
     <Record type="HKQuantityTypeIdentifierBodyMass" sourceName="MyFitnessPal" sourceVersion="22314" unit="lb" creationDate="2019-01-03 20:39:09 -0800" startDate="2019-01-02 20:39:00 -0800" endDate="2019-01-02 20:39:00 -0800" value="188.826"/>
-
+    <Record type="HKQuantityTypeIdentifierBodyFatPercentage" sourceName="Renpho" sourceVersion="4" unit="%" creationDate="2020-04-19 06:53:41 -0800" startDate="2020-04-18 05:52:26 -0800" endDate="2020-04-18 05:52:26 -0800" value="0.161"/>
+    <Record type="HKQuantityTypeIdentifierBodyFatPercentage" sourceName="Renpho" sourceVersion="4" unit="%" creationDate="2020-04-19 06:53:41 -0800" startDate="2020-04-17 05:57:55 -0800" endDate="2020-04-17 05:57:55 -0800" value="0.163"/>
+    <Record type="HKQuantityTypeIdentifierBodyMassIndex" sourceName="Renpho" sourceVersion="4" unit="count" creationDate="2020-04-19 06:53:41 -0800" startDate="2020-04-18 05:52:26 -0800" endDate="2020-04-18 05:52:26 -0800" value="22.4"/>
+    <Record type="HKQuantityTypeIdentifierBodyMassIndex" sourceName="Renpho" sourceVersion="4" unit="count" creationDate="2020-04-19 06:53:41 -0800" startDate="2020-04-17 05:57:55 -0800" endDate="2020-04-17 05:57:55 -0800" value="22.6"/>
+    <Record type="HKQuantityTypeIdentifierLeanBodyMass" sourceName="Renpho" sourceVersion="4" unit="lb" creationDate="2020-04-19 06:53:41 -0800" startDate="2020-04-17 05:57:55 -0800" endDate="2020-04-17 05:57:55 -0800" value="116.2"/>
+    <Record type="HKQuantityTypeIdentifierLeanBodyMass" sourceName="Renpho" sourceVersion="4" unit="lb" creationDate="2020-04-19 06:53:44 -0800" startDate="2020-04-15 05:58:55 -0800" endDate="2020-04-15 05:58:55 -0800" value="115.8"/>
+    <Record type="c" sourceName="🕛🕐🕑🕒" sourceVersion="7.2" device="&lt;&lt;HKDevice: 0x2820680f0&gt;, name:Apple Watch, manufacturer:Apple Inc., model:Watch, hardware:Watch4,2, software:7.2&gt;" unit="dBASPL" creationDate="2021-01-22 19:29:25 -0800" startDate="2021-01-22 19:21:01 -0800" endDate="2021-01-22 19:51:01 -0800" value="68.0391"/>
+    <Record type="HKQuantityTypeIdentifierEnvironmentalAudioExposure" sourceName="🕛🕐🕑🕒" sourceVersion="7.2" device="&lt;&lt;HKDevice: 0x2820680f0&gt;, name:Apple Watch, manufacturer:Apple Inc., model:Watch, hardware:Watch4,2, software:7.2&gt;" unit="dBASPL" creationDate="2021-01-22 19:29:25 -0800" startDate="2021-01-22 19:21:01 -0800" endDate="2021-01-22 19:51:01 -0800" value="68.0391"/>
     <Audiogram type="HKDataTypeIdentifierAudiogram" sourceName="Hearing Test" sourceVersion="3092"
                creationDate="2021-01-22 20:31:37 -0800" startDate="2021-01-22 20:30:50 -0800"
                endDate="2021-01-22 20:30:50 -0800">

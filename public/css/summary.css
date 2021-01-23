@@ -21,3 +21,14 @@ main.hk-main {
     width: 100%;
     height: 500px;
 }
+
+/* Graph data */
+#summary-mass-graph, #summary-lean-mass-graph, #summary-bmi-graph, #summary-fat-percent-graph {
+    width: 100%;
+    height: 500px;
+}
+
+#summary-exposure-graph {
+    width: 100%;
+    height: 500px;
+}

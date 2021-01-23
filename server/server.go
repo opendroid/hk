@@ -27,7 +27,10 @@ func Start(port int, f string) {
 	mux.HandleFunc("/records-xhr-types", execTemplate(recordsTypesNav, "records-xhr-types.gohtml"))
 	mux.HandleFunc("/records-xhr-all", execTemplate(recordsAllNav, "records-xhr-all.gohtml"))
 	mux.HandleFunc("/summary-table", execTemplate(summaryTableNav, "summary-table.gohtml"))
-	mux.HandleFunc("/summary-graph", execTemplate(summaryGraphNav, "summary-graph.gohtml"))
+	mux.HandleFunc("/summary-activity", execTemplate(summaryGraphNav, "summary-activity.gohtml"))
+	mux.HandleFunc("/summary-mass", execTemplate(summaryBodyMassNav, "summary-mass.gohtml"))
+	mux.HandleFunc("/summary-exposure", execTemplate(summaryExposureNav, "summary-exposure.gohtml"))
+
 	mux.HandleFunc("/error", errorsPage)
 
 	// v1 records APIs. The inout is in HTTP only cookie called "user"
@@ -35,6 +38,9 @@ func Start(port int, f string) {
 	mux.HandleFunc("/v1/recordsTypes", recordsData(recordsTypes))
 	mux.HandleFunc("/v1/recordsAll", recordsData(recordsAll))
 	mux.HandleFunc("/v1/activitySummary", recordsData(activitySummary))
+	mux.HandleFunc("/v1/bodyMass", recordsData(bodyMass))
+	mux.HandleFunc("/v1/exposure", recordsData(exposure))
+
 	n := NewSessionHandler(mux) // Wrapper mux
 	address := fmt.Sprintf(":%d", port)
 	log.Fatal(http.ListenAndServe(address, n))
