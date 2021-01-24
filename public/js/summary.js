@@ -12,20 +12,20 @@ function readyGTable(tableID, d) {
     try {
         console.log(`Try table ${tableID}. Len: ${d.length}`)
         google.charts.load('current', {'packages': ['table']});
-        google.charts.setOnLoadCallback(() => drawSummaryTable(tableID, d));
+        google.charts.setOnLoadCallback(() => addSummaryTable(tableID, d));
         return d;
     } catch (err) {
         console.error(`readyGTable: ${err}`);
     }
 }
 
-// drawSummaryTable Plots the  actual graph onto a DIV
-function drawSummaryTable(tableID, summary) {
+// addSummaryTable Plots the  actual graph onto a DIV
+function addSummaryTable(tableID, summary) {
     try {
         if (summary && Array.isArray(summary) && summary.length) {
             const data = new google.visualization.DataTable();
             // Add table headers
-            data.addColumn('string', 'Date');
+            data.addColumn('date', 'Date');
             data.addColumn('number', 'Energy Burned');
             data.addColumn('number', 'Goal');
             data.addColumn('number', 'Exercise');
@@ -34,7 +34,7 @@ function drawSummaryTable(tableID, summary) {
             data.addColumn('number', 'Goal');
             // Add table data
             const items = summary.map((d) => {
-                return [d.yyyymmdd,
+                return [new Date(d.yyyymmdd),
                     {v: parseFloat(d.energy_burned), f: `Cal ${numberWithComma(d.energy_burned)}`},
                     {v: parseFloat(d.energy_burned_goal), f: `${numberWithComma(d.energy_burned_goal)}`},
                     {v: parseFloat(d.exercise_time), f: `Min ${numberWithComma(d.exercise_time)}`},
@@ -45,8 +45,6 @@ function drawSummaryTable(tableID, summary) {
             data.addRows([...items]);
             const options = {showRowNumber: true};
             const table = new google.visualization.Table(document.getElementById(tableID));
-            const date_formatter = new google.visualization.DateFormat({formatType: 'medium', timeZone: -8});
-            date_formatter.format(data,2);
             table.draw(data, options);
         }
     } catch (err) {
@@ -70,7 +68,7 @@ function filterBadDatesData(data) {
         return data.filter(d => {
             try {
                 const yyyymmdd = d.yyyymmdd.split("-");
-                return  parseInt(yyyymmdd[0]) > 2000;
+                return parseInt(yyyymmdd[0]) > 2000;
             } catch (e) {
                 return false
             }
@@ -78,6 +76,7 @@ function filterBadDatesData(data) {
     }
     return [];
 }
+
 // Draws energy graphs
 function readyEnergyCharts(divID, d) {
     google.charts.setOnLoadCallback(() => drawEnergyGraph(divID, d));
@@ -99,8 +98,18 @@ function readyStandCharts(divID, d) {
 // drawEnergyGraph Plots the  actual graph onto a DIV
 function drawEnergyGraph(divID, summary) {
     if (summary && Array.isArray(summary) && summary.length) {
-        const d = summary.map(d => [new Date(d.yyyymmdd), parseFloat(d.energy_burned), parseFloat(d.energy_burned_goal)]);
-        const dataHeader = ["Date", "Energy Burned", "Goal"];
+        const d = summary.map(d => {
+            return [new Date(d.yyyymmdd),
+                {
+                    v: parseFloat(d.energy_burned),
+                    f: `${numberWithComma(parseFloat(d.energy_burned))} ${d.energy_burned_unit}`
+                },
+                {
+                    v: parseFloat(d.energy_burned_goal),
+                    f: `${numberWithComma(parseFloat(d.energy_burned_goal))} ${d.energy_burned_unit}`
+                }]
+        });
+        const dataHeader = [{label: "Date", type: "date"}, "Energy Burned", "Goal"];
         const data = google.visualization.arrayToDataTable([dataHeader, ...d]);
         // https://developers.google.com/chart/interactive/docs/gallery/areachart#Configuration_Options
         const options = {
@@ -116,8 +125,12 @@ function drawEnergyGraph(divID, summary) {
 // drawExerciseGraph Plots the  actual graph onto a DIV
 function drawExerciseGraph(divID, summary) {
     if (summary && Array.isArray(summary) && summary.length) {
-        const d = summary.map(d => [new Date(d.yyyymmdd), parseFloat(d.exercise_time), parseFloat(d.exercise_time_goal)]);
-        const dataHeader = ["Date", "Exercise", "Goal"];
+        const d = summary.map(d => {
+            return [new Date(d.yyyymmdd),
+                {v: parseFloat(d.exercise_time), f: `${parseFloat(d.exercise_time)} Minutes`},
+                {v: parseFloat(d.exercise_time_goal), f: `${parseFloat(d.exercise_time_goal)} Minutes`}];
+        });
+        const dataHeader = [{label: "Date", type: "date"}, "Exercise", "Goal"];
         const data = google.visualization.arrayToDataTable([dataHeader, ...d]);
         // https://developers.google.com/chart/interactive/docs/gallery/areachart#Configuration_Options
         const options = {
@@ -133,8 +146,12 @@ function drawExerciseGraph(divID, summary) {
 // drawStandHoursGraph Plots the  actual graph onto a DIV
 function drawStandHoursGraph(divID, summary) {
     if (summary && Array.isArray(summary) && summary.length) {
-        const d = summary.map(d => [new Date(d.yyyymmdd), parseFloat(d.stand_hours), parseFloat(d.stand_hours_goal)]);
-        const dataHeader = ["Date", "Stand", "Goal"];
+        const d = summary.map(d => {
+            return [new Date(d.yyyymmdd),
+                {v: parseFloat(d.stand_hours), f: `${parseFloat(d.stand_hours)} Hours`},
+                {v: parseFloat(d.stand_hours_goal), f: `${parseFloat(d.stand_hours_goal)} Hours`}];
+        });
+        const dataHeader = [{label: "Date", type: "date"}, "Stand", "Goal"];
         const data = google.visualization.arrayToDataTable([dataHeader, ...d]);
         // https://developers.google.com/chart/interactive/docs/gallery/areachart#Configuration_Options
         const options = {
