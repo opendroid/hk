@@ -81,6 +81,7 @@ var (
 			{Name: "Activity", Active: false, HREF: summaryActivityHREF},
 			{Name: "Body Mass", Active: false, HREF: summaryBodyMassHREF},
 			{Name: "Exposure", Active: false, HREF: summaryExposureHREF},
+			{Name: "Walks", Active: false, HREF: summaryWalksHREF},
 		},
 	}
 
@@ -92,6 +93,7 @@ var (
 			{Name: "Activity", Active: true, HREF: summaryActivityHREF},
 			{Name: "Body Mass", Active: false, HREF: summaryBodyMassHREF},
 			{Name: "Exposure", Active: false, HREF: summaryExposureHREF},
+			{Name: "Walks", Active: false, HREF: summaryWalksHREF},
 		},
 	}
 
@@ -103,6 +105,7 @@ var (
 			{Name: "Activity", Active: false, HREF: summaryActivityHREF},
 			{Name: "Body Mass", Active: true, HREF: summaryBodyMassHREF},
 			{Name: "Exposure", Active: false, HREF: summaryExposureHREF},
+			{Name: "Walks", Active: false, HREF: summaryWalksHREF},
 		},
 	}
 
@@ -114,6 +117,19 @@ var (
 			{Name: "Activity", Active: false, HREF: summaryActivityHREF},
 			{Name: "Body Mass", Active: false, HREF: summaryBodyMassHREF},
 			{Name: "Exposure", Active: true, HREF: summaryExposureHREF},
+			{Name: "Walks", Active: false, HREF: summaryWalksHREF},
+		},
+	}
+
+	summaryWalksNav = PageHeader{ // For summary.gohtml page
+		Title:  "Body Mass Data",
+		Active: "summary",
+		NS: []NameActiveHREF{
+			{Name: "Table", Active: false, HREF: summaryTableHREF},
+			{Name: "Activity", Active: false, HREF: summaryActivityHREF},
+			{Name: "Body Mass", Active: false, HREF: summaryBodyMassHREF},
+			{Name: "Exposure", Active: false, HREF: summaryExposureHREF},
+			{Name: "Walks", Active: true, HREF: summaryWalksHREF},
 		},
 	}
 
@@ -121,6 +137,8 @@ var (
 		{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
 		{Name: "Types", Active: false, HREF: recordsTypesHREF},
 		{Name: "All", Active: false, HREF: recordsAllHREF},
+		{Name: "Exposure", Active: false, HREF: summaryExposureHREF},
+		{Name: "Walks", Active: false, HREF: summaryWalksHREF},
 	}
 )
 

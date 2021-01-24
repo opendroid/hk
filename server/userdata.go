@@ -16,6 +16,7 @@ type userData struct {
 	recordTypes   export.KeyCounts
 	mass          *export.BodyMassComposition
 	audioExposure *export.AudioExposure
+	walkData      *export.WalkerData
 }
 
 func processHealthData(uID string) {
@@ -29,6 +30,7 @@ func processHealthData(uID string) {
 		recordTypes := health.RecordsTypes()
 		mass := health.BodyMassData()
 		ae := health.AudioExposure()
+		wd := health.WalkerData()
 		users[uID] = userData{
 			health:        health,
 			summary:       summary,
@@ -36,6 +38,7 @@ func processHealthData(uID string) {
 			recordTypes:   recordTypes,
 			mass:          mass,
 			audioExposure: ae,
+			walkData:      wd,
 		}
 	}
 	end := time.Since(start)

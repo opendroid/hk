@@ -74,3 +74,23 @@ function addNameTypeKeyCountDataRows(table, data) {
 function numberWithComma(n) {
     return parseInt(n, 10).toLocaleString('en-US', {maximumFractionDigits: 0})
 }
+
+// drawChart common handler for "mass.js" and "walks.js"
+function drawChart(divID, d, msg) {
+    const data = google.visualization.arrayToDataTable(d);
+    // https://developers.google.com/chart/interactive/docs/gallery/areachart#Configuration_Options
+    const options = {
+        title: `${msg}`, titlePosition: "none",
+        titleTextStyle: {fontSize: 32},
+        curveType: 'function', legend: {position: 'in'},
+        explorer: {
+            axis: 'horizontal',
+            keepInBounds: true,
+            maxZoomIn: .01,
+            actions: ['dragToZoom', 'rightClickToReset']
+        }
+    };
+    const chart = new google.visualization.LineChart(document.getElementById(divID));
+    chart.draw(data, options);
+    console.log(`Walks data points: ${stepCount.length}, Total value: ${numberWithComma(value)}`);
+}

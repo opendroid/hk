@@ -109,7 +109,7 @@ function drawEnergyGraph(divID, summary) {
                     f: `${numberWithComma(parseFloat(d.energy_burned_goal))} ${d.energy_burned_unit}`
                 }]
         });
-        const dataHeader = [{label: "Date", type: "date"}, "Energy Burned", "Goal"];
+        const dataHeader = [{label: "Date", type: "date"}, "Energy Burned (Cal)", "Goal"];
         const data = google.visualization.arrayToDataTable([dataHeader, ...d]);
         // https://developers.google.com/chart/interactive/docs/gallery/areachart#Configuration_Options
         const options = {
@@ -130,11 +130,11 @@ function drawExerciseGraph(divID, summary) {
                 {v: parseFloat(d.exercise_time), f: `${parseFloat(d.exercise_time)} Minutes`},
                 {v: parseFloat(d.exercise_time_goal), f: `${parseFloat(d.exercise_time_goal)} Minutes`}];
         });
-        const dataHeader = [{label: "Date", type: "date"}, "Exercise", "Goal"];
+        const dataHeader = [{label: "Date", type: "date"}, "Exercise (Minutes)", "Goal"];
         const data = google.visualization.arrayToDataTable([dataHeader, ...d]);
         // https://developers.google.com/chart/interactive/docs/gallery/areachart#Configuration_Options
         const options = {
-            title: 'Energy Burned', titlePosition: "none",
+            title: 'Exercise Minutes', titlePosition: "none",
             titleTextStyle: {fontSize: 32},
             curveType: 'function', legend: {position: 'in'}
         };
@@ -151,11 +151,11 @@ function drawStandHoursGraph(divID, summary) {
                 {v: parseFloat(d.stand_hours), f: `${parseFloat(d.stand_hours)} Hours`},
                 {v: parseFloat(d.stand_hours_goal), f: `${parseFloat(d.stand_hours_goal)} Hours`}];
         });
-        const dataHeader = [{label: "Date", type: "date"}, "Stand", "Goal"];
+        const dataHeader = [{label: "Date", type: "date"}, "Stand (Hours)", "Goal"];
         const data = google.visualization.arrayToDataTable([dataHeader, ...d]);
         // https://developers.google.com/chart/interactive/docs/gallery/areachart#Configuration_Options
         const options = {
-            title: 'Energy Burned', titlePosition: "none",
+            title: 'Stand Hours', titlePosition: "none",
             titleTextStyle: {fontSize: 32},
             curveType: 'function', legend: {position: 'in'}
         };

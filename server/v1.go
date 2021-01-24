@@ -93,6 +93,8 @@ func getRecordCategoryData(u userData, cat RecordsDataCategory) ([]byte, error) 
 		return json.Marshal(u.mass)
 	case exposure:
 		return json.Marshal(u.audioExposure)
+	case walks:
+		return json.Marshal(u.walkData)
 	case recordsAll:
 		fallthrough
 	default:

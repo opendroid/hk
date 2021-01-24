@@ -28,6 +28,7 @@ const (
 	summaryActivityHREF = "/summary-activity"
 	summaryBodyMassHREF = "/summary-mass"
 	summaryExposureHREF = "/summary-exposure"
+	summaryWalksHREF    = "/summary-walks"
 )
 
 type RecordsDataCategory string
@@ -39,6 +40,7 @@ const (
 	activitySummary RecordsDataCategory = "summary"
 	bodyMass        RecordsDataCategory = "mass"
 	exposure        RecordsDataCategory = "exposure"
+	walks           RecordsDataCategory = "walks"
 )
 
 const (

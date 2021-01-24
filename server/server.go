@@ -30,16 +30,17 @@ func Start(port int, f string) {
 	mux.HandleFunc("/summary-activity", execTemplate(summaryGraphNav, "summary-activity.gohtml"))
 	mux.HandleFunc("/summary-mass", execTemplate(summaryBodyMassNav, "summary-mass.gohtml"))
 	mux.HandleFunc("/summary-exposure", execTemplate(summaryExposureNav, "summary-exposure.gohtml"))
-
+	mux.HandleFunc("/summary-walks", execTemplate(summaryWalksNav, "summary-walks.gohtml"))
 	mux.HandleFunc("/error", errorsPage)
 
-	// v1 records APIs. The inout is in HTTP only cookie called "user"
+	// v1 records APIs. The input "user" is a HTTP cookie
 	mux.HandleFunc("/v1/recordsSources", recordsData(recordsSource))
 	mux.HandleFunc("/v1/recordsTypes", recordsData(recordsTypes))
 	mux.HandleFunc("/v1/recordsAll", recordsData(recordsAll))
 	mux.HandleFunc("/v1/activitySummary", recordsData(activitySummary))
 	mux.HandleFunc("/v1/bodyMass", recordsData(bodyMass))
 	mux.HandleFunc("/v1/exposure", recordsData(exposure))
+	mux.HandleFunc("/v1/walks", recordsData(walks))
 
 	n := NewSessionHandler(mux) // Wrapper mux
 	address := fmt.Sprintf(":%d", port)

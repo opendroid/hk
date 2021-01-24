@@ -59,6 +59,9 @@ const (
 	DaytimeHR RecordMetadataKey = "Daytime HR"
 	// DeepSleep record example <MetadataEntry key="Deep Sleep" value="8053"/>
 	DeepSleep RecordMetadataKey = "Deep Sleep"
+	// DevicePlacementSide, example <Record type="HKQuantityTypeIdentifierWalkingAsymmetryPercentage" ..>
+	//    <MetadataEntry key="HKMetadataKeyDevicePlacementSide" value="2"/>
+	DevicePlacementSide RecordMetadataKey = "HKMetadataKeyDevicePlacementSide"
 	// EditSlots record example  <MetadataEntry key="Edit Slots" value="0415,0630,0500,0445,0530,0615,0430,0515,0545"/>
 	EditSlots RecordMetadataKey = "Edit Slots"
 	// EnergyThreshold record example <MetadataEntry key="Energy Threshold" value="1200"/>
@@ -92,8 +95,8 @@ const (
 )
 
 // RecordMetadataKeysKnown so far in data set
-var RecordMetadataKeysKnown = RecordMetadataKeys{Asleep, AverageHR, DaytimeHR, DeepSleep, EditSlots,
-	EnergyThreshold, Calibrated, MotionContext, SyncID, SyncVersion, RecordTimeZone, HKVO2MaxTestType, Lights,
+var RecordMetadataKeysKnown = RecordMetadataKeys{Asleep, AverageHR, DaytimeHR, DeepSleep, DevicePlacementSide,
+	EditSlots, EnergyThreshold, Calibrated, MotionContext, SyncID, SyncVersion, RecordTimeZone, HKVO2MaxTestType, Lights,
 	Meal, MealLowercase, Nap, Rating, Recharge, Tags,
 }
 
@@ -169,16 +172,36 @@ const (
 	Height RecordType = "HKQuantityTypeIdentifierHeight"
 	// LeanBodyMass eg: <Record type="HKQuantityTypeIdentifierLeanBodyMass" sourceName="Renpho" sourceVersion="4" unit="lb" creationDate="2020-04-19 06:53:44 -0800" startDate="2020-04-15 05:58:55 -0800" endDate="2020-04-15 05:58:55 -0800" value="115.8"/>
 	LeanBodyMass RecordType = "HKQuantityTypeIdentifierLeanBodyMass"
-	// RestingHeartRate eg:<Record type="HKQuantityTypeIdentifierRestingHeartRate" sourceName="🕛🕐🕑🕒" sourceVersion="5.0.1" unit="count/min" creationDate="2018-10-27 20:40:57 -0800" startDate="2018-10-27 18:28:47 -0800" endDate="2018-10-27 20:37:20 -0800" value="59"/>
+	// RestingHeartRate eg:
+	//   <Record type="HKQuantityTypeIdentifierRestingHeartRate" sourceName="🕛🕐🕑🕒" sourceVersion="5.0.1" unit="count/min" creationDate="2018-10-27 20:40:57 -0800" startDate="2018-10-27 18:28:47 -0800" endDate="2018-10-27 20:37:20 -0800" value="59"/>
 	RestingHeartRate RecordType = "HKQuantityTypeIdentifierRestingHeartRate"
-	// SixMinuteWalkTestDistance eg: <Record type="HKQuantityTypeIdentifierSixMinuteWalkTestDistance" sourceName="🔜" sourceVersion="2420.8.11" unit="m" creationDate="2020-11-12 18:31:58 -0800" startDate="2020-11-12 18:31:49 -0800" endDate="2020-11-12 18:31:49 -0800" value="500">
+	// SixMinuteWalkTestDistance eg:
+	//   <Record type="HKQuantityTypeIdentifierSixMinuteWalkTestDistance" sourceName="🔜" sourceVersion="2420.8.11" unit="m" creationDate="2020-11-12 18:31:58 -0800" startDate="2020-11-12 18:31:49 -0800" endDate="2020-11-12 18:31:49 -0800" value="500">
 	SixMinuteWalkTestDistance RecordType = "HKQuantityTypeIdentifierSixMinuteWalkTestDistance"
 	// StepCount eg: <Record type="HKQuantityTypeIdentifierStepCount" sourceName="🔜" sourceVersion="10.1.1" device="&lt;&lt;HKDevice: 0x283714aa0&gt;, name:iPhone, manufacturer:Apple, model:iPhone, hardware:iPhone9,4, software:10.1.1&gt;" unit="count" creationDate="2016-12-09 09:52:21 -0800" startDate="2016-12-09 09:37:52 -0800" endDate="2016-12-09 09:43:12 -0800" value="155"/>
 	StepCount RecordType = "HKQuantityTypeIdentifierStepCount"
-	// VO2Max eg: <Record type="HKQuantityTypeIdentifierVO2Max" sourceName="🕛🕐🕑🕒" unit="mL/min·kg" creationDate="2018-12-19 17:49:50 -0800" startDate="2018-12-19 17:49:50 -0800" endDate="2018-12-19 17:49:50 -0800" value="32.7204">
+	// VO2Max eg:
+	//   <Record type="HKQuantityTypeIdentifierVO2Max" sourceName="🕛🕐🕑🕒" unit="mL/min·kg" creationDate="2018-12-19 17:49:50 -0800" startDate="2018-12-19 17:49:50 -0800" endDate="2018-12-19 17:49:50 -0800" value="32.7204">
 	VO2Max RecordType = "HKQuantityTypeIdentifierVO2Max"
-	// WalkingHeartRateAverage eg: <Record type="HKQuantityTypeIdentifierWalkingHeartRateAverage" sourceName="🕛🕐🕑🕒" sourceVersion="5.0.1" unit="count/min" creationDate="2018-10-28 15:27:01 -0800" startDate="2018-10-27 23:03:10 -0800" endDate="2018-10-28 15:26:56 -0800" value="97.5"/>
+	// WalkingAsymmetryPercentage A quantity sample measuring the percentage of steps in which one foot moves at a
+	// different speed than the other when walking steadily over flat ground. eg:
+	//     <Record type="HKQuantityTypeIdentifierWalkingAsymmetryPercentage" sourceName="Dharti Shah’s iPhone" sourceVersion="14.0" device="&lt;&lt;HKDevice: 0x281326260&gt;, name:iPhone, manufacturer:Apple Inc., model:iPhone, hardware:iPhone12,3, software:14.0&gt;" unit="%" creationDate="2020-09-16 17:56:41 -0800" startDate="2020-09-16 17:52:45 -0800" endDate="2020-09-16 17:53:09 -0800" value="0.07">
+	//        <MetadataEntry key="HKMetadataKeyDevicePlacementSide" value="2"/>
+	//    </Record>
+	WalkingAsymmetryPercentage RecordType = "HKQuantityTypeIdentifierWalkingAsymmetryPercentage"
+	// WalkingDoubleSupportPercentage A quantity sample that measures the percentage of time when both of the user’s feet
+	// are touching the ground while walking steadily over flat ground. eg:
+	//      <Record type="HKQuantityTypeIdentifierWalkingDoubleSupportPercentage" sourceName="Dharti Shah’s iPhone" sourceVersion="14.0" device="&lt;&lt;HKDevice: 0x28134ec60&gt;, name:iPhone, manufacturer:Apple Inc., model:iPhone, hardware:iPhone12,3, software:14.0&gt;" unit="%" creationDate="2020-09-16 18:35:24 -0800" startDate="2020-09-16 18:33:42 -0800" endDate="2020-09-16 18:34:15 -0800" value="0.294"/>
+	WalkingDoubleSupportPercentage RecordType = "HKQuantityTypeIdentifierWalkingDoubleSupportPercentage"
+	// WalkingHeartRateAverage eg:
+	//   <Record type="HKQuantityTypeIdentifierWalkingHeartRateAverage" sourceName="🕛🕐🕑🕒" sourceVersion="5.0.1" unit="count/min" creationDate="2018-10-28 15:27:01 -0800" startDate="2018-10-27 23:03:10 -0800" endDate="2018-10-28 15:26:56 -0800" value="97.5"/>
 	WalkingHeartRateAverage RecordType = "HKQuantityTypeIdentifierWalkingHeartRateAverage"
+	// WalkingSpeed eg:  2.52774 mi/hr
+	//   <Record type="HKQuantityTypeIdentifierWalkingSpeed" sourceName="Dharti Shah’s iPhone" sourceVersion="14.2" device="&lt;&lt;HKDevice: 0x28135db30&gt;, name:iPhone, manufacturer:Apple Inc., model:iPhone, hardware:iPhone12,3, software:14.2&gt;" unit="mi/hr" creationDate="2021-01-02 11:07:49 -0800" startDate="2021-01-02 11:03:45 -0800" endDate="2021-01-02 11:03:58 -0800" value="2.52774"/>
+	WalkingSpeed RecordType = "HKQuantityTypeIdentifierWalkingSpeed"
+	// WalkingStepLength eg: 17.3228 in step
+	//   <Record type="HKQuantityTypeIdentifierWalkingStepLength" sourceName="Dharti Shah’s iPhone" sourceVersion="14.0" device="&lt;&lt;HKDevice: 0x281307c50&gt;, name:iPhone, manufacturer:Apple Inc., model:iPhone, hardware:iPhone12,3, software:14.0&gt;" unit="in" creationDate="2020-09-18 08:16:42 -0800" startDate="2020-09-18 07:49:05 -0800" endDate="2020-09-18 07:49:10 -0800" value="17.3228"/>
+	WalkingStepLength RecordType = "HKQuantityTypeIdentifierWalkingStepLength"
 )
 
 // RecordTypesKnown so far in data. As you see more types add them here.
@@ -188,7 +211,8 @@ var RecordTypesKnown = RecordTypes{AppleStandHour, HandwashingEvent, MindfulSess
 	DietaryFatMonounsaturated, DietaryFatPolyunsaturated, DietaryFatSaturated, DietaryFatTotal, DietaryFiber,
 	DietaryIron, DietaryPotassium, DietaryProtein, DietarySodium, DietarySugar, DietaryVitaminC, DistanceWalkingRunning,
 	EnvironmentalAudioExposure, FlightsClimbed, HeadphoneAudioExposure, HeartRate, HeartRateVariabilitySDNN,
-	Height, LeanBodyMass, RestingHeartRate, SixMinuteWalkTestDistance, StepCount, VO2Max, WalkingHeartRateAverage,
+	Height, LeanBodyMass, RestingHeartRate, SixMinuteWalkTestDistance, StepCount, VO2Max,
+	WalkingAsymmetryPercentage, WalkingDoubleSupportPercentage, WalkingHeartRateAverage, WalkingSpeed, WalkingStepLength,
 }
 
 // RecordSource defines enum space of known "sourceName" in a Record

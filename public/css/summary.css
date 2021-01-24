@@ -8,7 +8,6 @@ main.hk-main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px dotted hotpink;
 }
 
 /* HK-Main content */
@@ -28,7 +27,7 @@ main.hk-main {
     height: 500px;
 }
 
-#summary-exposure-graph {
+#summary-exposure-graph, #summary-walk-steps, #summary-walk-distance {
     width: 100%;
     height: 500px;
 }

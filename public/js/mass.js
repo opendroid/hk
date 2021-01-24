@@ -10,23 +10,22 @@ function drawMassGraphs(mDivID, lmDivID, bmiDivID, fatPercentDivID, errElementID
         .catch(e => displayError(errElementID, e));
 }
 
-function readyMassCharts (divID, d) {
-    google.charts.setOnLoadCallback(() => drawMassDataGraph(divID, d.mass, "Mass"));
+function readyMassCharts(divID, d) {
+    google.charts.setOnLoadCallback(() => drawMassDataGraph(divID, d.mass, "Mass (lbs)"));
     return d;
 }
 
-function readyLeanMassCharts (divID, d) {
-    google.charts.setOnLoadCallback(() => drawMassDataGraph(divID, d.lean_body_mass, "Lean Body Mass"));
+function readyLeanMassCharts(divID, d) {
+    google.charts.setOnLoadCallback(() => drawMassDataGraph(divID, d.lean_body_mass, "Lean Body Mass (lbs)"));
     return d;
 }
 
-
-function readyBMICharts (divID, d) {
+function readyBMICharts(divID, d) {
     google.charts.setOnLoadCallback(() => drawMassDataGraph(divID, d.bmi, "BMI"));
     return d;
 }
 
-function readyFatPercentCharts (divID, d) {
+function readyFatPercentCharts(divID, d) {
     google.charts.setOnLoadCallback(() => drawMassDataGraph(divID, d.fat_percent, "Fat %"));
     return d;
 }
@@ -45,16 +44,6 @@ function drawMassDataGraph(divID, mass, msg) {
             }
         });
         const dataHeader = [{label: "Date", type: "datetime"}, {label: msg, type: "number"}];
-        const data = google.visualization.arrayToDataTable([dataHeader, ...d]);
-        // https://developers.google.com/chart/interactive/docs/gallery/areachart#Configuration_Options
-
-        const options = {
-            title: `${msg}`, titlePosition: "none",
-            titleTextStyle: {fontSize: 32},
-            curveType: 'function', legend: {position: 'in'},
-            explorer: { axis: 'horizontal', keepInBounds: true, maxZoomIn: .01, actions: ['dragToZoom', 'rightClickToReset']}
-        };
-        const chart = new google.visualization.LineChart(document.getElementById(divID));
-        chart.draw(data, options);
+        drawChart(divID, [dataHeader, ...d], msg)
     }
 }

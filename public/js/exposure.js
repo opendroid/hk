@@ -20,7 +20,8 @@ function drawExposureGraph(divID, exposure) {
         let ed = [];
         exposure.forEach(d => {
             const duration = numberWithComma((d.end_date - d.creation_timestamp_sec) / 60);
-            ed.push([new Date(d.creation_timestamp_sec * 1000), {v: d.value, f: `${numberWithComma(d.value)} ${d.unit} (${duration} Minutes), ${d.source}`}]);
+            ed.push([new Date(d.creation_timestamp_sec * 1000),
+                {v: d.value, f: `${numberWithComma(d.value)} ${d.unit} (${duration} Minutes), ${d.source}`}]);
         });
         const dataHeader = [{label: "Date", type: "datetime"}, {label: "Exposure", type: "number"}];
         const data = google.visualization.arrayToDataTable([dataHeader, ...ed]);
@@ -29,7 +30,12 @@ function drawExposureGraph(divID, exposure) {
             title: 'Audio Exposure', titlePosition: "none",
             titleTextStyle: {fontSize: 32},
             curveType: 'function', legend: {position: 'in'},
-            explorer: { axis: 'horizontal', keepInBounds: true, maxZoomIn: .01, actions: ['dragToZoom', 'rightClickToReset']}
+            explorer: {
+                axis: 'horizontal',
+                keepInBounds: true,
+                maxZoomIn: .01,
+                actions: ['dragToZoom', 'rightClickToReset']
+            }
         };
         const chart = new google.visualization.LineChart(document.getElementById(divID));
         chart.draw(data, options);

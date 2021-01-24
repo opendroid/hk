@@ -7,8 +7,8 @@ import (
 	"strconv"
 )
 
-// MinimalData elements in various types of body-mass data
-type MinimalData struct {
+// BodyMassElement elements in various types of body-mass data
+type BodyMassElement struct {
 	CreationDate int64   `json:"creation_timestamp_sec"`
 	SourceName   string  `json:"source"`
 	Unit         string  `json:"unit,omitempty"`
@@ -17,10 +17,10 @@ type MinimalData struct {
 
 // BodyMassComposition data slices related to body mass.
 type BodyMassComposition struct {
-	Mass          []MinimalData `json:"mass"`
-	LeanMass      []MinimalData `json:"lean_body_mass"`
-	BMI           []MinimalData `json:"bmi"`
-	FatPercentage []MinimalData `json:"fat_percent"`
+	Mass          []BodyMassElement `json:"mass"`
+	LeanMass      []BodyMassElement `json:"lean_body_mass"`
+	BMI           []BodyMassElement `json:"bmi"`
+	FatPercentage []BodyMassElement `json:"fat_percent"`
 }
 
 // BodyMass get the body mass data
@@ -29,9 +29,9 @@ func (h *HealthData) BodyMassData() *BodyMassComposition {
 		return nil
 	}
 	var m BodyMassComposition
-	m.Mass = make([]MinimalData, 0)
-	m.BMI = make([]MinimalData, 0)
-	m.FatPercentage = make([]MinimalData, 0)
+	m.Mass = make([]BodyMassElement, 0)
+	m.BMI = make([]BodyMassElement, 0)
+	m.FatPercentage = make([]BodyMassElement, 0)
 	for _, d := range h.Records {
 		switch RecordType(d.Type) {
 		case BodyMass:
@@ -53,13 +53,14 @@ func (h *HealthData) BodyMassData() *BodyMassComposition {
 }
 
 // appendMassData helper appends relevant components slice
-func appendMassData(d []MinimalData, r Record) []MinimalData {
+func appendMassData(d []BodyMassElement, r Record) []BodyMassElement {
 	num, err := strconv.ParseFloat(r.Value, 32)
 	if err != nil {
 		logger.Error("appendData: strconv error",
+			zap.String("method", "appendMassData"),
 			zap.String("value", r.Value), zap.String("info", err.Error()))
 	}
-	e := MinimalData{
+	e := BodyMassElement{
 		CreationDate: recordTime(r.CreationDate),
 		SourceName:   r.SourceName,
 		Unit:         r.Unit,

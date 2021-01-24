@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Records</title>
+    {{template "favicon"}}
+    {{template "css"}}
+    <link rel="stylesheet" href="/public/css/summary.css">
+    {{template "js"}}
+    <script type="text/javascript" src="/public/js/misc.js"></script>
+    <script type="text/javascript" src="/public/js/walks.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+{{template "headlinetopbar" .Title}}
+{{template "navprimary" .Active}}
+{{template "navsecondary" .NS}}
+
+<!-- The main body -->
+<main id="hk-main" class="hk-main">
+    <h3 id="summary-heading">Step Count</h3>
+    <div id="summary-walk-steps"></div>
+    <h3 id="summary-heading">Distance</h3>
+    <div id="summary-walk-distance"></div>
+</main>
+{{/*  Use JS to create graph the data */}}
+<script type="text/javascript">
+    google.charts.load('current', {'packages': ['corechart']}); // Load google charts
+    summaryWalkSteps("summary-walk-steps", "summary-walk-distance", "summary-heading"); // Draw charts
+</script>
+</body>
+</html>
