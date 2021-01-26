@@ -35,7 +35,8 @@ function drawExposureGraph(divID, exposure) {
                 keepInBounds: true,
                 maxZoomIn: .01,
                 actions: ['dragToZoom', 'rightClickToReset']
-            }
+            },
+            crosshair: { trigger: "both", orientation: "both", color: "orange"}
         };
         const chart = new google.visualization.LineChart(document.getElementById(divID));
         chart.draw(data, options);

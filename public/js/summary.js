@@ -115,7 +115,8 @@ function drawEnergyGraph(divID, summary) {
         const options = {
             title: 'Energy Burned', titlePosition: "none",
             titleTextStyle: {fontSize: 32},
-            curveType: 'function', legend: {position: 'in'}
+            curveType: 'function', legend: {position: 'in'},
+            crosshair: { trigger: "both", orientation: "both", color: "orange" }
         };
         const chart = new google.visualization.LineChart(document.getElementById(divID));
         chart.draw(data, options);
@@ -130,13 +131,14 @@ function drawExerciseGraph(divID, summary) {
                 {v: parseFloat(d.exercise_time), f: `${parseFloat(d.exercise_time)} Minutes`},
                 {v: parseFloat(d.exercise_time_goal), f: `${parseFloat(d.exercise_time_goal)} Minutes`}];
         });
-        const dataHeader = [{label: "Date", type: "date"}, "Exercise (Minutes)", "Goal"];
+        const dataHeader = [{label: "Date", type: "date"}, "Exercise (Minutes)", "orange"];
         const data = google.visualization.arrayToDataTable([dataHeader, ...d]);
         // https://developers.google.com/chart/interactive/docs/gallery/areachart#Configuration_Options
         const options = {
             title: 'Exercise Minutes', titlePosition: "none",
             titleTextStyle: {fontSize: 32},
-            curveType: 'function', legend: {position: 'in'}
+            curveType: 'function', legend: {position: 'in'},
+            crosshair: { trigger: "both", orientation: "both", color: "orange"}
         };
         const chart = new google.visualization.LineChart(document.getElementById(divID));
         chart.draw(data, options);
@@ -151,13 +153,14 @@ function drawStandHoursGraph(divID, summary) {
                 {v: parseFloat(d.stand_hours), f: `${parseFloat(d.stand_hours)} Hours`},
                 {v: parseFloat(d.stand_hours_goal), f: `${parseFloat(d.stand_hours_goal)} Hours`}];
         });
-        const dataHeader = [{label: "Date", type: "date"}, "Stand (Hours)", "Goal"];
+        const dataHeader = [{label: "Date", type: "date"}, "Stand (Hours)", "orange"];
         const data = google.visualization.arrayToDataTable([dataHeader, ...d]);
         // https://developers.google.com/chart/interactive/docs/gallery/areachart#Configuration_Options
         const options = {
             title: 'Stand Hours', titlePosition: "none",
             titleTextStyle: {fontSize: 32},
-            curveType: 'function', legend: {position: 'in'}
+            curveType: 'function', legend: {position: 'in'},
+            crosshair: { trigger: "both", orientation: "both", color: "orange"}
         };
         const chart = new google.visualization.LineChart(document.getElementById(divID));
         chart.draw(data, options);

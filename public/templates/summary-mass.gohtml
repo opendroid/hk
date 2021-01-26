@@ -18,19 +18,38 @@
 
 <!-- The main body -->
 <main id="hk-main" class="hk-main">
-    <h3 id="summary-heading">Body Mass</h3>
-    <div id="summary-mass-graph"></div>
-    <h3 id="summary-heading">Lean Body Mass</h3>
-    <div id="summary-lean-mass-graph"></div>
-    <h3 id="summary-heading">BMI</h3>
-    <div id="summary-bmi-graph"></div>
-    <h3 id="summary-heading">Fat Percentage</h3>
-    <div id="summary-fat-percent-graph"></div>
+    <section id="summary-mass-dashboard" class="summary-mass">
+        <h3 id="summary-mass-heading">Body Mass</h3>
+        <div id="summary-mass-main" class="summary-main"></div>
+        <div id="summary-mass-controls" class="summary-controls"></div>
+    </section>
+    <section id="summary-lean-mass-dashboard" class="summary-mass">
+        <h3 id="summary-lean-mass-heading">Lean Body Mass</h3>
+        <div id="summary-lean-mass-main" class="summary-main"></div>
+        <div id="summary-lean-mass-controls" class="summary-controls"></div>
+    </section>
+    <section id="summary-bmi-dashboard" class="summary-mass">
+        <h3 id="summary-bmi-heading">BMI</h3>
+        <div id="summary-bmi-main" class="summary-main"></div>
+        <div id="summary-bmi-controls" class="summary-controls"></div>
+    </section>
+    <section id="summary-fat-percent-dashboard" class="summary-mass">
+        <h3 id="summary-fat-percent-heading">Fat Percentage</h3>
+        <div id="summary-fat-percent-main" class="summary-main"></div>
+        <div id="summary-fat-percent-controls" class="summary-controls"></div>
+    </section>
 </main>
 {{/*  Use JS to create graph the data */}}
 <script type="text/javascript">
-    google.charts.load('current', {'packages': ['corechart']}); // Load google charts
-    drawMassGraphs("summary-mass-graph", "summary-lean-mass-graph", "summary-bmi-graph", "summary-fat-percent-graph", "summary-heading"); // Draw charts
+    // Load google charts
+    google.charts.load('current', {'packages': ['corechart', 'controls']});
+    // Draw charts
+    // drawMassGraphs("summary-mass-graph", "summary-lean-mass-graph", "summary-bmi-graph", "summary-fat-percent-graph", "summary-heading");
+    const divIDs = [{dashboard: "summary-mass-dashboard", main: "summary-mass-main", control: "summary-mass-controls", err: "summary-mass-heading"},
+        {dashboard: "summary-lean-mass-dashboard", main: "summary-lean-mass-main", control: "summary-lean-mass-controls", err: "summary-lean-mass-heading"},
+        {dashboard: "summary-bmi-dashboard", main: "summary-bmi-main", control: "summary-bmi-controls", err: "summary-bmi-heading"},
+        {dashboard: "summary-fat-percent-dashboard", main: "summary-fat-percent-main", control: "summary-fat-percent-controls", err: "summary-fat-percent-heading"}]
+    drawMassDashboards(divIDs);
 </script>
 </body>
 </html>
