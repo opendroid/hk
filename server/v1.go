@@ -26,7 +26,7 @@ func jsonErrorResponse(w http.ResponseWriter, msg string, status int) {
 func recordsData(cat RecordsDataCategory) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		user, ok := r.Context().Value(sessionIDKey).(string)
+		user, ok := r.Context().Value(contextKeyUserID).(string)
 		if !ok {
 			logger.Error("User not found", zap.String("method", "recordsData"), zap.String("cat", string(cat)))
 			jsonErrorResponse(w, "User not found", http.StatusBadRequest)

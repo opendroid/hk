@@ -41,7 +41,6 @@ func Start(port int, f string) {
 	mux.HandleFunc("/v1/bodyMass", recordsData(bodyMass))
 	mux.HandleFunc("/v1/exposure", recordsData(exposure))
 	mux.HandleFunc("/v1/walks", recordsData(walks))
-
 	n := NewSessionHandler(mux) // Wrapper mux
 	address := fmt.Sprintf(":%d", port)
 	log.Fatal(http.ListenAndServe(address, n))

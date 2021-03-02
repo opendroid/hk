@@ -255,4 +255,5 @@
     <Record type="HKQuantityTypeIdentifierStepCount" sourceName="DonorTwo's iPhone" unit="count" creationDate="2014-09-26 19:07:08 -0800" startDate="2014-09-19 10:50:21 -0800" endDate="2014-09-19 10:50:26 -0800" value="223"/>
     <Record type="HKQuantityTypeIdentifierDistanceWalkingRunning" sourceName="DonorTwo's iPhone" unit="mi" creationDate="2014-09-26 19:07:08 -0800" startDate="2014-09-26 12:32:49 -0800" endDate="2014-09-26 12:32:51 -0800" value="0.00205053"/>
     <Record type="HKQuantityTypeIdentifierDistanceWalkingRunning" sourceName="DonorTwo's iPhone" unit="mi" creationDate="2014-09-26 19:07:08 -0800" startDate="2014-09-26 12:32:51 -0800" endDate="2014-09-26 12:32:54 -0800" value="0.00233014"/>
+    <Record type="HKCategoryTypeIdentifierAppleStandHour" sourceName="Dharti's Apple Watch" creationDate="2015-07-14 13:00:27 -0800" startDate="2015-07-14 13:00:00 -0800" endDate="2015-07-14 14:00:00 -0800" value="HKCategoryValueAppleStandHourStood"/>
 </HealthData>

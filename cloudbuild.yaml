@@ -3,9 +3,9 @@ steps:
   - id: lint
     name: "gcr.io/cloud-builders/go"
     args: ["vet","./..."]
-    env: ["PROJECT_ROOT=the-gpl"]
+    env: ["PROJECT_ROOT=hk"]
   - id: build
     name: "gcr.io/cloud-builders/docker"
     args: ['build', '--tag=gcr.io/the-gpl/hk', '.']
-    env: ["PROJECT_ROOT=the-gpl"]
+    env: ["PROJECT_ROOT=hk"]
 images: ['gcr.io/the-gpl/hk']

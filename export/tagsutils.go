@@ -138,11 +138,7 @@ func workoutKeys(ws []Workout) []string {
 	for _, w := range ws {
 		md := w.MetadataEntries
 		for _, m := range md {
-			if _, ok := kCount[m.Key]; ok {
-				kCount[m.Key]++
-			} else {
-				kCount[m.Key] = 1
-			}
+			kCount[m.Key]++
 		}
 	}
 
@@ -198,11 +194,7 @@ func workoutActivityTypes(ws []Workout) []string {
 	kCount := map[string]int{}
 	for _, w := range ws {
 		md := w.ActivityType
-		if _, ok := kCount[md]; ok {
-			kCount[md]++
-		} else {
-			kCount[md] = 1
-		}
+		kCount[md]++
 	}
 
 	// Iterate kCount and return names
@@ -223,11 +215,7 @@ func recordKeys(rs []Record) []string {
 	for _, r := range rs {
 		md := r.MetadataEntries
 		for _, m := range md {
-			if _, ok := kCount[m.Key]; ok {
-				kCount[m.Key]++
-			} else {
-				kCount[m.Key] = 1
-			}
+			kCount[m.Key]++
 		}
 	}
 
@@ -249,11 +237,7 @@ func recordSources(rs []Record) []string {
 	kCount := map[string]int{}
 	for _, r := range rs {
 		s := r.SourceName
-		if _, ok := kCount[s]; ok {
-			kCount[s]++
-		} else {
-			kCount[s] = 1
-		}
+		kCount[s]++
 	}
 
 	// Iterate kCount and return names
@@ -273,11 +257,7 @@ func recordTypes(rs []Record) []string {
 	kCount := map[string]int{}
 	for _, r := range rs {
 		t := r.Type
-		if _, ok := kCount[t]; ok {
-			kCount[t]++
-		} else {
-			kCount[t] = 1
-		}
+		kCount[t]++
 	}
 
 	// Iterate kCount and return names

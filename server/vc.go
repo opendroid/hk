@@ -26,7 +26,7 @@ func init() {
 
 // Index page handler
 func index(w http.ResponseWriter, r *http.Request) {
-	user, ok := r.Context().Value(sessionIDKey).(string)
+	user, ok := r.Context().Value(contextKeyUserID).(string)
 	if !ok {
 		logger.Error("User not found", zap.String("page", "index"))
 		displayErrorMessage(w, umNoData)
@@ -50,7 +50,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 // records page handler
 func records(w http.ResponseWriter, r *http.Request) {
-	user, ok := r.Context().Value(sessionIDKey).(string)
+	user, ok := r.Context().Value(contextKeyUserID).(string)
 	if !ok {
 		logger.Error("User not found", zap.String("page", "records"))
 		displayErrorMessage(w, umNotProcessed)
@@ -73,7 +73,7 @@ func records(w http.ResponseWriter, r *http.Request) {
 // execTemplate Executes similar looking "tplName" templates with "menu" PageHeader data.
 func execTemplate(menu PageHeader, tplName string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		_, ok := r.Context().Value(sessionIDKey).(string)
+		_, ok := r.Context().Value(contextKeyUserID).(string)
 		if !ok {
 			logger.Error("User not found", zap.String("page", tplName))
 			displayErrorMessage(w, umNotProcessed)

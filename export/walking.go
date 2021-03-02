@@ -32,13 +32,22 @@ func (h *HealthData) WalkerData() *WalkerData {
 	// Save data as sum by date
 	sc := make(map[string]WalkingDataElement)
 	dwr := make(map[string]WalkingDataElement)
+	skipped := make(map[string]int)
 	for _, r := range h.Records {
-		if RecordType(r.Type) == StepCount {
-			saveWalkElementValue(sc, &r)
-		} else if RecordType(r.Type) == DistanceWalkingRunning {
-			saveWalkElementValue(dwr, &r)
+		sd := string([]byte(r.StartDate)[:10])
+		ed := string([]byte(r.EndDate)[:10])
+		if sd == ed { // For now ignore multi day data
+			if RecordType(r.Type) == StepCount {
+				saveWalkElementValue(sc, &r)
+			} else if RecordType(r.Type) == DistanceWalkingRunning {
+				saveWalkElementValue(dwr, &r)
+			}
+		} else {
+			skipped[r.Type]++
 		}
 	}
+	a, _ := maps2SortedSlice(skipped)
+	logger.Info("Skipped", zap.Array("skipped", a))
 	var wd WalkerData                            // Prepare data
 	wd.StepCount = make([]WalkingDataElement, 0) // Create underlying data slice for Steps
 	wd.DistanceWalkingRunning = make([]WalkingDataElement, 0)
@@ -85,5 +94,21 @@ func mapToWalkingDataElementSlice(wd []WalkingDataElement, m map[string]WalkingD
 		wd = append(wd, v)
 	}
 	sort.Slice(wd, func(i, j int) bool { return wd[i].YYYYMMDD < wd[j].YYYYMMDD })
+	return wd
+}
+
+// Get all GetRecords
+func (h *HealthData) GetRecords(tag RecordType, date string) []Record {
+	if h == nil {
+		return nil
+	}
+
+	wd := make([]Record, 0)
+	for _, r := range h.Records {
+		if (tag == All || RecordType(r.Type) == tag) && strings.Contains(r.CreationDate, date) {
+			wd = append(wd, r)
+		}
+	}
+	sort.Slice(wd, func(i, j int) bool { return wd[i].StartDate > wd[j].StartDate })
 	return wd
 }

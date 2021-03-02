@@ -27,7 +27,7 @@ func NewSessionHandler(h http.Handler) *sessionHandler {
 // ServeHTTP wraps handlers to set "user" Cookie and logging
 func (s *sessionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
-	user := "unknown"
+	var user string
 	newSession := false
 	cookie, err := r.Cookie("user")
 	if err != nil {
@@ -43,7 +43,7 @@ func (s *sessionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// If path contains "/public/images" set cache enable
 	enableImageCache(w, r.URL.Path)
 
-	ctx := context.WithValue(r.Context(), "user", user)
+	ctx := context.WithValue(r.Context(), contextKeyUserID, user)
 	rc := r.WithContext(ctx)
 	s.handler.ServeHTTP(w, rc)
 	end := time.Since(start)
@@ -64,7 +64,7 @@ func (s *sessionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 //  https://www.thepolyglotdeveloper.com/2018/02/encrypt-decrypt-data-golang-application-crypto-packages/
 func newUserCookie() *http.Cookie {
 	return &http.Cookie{
-		Name:     sessionIDKey,
+		Name:     userCookieKey,
 		Value:    uuid.New().String(),
 		Expires:  time.Now().Add(dayHrs), // One day
 		MaxAge:   daySeconds,

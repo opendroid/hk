@@ -52,9 +52,9 @@ const (
 
 // User cookie
 const (
-	sessionIDKey = "user" // User UUID is stored in this scoped request
-	dayHrs       = 1 * 24 * time.Hour
-	daySeconds   = int(dayHrs) * 3600
+	userCookieKey = "user" // "user" cookie key stored
+	dayHrs        = 1 * 24 * time.Hour
+	daySeconds    = int(dayHrs) * 3600
 )
 
 // User Messages in case of error
@@ -62,4 +62,11 @@ const (
 	umNoError      = "Dont worry be happy"
 	umNoData       = "Sorry could not find your data"
 	umNotProcessed = "Sorry your data is not processed yet"
+)
+
+//  Context keys used in context request.
+type contextKey int
+
+const (
+	contextKeyUserID contextKey = iota // User UUID is stored in this scoped request
 )

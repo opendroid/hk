@@ -1,5 +1,9 @@
 package export
 
+import (
+	"go.uber.org/zap/zapcore"
+)
+
 // This section implements sort.Interface for various known types
 // Len of WorkoutMetadataKeys for sort
 func (w WorkoutMetadataKeys) Len() int { return len(w) }
@@ -51,7 +55,25 @@ type KeyCount struct {
 	Key   string `json:"key"`
 	Count int    `json:"count"`
 }
+
+func (k KeyCount) MarshalLogObject(enc zapcore.ObjectEncoder) error {
+	enc.AddString("tag", k.Key)
+	enc.AddInt("count", k.Count)
+	return nil
+}
+
 type KeyCounts []KeyCount
+
+func (k KeyCounts) MarshalLogArray(enc zapcore.ArrayEncoder) error {
+	if k == nil {
+		return nil
+	}
+	var err error
+	for _, v := range k {
+		err = enc.AppendObject(v)
+	}
+	return err
+}
 
 // Len of KeyCounts for sort
 func (k KeyCounts) Len() int { return len(k) }

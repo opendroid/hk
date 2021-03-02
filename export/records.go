@@ -222,7 +222,7 @@ type HealthData struct {
 	Correlations      []Correlation     `xml:"Correlation" json:"correlations,omitempty"`
 	Workouts          []Workout         `xml:"Workout" json:"workouts,omitempty"`
 	ActivitiesSummary []ActivitySummary `xml:"ActivitySummary" json:"activities_summary,omitempty"`
-	Audiograms        []Audiogram       `xml:"Audiogram,omitempty,omitempty"  json:"audiograms,omitempty"`
+	Audiograms        []Audiogram       `xml:"Audiogram,omitempty"  json:"audiograms,omitempty"`
 }
 
 // String describes ActivitySummary

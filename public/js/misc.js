@@ -92,5 +92,4 @@ function drawChart(divID, d, msg) {
     };
     const chart = new google.visualization.LineChart(document.getElementById(divID));
     chart.draw(data, options);
-    console.log(`Walks data points: ${stepCount.length}, Total value: ${numberWithComma(value)}`);
 }

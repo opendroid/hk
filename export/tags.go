@@ -202,6 +202,8 @@ const (
 	// WalkingStepLength eg: 17.3228 in step
 	//   <Record type="HKQuantityTypeIdentifierWalkingStepLength" sourceName="Dharti Shah’s iPhone" sourceVersion="14.0" device="&lt;&lt;HKDevice: 0x281307c50&gt;, name:iPhone, manufacturer:Apple Inc., model:iPhone, hardware:iPhone12,3, software:14.0&gt;" unit="in" creationDate="2020-09-18 08:16:42 -0800" startDate="2020-09-18 07:49:05 -0800" endDate="2020-09-18 07:49:10 -0800" value="17.3228"/>
 	WalkingStepLength RecordType = "HKQuantityTypeIdentifierWalkingStepLength"
+	// get All Records
+	All RecordType = "All"
 )
 
 // RecordTypesKnown so far in data. As you see more types add them here.
