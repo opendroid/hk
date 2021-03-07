@@ -29,6 +29,9 @@ const (
 	summaryBodyMassHREF = "/summary-mass"
 	summaryExposureHREF = "/summary-exposure"
 	summaryWalksHREF    = "/summary-walks"
+	infoPrivacy         = "/info-privacy"
+	infoContactUs       = "/info-contact-us"
+	infoAboutUs         = "/info-about-us"
 )
 
 type RecordsDataCategory string

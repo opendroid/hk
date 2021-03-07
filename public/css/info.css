@@ -1,0 +1,23 @@
+/* Main content box. */
+main.hk-main {
+    display: flex;
+    margin-left: 12rem; /* same as width of 'section.hk-nav' */
+    padding-top: 5rem;
+    padding-left: 2rem;
+    width: 80%;
+    color: #000062;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+/* HK-Main content */
+#hk-main.no-margin {
+    margin-left: 0;
+}
+
+main.hk-main .info {
+    margin: 2rem;
+    line-height: 2rem;
+    width: 40%;
+    font-weight: 400;
+}

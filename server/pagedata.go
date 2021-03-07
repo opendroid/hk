@@ -16,8 +16,8 @@ type NameActiveHREF struct {
 // PageHeader defines the Title of a page and Name of  Active Primary Nav page. One of "records", "activity" or "summary"
 type PageHeader struct {
 	Title  string
-	Active string // Nav Primary data
-	NS     []NameActiveHREF
+	Active string           // Nav Primary data
+	NS     []NameActiveHREF // Nav secondary
 }
 
 // RecordsPage data for Page records
@@ -30,6 +30,11 @@ type IndexPage struct {
 type ErrorPage struct {
 	PageHeader
 	Error string
+}
+
+// InfoPage data for Page records
+type InfoPage struct {
+	PageHeader
 }
 
 // RecordsPage data for Page records
@@ -73,6 +78,7 @@ var (
 		},
 	}
 
+	// Summary health data section pages primary and secondary navigation data
 	summaryTableNav = PageHeader{ // For summary.gohtml page
 		Title:  "Activity Summary Table",
 		Active: "summary",
@@ -133,6 +139,36 @@ var (
 		},
 	}
 
+	// Info section pages primary and secondary navigation data
+	infoPrivacyNav = PageHeader{
+		Title:  "Usense.io Privacy Policy",
+		Active: "info",
+		NS: []NameActiveHREF{
+			{Name: "Privacy", Active: true, HREF: infoPrivacy},
+			{Name: "Contact", Active: false, HREF: infoContactUs},
+			{Name: "About", Active: false, HREF: infoAboutUs},
+		},
+	}
+
+	infoContactUsNav = PageHeader{
+		Title:  "Contact Us",
+		Active: "info",
+		NS: []NameActiveHREF{
+			{Name: "Privacy", Active: false, HREF: infoPrivacy},
+			{Name: "Contact", Active: true, HREF: infoContactUs},
+			{Name: "About", Active: false, HREF: infoAboutUs},
+		},
+	}
+
+	infoAboutUsNav = PageHeader{
+		Title:  "About US",
+		Active: "info",
+		NS: []NameActiveHREF{
+			{Name: "Privacy", Active: false, HREF: infoPrivacy},
+			{Name: "Contact", Active: false, HREF: infoContactUs},
+			{Name: "About", Active: true, HREF: infoAboutUs},
+		},
+	}
 	defaultSecondaryNav = []NameActiveHREF{ // Default
 		{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
 		{Name: "Types", Active: false, HREF: recordsTypesHREF},

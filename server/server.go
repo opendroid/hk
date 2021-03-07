@@ -22,6 +22,11 @@ func Start(port int, f string) {
 
 	// URL handlers
 	mux.HandleFunc("/", index)
+	mux.HandleFunc("/info", execPublicTemplate(infoPrivacyNav, "info-privacy.gohtml"))
+	mux.HandleFunc("/privacy", execPublicTemplate(infoPrivacyNav, "info-privacy.gohtml"))
+	mux.HandleFunc("/info-privacy", execPublicTemplate(infoPrivacyNav, "info-privacy.gohtml"))
+	mux.HandleFunc("/info-contact-us", execPublicTemplate(infoContactUsNav, "info-contact-us.gohtml"))
+	mux.HandleFunc("/info-about-us", execPublicTemplate(infoAboutUsNav, "info-about-us.gohtml"))
 	mux.HandleFunc("/records", records)
 	mux.HandleFunc("/records-xhr-sources", execTemplate(recordsSourcesNav, "records-xhr-sources.gohtml"))
 	mux.HandleFunc("/records-xhr-types", execTemplate(recordsTypesNav, "records-xhr-types.gohtml"))

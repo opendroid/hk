@@ -88,6 +88,17 @@ func execTemplate(menu PageHeader, tplName string) http.HandlerFunc {
 	}
 }
 
+// execPublicTemplate a public page eg privacy, contactus or support
+func execPublicTemplate(menu PageHeader, tplName string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if err := html.ExecuteTemplate(w, tplName, menu); err != nil {
+			logger.Error(err.Error(), zap.String("page", tplName))
+			_, _ = w.Write([]byte(err.Error()))
+			return
+		}
+	}
+}
+
 // errorsPage page handler
 func errorsPage(w http.ResponseWriter, _ *http.Request) {
 	displayErrorMessage(w, umNoError)
