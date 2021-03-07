@@ -6,6 +6,6 @@ steps:
     env: ["PROJECT_ROOT=hk"]
   - id: build
     name: "gcr.io/cloud-builders/docker"
-    args: ['build', '--tag=gcr.io/usense/hk', '.']
+    args: ['build', '--tag=gcr.io/usense-apps/hk', '.']
     env: ["PROJECT_ROOT=hk"]
-images: ['gcr.io/usense/hk']
+images: ['gcr.io/usense-apps/hk']
