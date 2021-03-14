@@ -34,6 +34,21 @@ main.hk-main .gopher {
     animation-direction: normal;
 }
 
+.button-login {
+    background: url("/public/images/icons/signin-google-blue.png");
+    background-size: contain;
+    margin-top: 4rem;
+    display: inline-block;
+    color: #444;
+    width: 200px;
+    height: 50px;
+    border-radius: 5px;
+    border: thin solid #6746c3;
+    box-shadow: 2px 2px 2px #311b92;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
 @keyframes rotate {
     0% {
         transform: rotate(0deg)

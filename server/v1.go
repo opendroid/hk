@@ -1,5 +1,8 @@
 package server
 
+// v1.go contains API handlers that are called from the web-pages to
+// access data via XMLHttpRequest.
+
 import (
 	"compress/gzip"
 	"encoding/json"
@@ -10,8 +13,8 @@ import (
 )
 
 type apiError struct {
-	Text   string `json:"text"`
-	Status int    `json:"status"`
+	Text   string `json:"text,omitempty"`
+	Status int    `json:"status,omitempty"`
 }
 
 // jsonErrorResponse returns string JSON

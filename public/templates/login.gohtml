@@ -2,23 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HK - Error</title>
+    <title>HK Login</title>
     {{template "favicon"}}
     {{template "css"}}
-    <link rel="stylesheet" href="/public/css/errors.css">
+    <link rel="stylesheet" href="/public/css/main.css">
     {{template "js"}}
 </head>
 <body>
 {{template "headlinetopbar" .Title}}
 {{template "navprimary" .NP}}
-{{template "navsecondary" .NS}}
 
 <!-- The main body -->
 <main id="hk-main" class="hk-main">
-    <article class="info">
-        {{.Error}}
-    </article>
-    <img class="gopher-error" src="/public/images/gopher-error.png" alt="Gopher logo">
+    <button class="button-login" id="auth"></button>
+
+    <script type="text/javascript">
+        document.getElementById("auth").onclick = function () {
+            location.href = "/auth";
+        };
+    </script>
 </main>
 </body>
 </html>

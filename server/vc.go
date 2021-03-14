@@ -1,10 +1,13 @@
 package server
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/opendroid/hk/logger"
 	"go.uber.org/zap"
 	"html/template"
+	"io/ioutil"
 	"math"
 	"net/http"
 )
@@ -12,16 +15,14 @@ import (
 // vc are View Controllers for the handlers
 // Save the health data in a map
 var (
-	html  *template.Template
-	users map[string]userData
-	file  string
+	html *template.Template
+	file string
 )
 
 // init initializes the templates
 func init() {
 	helpers := template.FuncMap{"numWithComma": numWithComma}
 	html = template.Must(template.New(root).Funcs(helpers).ParseGlob(htmlGlob))
-	users = make(map[string]userData)
 }
 
 // Index page handler
@@ -34,8 +35,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// If data exists return. No need to re-analyze
-	if _, ok := users[user]; ok {
-		logger.Debug("User data exists", zap.String("user", user))
+	if d, ok := users[user]; ok && d.health != nil {
+		logger.Debug("User health data exists", zap.String("user", user))
 		records(w, r)
 		return
 	}
@@ -46,6 +47,45 @@ func index(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write([]byte(err.Error()))
 		return
 	}
+}
+
+// authHandler initiates OAuth2 with Google. Redirects the user to Google's "oauth2.Endpoint".
+// Once the auth is successful the user is re-directed to URL auth2ClientConfig.RedirectURL.
+// The allowed callback URLs need to configured in GCP Project.
+func authHandler(w http.ResponseWriter, r *http.Request) {
+	user, ok := r.Context().Value(contextKeyUserID).(string)
+	if !ok {
+		logger.Error("User required for authentication", zap.String("page", "records"))
+		displayErrorMessage(w, umNotProcessed)
+		return
+	}
+	url := auth2ClientConfig.AuthCodeURL(user)
+	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
+}
+
+// loginSuccess routes successful requests to user
+func loginSuccess(w http.ResponseWriter, r *http.Request) {
+	user, ok := r.Context().Value(contextKeyUserID).(string)
+	if !ok {
+		logger.Error("User not found", zap.String("page", "records"))
+		displayErrorMessage(w, umNotProcessed)
+		return
+	}
+	// Get the state i.e. {userCookie}:{redirectURL}.
+	userState, code := r.FormValue("state"), r.FormValue("code")
+	if user != userState {
+		logger.Error("Invalid user", zap.String("user", user), zap.String("state", userState))
+	}
+	// Use the code an userState to get the user info
+	if data, err := googleUserInfo(userState, code); err != nil {
+		logger.Error(err.Error(), zap.String("page", "loginSuccess"))
+		displayErrorMessage(w, umNotProcessed)
+		return
+	} else {
+		updateAuth(user, data)
+		logger.Info("Updated User", zap.String("user", user))
+	}
+	http.Redirect(w, r, "/records-xhr-all", http.StatusTemporaryRedirect)
 }
 
 // records page handler
@@ -73,10 +113,19 @@ func records(w http.ResponseWriter, r *http.Request) {
 // execTemplate Executes similar looking "tplName" templates with "menu" PageHeader data.
 func execTemplate(menu PageHeader, tplName string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		_, ok := r.Context().Value(contextKeyUserID).(string)
+		sid, ok := r.Context().Value(contextKeyUserID).(string)
 		if !ok {
 			logger.Error("User not found", zap.String("page", tplName))
 			displayErrorMessage(w, umNotProcessed)
+			return
+		}
+		menu.NP.State = "data" // Indicator for NV to show or not to show user data
+		authenticated := isAuthenticated(sid)
+		if !authenticated { // If not Authenticated redirect to login page
+			menu.NP.State = "login"
+			logger.Info("User not authenticated", zap.String("page", tplName),
+				zap.String("user", sid), zap.String("redirect", "/login"))
+			http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
 			return
 		}
 
@@ -91,6 +140,12 @@ func execTemplate(menu PageHeader, tplName string) http.HandlerFunc {
 // execPublicTemplate a public page eg privacy, contactus or support
 func execPublicTemplate(menu PageHeader, tplName string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		sid, _ := r.Context().Value(contextKeyUserID).(string)
+		menu.NP.State = "data" // Indicator for NV to show or not to show user data
+		authenticated := isAuthenticated(sid)
+		if !authenticated { // If not Authenticated redirect to login page
+			menu.NP.State = "login"
+		}
 		if err := html.ExecuteTemplate(w, tplName, menu); err != nil {
 			logger.Error(err.Error(), zap.String("page", tplName))
 			_, _ = w.Write([]byte(err.Error()))
@@ -135,4 +190,34 @@ func numWithComma(n int) string {
 		c = "-" + c
 	}
 	return c
+}
+
+// googleUserInfo returns user data from Google
+func googleUserInfo(state, code string) (*gUserInfo, error) {
+	if state == "" {
+		return nil, fmt.Errorf("invalid oauth state")
+	}
+	token, err := auth2ClientConfig.Exchange(context.TODO(), code)
+	if err != nil {
+		return nil, fmt.Errorf("exchange error: %s", err.Error())
+	}
+	r, err := http.Get(userInfoUrl + token.AccessToken)
+	if err != nil {
+		return nil, fmt.Errorf("userinfo error: %s", err.Error())
+	}
+	defer func() { _ = r.Body.Close() }()
+	data, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		return nil, fmt.Errorf("parse error: %s", err.Error())
+	}
+	var userInfo gUserInfo
+	if err := json.Unmarshal(data, &userInfo); err != nil {
+		return nil, fmt.Errorf("unmarshal error: %s", err.Error())
+	}
+	userInfo.Authenticated = true // Set the map
+	logger.Debug("User info", zap.Bool("auth", userInfo.Authenticated),
+		zap.String("name", userInfo.Name), zap.Bool("email_verified", userInfo.VerifiedEmail),
+		zap.String("email", userInfo.Email), zap.String("gender", userInfo.Gender),
+		zap.String("locale", userInfo.Locale), zap.String("id", userInfo.ID))
+	return &userInfo, nil
 }

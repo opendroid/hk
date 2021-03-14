@@ -30,7 +30,7 @@ func (h *HealthData) AudioExposure() *AudioExposure {
 	var d AudioExposure
 	d.Exposure = make([]Exposure, 0)
 	for _, r := range h.Records {
-		if RecordType(r.Type) == EnvironmentalAudioExposure {
+		if RecordType(r.Type) == EnvironmentalAudioExposure || RecordType(r.Type) == HeadphoneAudioExposure {
 			num, err := strconv.ParseFloat(r.Value, 32)
 			if err != nil {
 				logger.Error("appendData: strconv error",

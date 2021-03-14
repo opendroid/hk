@@ -228,3 +228,12 @@ li.nsul:hover {
 li.nsul:hover > a.nsula {
     color: #6746c3;
 }
+
+a[href^="mailto"] {
+    text-decoration: none;
+    color: #6746c3;
+}
+
+a[href^="mailto"]::before {
+    content: "📧 ";
+}

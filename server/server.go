@@ -22,12 +22,20 @@ func Start(port int, f string) {
 
 	// URL handlers
 	mux.HandleFunc("/", index)
+	mux.HandleFunc("/auth", authHandler) // Invoked from /login when user clicks on login button
+	mux.HandleFunc("/__g", loginSuccess)
+
+	// These are pages in unauthenticated space.
+	mux.HandleFunc("/login", execPublicTemplate(loginNav, "login.gohtml"))
 	mux.HandleFunc("/info", execPublicTemplate(infoPrivacyNav, "info-privacy.gohtml"))
 	mux.HandleFunc("/privacy", execPublicTemplate(infoPrivacyNav, "info-privacy.gohtml"))
 	mux.HandleFunc("/info-privacy", execPublicTemplate(infoPrivacyNav, "info-privacy.gohtml"))
 	mux.HandleFunc("/info-contact-us", execPublicTemplate(infoContactUsNav, "info-contact-us.gohtml"))
 	mux.HandleFunc("/info-about-us", execPublicTemplate(infoAboutUsNav, "info-about-us.gohtml"))
-	mux.HandleFunc("/records", records)
+	mux.HandleFunc("/error", errorsPage)
+
+	// These are pages in Authenticated space.
+	mux.HandleFunc("/records", records) // Deprecated. Remove it when appropriate
 	mux.HandleFunc("/records-xhr-sources", execTemplate(recordsSourcesNav, "records-xhr-sources.gohtml"))
 	mux.HandleFunc("/records-xhr-types", execTemplate(recordsTypesNav, "records-xhr-types.gohtml"))
 	mux.HandleFunc("/records-xhr-all", execTemplate(recordsAllNav, "records-xhr-all.gohtml"))
@@ -36,7 +44,6 @@ func Start(port int, f string) {
 	mux.HandleFunc("/summary-mass", execTemplate(summaryBodyMassNav, "summary-mass.gohtml"))
 	mux.HandleFunc("/summary-exposure", execTemplate(summaryExposureNav, "summary-exposure.gohtml"))
 	mux.HandleFunc("/summary-walks", execTemplate(summaryWalksNav, "summary-walks.gohtml"))
-	mux.HandleFunc("/error", errorsPage)
 
 	// v1 records APIs. The input "user" is a HTTP cookie
 	mux.HandleFunc("/v1/recordsSources", recordsData(recordsSource))

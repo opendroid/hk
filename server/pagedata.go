@@ -13,11 +13,17 @@ type NameActiveHREF struct {
 	HREF   string
 }
 
+// NavPrimary data used to diplay "navprimary" elements
+type NavPrimary struct {
+	Active string // Name of active CSS class in primary navigation links
+	State  string // Show "login" or "data" <if available>
+}
+
 // PageHeader defines the Title of a page and Name of  Active Primary Nav page. One of "records", "activity" or "summary"
 type PageHeader struct {
-	Title  string
-	Active string           // Nav Primary data
-	NS     []NameActiveHREF // Nav secondary
+	Title string
+	NP    NavPrimary
+	NS    []NameActiveHREF // Nav secondary
 }
 
 // RecordsPage data for Page records
@@ -48,9 +54,14 @@ type RecordsPage struct {
 
 // Default data for template pages
 var (
+	loginNav = PageHeader{ // For record-xhr-sources.gohtml page
+		Title: "Login With Google",
+		NP:    NavPrimary{Active: "login", State: "login"},
+	}
+
 	recordsSourcesNav = PageHeader{ // For record-xhr-sources.gohtml page
-		Title:  "Your Health Records Sources",
-		Active: "records",
+		Title: "Your Health Records Sources",
+		NP:    NavPrimary{Active: "records", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Sources", Active: true, HREF: recordsDevicesHREF},
 			{Name: "Types", Active: false, HREF: recordsTypesHREF},
@@ -59,8 +70,8 @@ var (
 	}
 
 	recordsTypesNav = PageHeader{ // For record-xhr-types.gohtml page
-		Title:  "Your Health Records Types",
-		Active: "records",
+		Title: "Your Health Records Types",
+		NP:    NavPrimary{Active: "records", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
 			{Name: "Types", Active: true, HREF: recordsTypesHREF},
@@ -69,8 +80,8 @@ var (
 	}
 
 	recordsAllNav = PageHeader{ // For record-xhr-all.gohtml page
-		Title:  "All Your Health Records",
-		Active: "records",
+		Title: "All Your Health Records",
+		NP:    NavPrimary{Active: "records", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Sources", Active: false, HREF: recordsDevicesHREF},
 			{Name: "Types", Active: false, HREF: recordsTypesHREF},
@@ -80,8 +91,8 @@ var (
 
 	// Summary health data section pages primary and secondary navigation data
 	summaryTableNav = PageHeader{ // For summary.gohtml page
-		Title:  "Activity Summary Table",
-		Active: "summary",
+		Title: "Activity Summary Table",
+		NP:    NavPrimary{Active: "summary", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Table", Active: true, HREF: summaryTableHREF},
 			{Name: "Activity", Active: false, HREF: summaryActivityHREF},
@@ -92,8 +103,8 @@ var (
 	}
 
 	summaryGraphNav = PageHeader{ // For summary.gohtml page
-		Title:  "Your Activity Graph",
-		Active: "summary",
+		Title: "Your Activity Graph",
+		NP:    NavPrimary{Active: "summary", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Table", Active: false, HREF: summaryTableHREF},
 			{Name: "Activity", Active: true, HREF: summaryActivityHREF},
@@ -104,8 +115,8 @@ var (
 	}
 
 	summaryBodyMassNav = PageHeader{ // For summary.gohtml page
-		Title:  "Body Mass Data",
-		Active: "summary",
+		Title: "Body Mass Data",
+		NP:    NavPrimary{Active: "summary", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Table", Active: false, HREF: summaryTableHREF},
 			{Name: "Activity", Active: false, HREF: summaryActivityHREF},
@@ -116,8 +127,8 @@ var (
 	}
 
 	summaryExposureNav = PageHeader{ // For summary.gohtml page
-		Title:  "Body Mass Data",
-		Active: "summary",
+		Title: "Body Mass Data",
+		NP:    NavPrimary{Active: "summary", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Table", Active: false, HREF: summaryTableHREF},
 			{Name: "Activity", Active: false, HREF: summaryActivityHREF},
@@ -128,8 +139,8 @@ var (
 	}
 
 	summaryWalksNav = PageHeader{ // For summary.gohtml page
-		Title:  "Body Mass Data",
-		Active: "summary",
+		Title: "Body Mass Data",
+		NP:    NavPrimary{Active: "summary", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Table", Active: false, HREF: summaryTableHREF},
 			{Name: "Activity", Active: false, HREF: summaryActivityHREF},
@@ -141,8 +152,8 @@ var (
 
 	// Info section pages primary and secondary navigation data
 	infoPrivacyNav = PageHeader{
-		Title:  "Usense.io Privacy Policy",
-		Active: "info",
+		Title: "Usense.io Privacy Policy",
+		NP:    NavPrimary{Active: "info", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Privacy", Active: true, HREF: infoPrivacy},
 			{Name: "Contact", Active: false, HREF: infoContactUs},
@@ -151,8 +162,8 @@ var (
 	}
 
 	infoContactUsNav = PageHeader{
-		Title:  "Contact Us",
-		Active: "info",
+		Title: "Contact Us",
+		NP:    NavPrimary{Active: "info", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Privacy", Active: false, HREF: infoPrivacy},
 			{Name: "Contact", Active: true, HREF: infoContactUs},
@@ -161,8 +172,8 @@ var (
 	}
 
 	infoAboutUsNav = PageHeader{
-		Title:  "About US",
-		Active: "info",
+		Title: "About US",
+		NP:    NavPrimary{Active: "info", State: "data"},
 		NS: []NameActiveHREF{
 			{Name: "Privacy", Active: false, HREF: infoPrivacy},
 			{Name: "Contact", Active: false, HREF: infoContactUs},
@@ -183,6 +194,7 @@ func getIndexPageData(userID string) *IndexPage {
 	return &IndexPage{
 		PageHeader: PageHeader{
 			Title: "Your Health Records",
+			NP:    NavPrimary{Active: "records", State: "data"},
 			NS:    defaultSecondaryNav,
 		},
 		UserID: userID,
@@ -193,9 +205,9 @@ func getIndexPageData(userID string) *IndexPage {
 func getRecordsPageData(userID string) *RecordsPage {
 	d := RecordsPage{
 		PageHeader: PageHeader{
-			Title:  "Your records data",
-			Active: "records",
-			NS:     defaultSecondaryNav,
+			Title: "Your records data",
+			NP:    NavPrimary{Active: "records", State: "data"},
+			NS:    defaultSecondaryNav,
 		},
 	}
 	u, ok := users[userID]
@@ -214,6 +226,7 @@ func getErrorPageData(err string) *ErrorPage {
 	return &ErrorPage{
 		PageHeader: PageHeader{
 			Title: "System Error Message",
+			NP:    NavPrimary{Active: "records", State: "data"}, // TODO: need appropriate header
 			NS:    defaultSecondaryNav,
 		},
 		Error: err,

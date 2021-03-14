@@ -62,9 +62,9 @@ const (
 
 // User Messages in case of error
 const (
-	umNoError      = "Dont worry be happy"
-	umNoData       = "Sorry could not find your data"
-	umNotProcessed = "Sorry your data is not processed yet"
+	umNoError      = "Dont worry be happy."
+	umNoData       = "Sorry could not find your data."
+	umNotProcessed = "Sorry your data is not processed yet."
 )
 
 //  Context keys used in context request.
