@@ -26,7 +26,7 @@ type PageHeader struct {
 	NS    []NameActiveHREF // Nav secondary
 }
 
-// RecordsPage data for Page records
+// IndexPage data
 type IndexPage struct {
 	PageHeader
 	UserID string
