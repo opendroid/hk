@@ -4,6 +4,7 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"log"
+	"os"
 )
 
 // logger
@@ -14,7 +15,11 @@ var (
 // provides logger
 func init() {
 	var err error
-	logger, err = zap.NewProduction()
+	if os.Getenv("USENSE_ENVIRONMENT") == "DEVELOPMENT" {
+		logger, err = zap.NewDevelopment()
+	} else {
+		logger, err = zap.NewProduction()
+	}
 	if err != nil {
 		log.Fatalf("Zap logger not initialized. %v", err)
 	}

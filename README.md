@@ -3,11 +3,24 @@ Set of utilities to parse analyze Apple HealthKit exported dataset.
 
 ```shell
 # Parsing a export
-hk -file=/path/to/apple_health_export/export.xml
+hk -file=./data/at/export.xml
+
+# Update all dependencies
+go get -u ./...
+go mod tidy
+go get github.com/google/uuid # Get and install a specific package
+go mod download # Download all dependencies
 
 # Build a docker image
 docker build -t hk:v1 .
 ```
+
+Required environment variable:
+```shell
+USENSE_OAUTH2_CLIENT_ID= "" # OAuth2 client ID from console.google.com 
+USENSE_OAUTH2_CLIENT_SECRET= "" # OAuth2 client Secret from console.google.com 
+USENSE_ENVIRONMENT= "DEVELOPMENT" # or "PROD"
+``` 
 
 ## Google Authentication
 The repo uses Google OAuth2 to authenticate users. Some helpful links are:

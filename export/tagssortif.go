@@ -5,6 +5,7 @@ import (
 )
 
 // This section implements sort.Interface for various known types
+
 // Len of WorkoutMetadataKeys for sort
 func (w WorkoutMetadataKeys) Len() int { return len(w) }
 
@@ -50,7 +51,7 @@ func (r RecordSources) Less(i, j int) bool { return string(r[i]) < string(r[j]) 
 // Swap two RecordTypes sort interface
 func (r RecordSources) Swap(i, j int) { r[i], r[j] = r[j], r[i] }
 
-// keyCount helper to sort data in decreasing order
+// KeyCount helper to sort data in decreasing order
 type KeyCount struct {
 	Key   string `json:"key"`
 	Count int    `json:"count"`
@@ -91,13 +92,13 @@ type NameTypeKeyCount struct {
 	KeyCount `json:"data,omitempty"`
 }
 
-// NameKeyCounts container for a "name" KeyCounts data
+// NameTypeKeyCounts container for a "name" KeyCounts data
 type NameTypeKeyCounts []NameTypeKeyCount
 
 // Len of NameKeyCounts for sort
 func (k NameTypeKeyCounts) Len() int { return len(k) }
 
-// Less of NameKeyCounts for sort in decreasing order of who has less Data Count
+// Less of NameKeyCounts for sort in decreasing order of who has fewer Data Count
 func (k NameTypeKeyCounts) Less(i, j int) bool { return k[i].Count > k[j].Count }
 
 // Swap two NameKeyCounts sort interface

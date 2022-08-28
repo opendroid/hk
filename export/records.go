@@ -10,27 +10,28 @@ import (
 
 // MetadataEntry Key/Value used across structures.
 // Examples of MetadataEntry with Record.SourceName
-//   AppleWatch: <MetadataEntry key="HKMetadataKeyHeartRateMotionContext" value="1"/>
-//   MyFitnessPal: <MetadataEntry key="meal" value="Lunch"/>
-//   MyFitnessPal: <MetadataEntry key="meal" value="Dinner"/>
-//   MyFitnessPal: <MetadataEntry key="Meal" value="Dinner"/>
-//   MyFitnessPal: <MetadataEntry key="Meal" value="Snacks"/>
-//   AppleWatch: <MetadataEntry key="HKMetadataKeySyncVersion" value="1"/>
-//   AppleWatch: <MetadataEntry key="HKMetadataKeySyncIdentifier" value="3:1B17A065-24BD-4C42-88C4-2185852AC39B:613580458.67789:613580909.63101:89"/>
-//   AppleWatch: <MetadataEntry key="HKVO2MaxTestType" value="2"/>
-//   AutoSleep: <MetadataEntry key="Recharge" value="100"/>
-//   AutoSleep: <MetadataEntry key="Asleep" value="19020"/>
-//   AutoSleep: <MetadataEntry key="Average HR" value="49.63"/>
-//   AutoSleep: <MetadataEntry key="Rating" value="11.97"/>
-//   AutoSleep: <MetadataEntry key="Daytime HR" value="68.35"/>
-//   AutoSleep: <MetadataEntry key="Deep Sleep" value="1020"/>
-//   AutoSleep: <MetadataEntry key="Lights" value="NO"/>
-//   AutoSleep: <MetadataEntry key="Energy Threshold" value="1200"/>
-//   AutoSleep: <MetadataEntry key="Nap" value="YES"/>
-//   AutoSleep: <MetadataEntry key="Tags" value="1"/>
-//   AutoSleep: <MetadataEntry key="Edit Slots" value="0415,0630,0500,0445,0530,0615,0430,0645,0515,0600,0545"/>
-//   Sleep++ and Clock: <MetadataEntry key="HKTimeZone" value="America/Los_Angeles"/>
-//   iPhone: <MetadataEntry key="HKMetadataKeyAppleDeviceCalibrated" value="1"/>
+//
+//	AppleWatch: <MetadataEntry key="HKMetadataKeyHeartRateMotionContext" value="1"/>
+//	MyFitnessPal: <MetadataEntry key="meal" value="Lunch"/>
+//	MyFitnessPal: <MetadataEntry key="meal" value="Dinner"/>
+//	MyFitnessPal: <MetadataEntry key="Meal" value="Dinner"/>
+//	MyFitnessPal: <MetadataEntry key="Meal" value="Snacks"/>
+//	AppleWatch: <MetadataEntry key="HKMetadataKeySyncVersion" value="1"/>
+//	AppleWatch: <MetadataEntry key="HKMetadataKeySyncIdentifier" value="3:1B17A065-24BD-4C42-88C4-2185852AC39B:613580458.67789:613580909.63101:89"/>
+//	AppleWatch: <MetadataEntry key="HKVO2MaxTestType" value="2"/>
+//	AutoSleep: <MetadataEntry key="Recharge" value="100"/>
+//	AutoSleep: <MetadataEntry key="Asleep" value="19020"/>
+//	AutoSleep: <MetadataEntry key="Average HR" value="49.63"/>
+//	AutoSleep: <MetadataEntry key="Rating" value="11.97"/>
+//	AutoSleep: <MetadataEntry key="Daytime HR" value="68.35"/>
+//	AutoSleep: <MetadataEntry key="Deep Sleep" value="1020"/>
+//	AutoSleep: <MetadataEntry key="Lights" value="NO"/>
+//	AutoSleep: <MetadataEntry key="Energy Threshold" value="1200"/>
+//	AutoSleep: <MetadataEntry key="Nap" value="YES"/>
+//	AutoSleep: <MetadataEntry key="Tags" value="1"/>
+//	AutoSleep: <MetadataEntry key="Edit Slots" value="0415,0630,0500,0445,0530,0615,0430,0645,0515,0600,0545"/>
+//	Sleep++ and Clock: <MetadataEntry key="HKTimeZone" value="America/Los_Angeles"/>
+//	iPhone: <MetadataEntry key="HKMetadataKeyAppleDeviceCalibrated" value="1"/>
 type MetadataEntry struct {
 	Key   string `xml:"key,attr" json:"key"`
 	Value string `xml:"value,attr" json:"value"`
@@ -71,7 +72,8 @@ type Me struct { // `xml:""`
 }
 
 // Record a typical record saved by various devices. A example is:
-//   <Record type="HKQuantityTypeIdentifierBodyMassIndex" sourceName="Renpho" sourceVersion="4" unit="count" creationDate="2020-04-19 06:53:46 -0800" startDate="2020-04-14 05:51:27 -0800" endDate="2020-04-14 05:51:27 -0800" value="22.6"/>
+//
+//	<Record type="HKQuantityTypeIdentifierBodyMassIndex" sourceName="Renpho" sourceVersion="4" unit="count" creationDate="2020-04-19 06:53:46 -0800" startDate="2020-04-14 05:51:27 -0800" endDate="2020-04-14 05:51:27 -0800" value="22.6"/>
 type Record struct {
 	XMLName xml.Name `xml:"Record" json:"-"`
 	// Attributes
@@ -469,7 +471,7 @@ func (h *HealthData) DescribeRecords() {
 	}
 	printStringInts("Records by SourceName:", t)
 
-	// Meta data for each SourceName, init count to 0
+	// Metadata for each SourceName, init count to 0
 	for k := range t {
 		t[k] = 0
 	}
@@ -482,7 +484,7 @@ func (h *HealthData) DescribeRecords() {
 	h.DescribeRecordsSourceNameByTypes()
 }
 
-// DescribeRecordsSourceName Metadata Keys. Sorts keys by alphanumeric
+// DescribeRecordsSourceName Metadata Keys. Sort keys by alphanumeric
 func (h *HealthData) DescribeRecordsSourceName() {
 	// Get all Metadata keys and stores them in a map whose key is SourceName
 	// [SourceName] = Map {"key-1": 5, "key-2": 10}
@@ -508,12 +510,12 @@ func (h *HealthData) DescribeRecordsSourceName() {
 		}
 	}
 	// Convert sm to []KeyCount
-	// snmc: SourceName metadata entries count: # of 'r.MetadataEntries' for 'SourceName'
+	// snmc: SourceName metadata entries count: # of "r.MetadataEntries" for "SourceName"
 	snmc := make(KeyCounts, 0, len(sm))
 	for k, v := range sm {
 		snmc = append(snmc, KeyCount{Key: k, Count: v})
 	}
-	// Sort 'SourceName' that  has highest count of 'MetadataEntries' first
+	// Sort 'SourceName' that  has the highest count of 'MetadataEntries' first
 	sort.Sort(snmc)
 	for _, s := range snmc {
 		if s.Count > 0 {
@@ -532,7 +534,7 @@ func (h *HealthData) DescribeRecordsTypesBySourceName() {
 	rstm := make(map[string]map[string]int)
 	rs := make(map[string]int) // How many types w/ each SourceName
 	for _, r := range h.Records {
-		if _, ok := rstm[r.SourceName]; !ok { // Create map for a unseen type
+		if _, ok := rstm[r.SourceName]; !ok { // Create map for an unseen type
 			rstm[r.SourceName] = make(map[string]int)
 		}
 		if _, ok := rs[r.SourceName]; !ok {
@@ -546,7 +548,7 @@ func (h *HealthData) DescribeRecordsTypesBySourceName() {
 			rstm[r.SourceName][r.Type]++
 		}
 	}
-	// Sort SourceName with highest types first
+	// Sort SourceName with the highest types first
 	snc := make(KeyCounts, 0, len(rs))
 	for k, v := range rs {
 		snc = append(snc, KeyCount{Key: k, Count: v})
@@ -569,7 +571,7 @@ func (h *HealthData) DescribeRecordsSourceNameByTypes() {
 	rtsm := make(map[string]map[string]int)
 	rt := make(map[string]int) // How many types w/ each Type
 	for _, r := range h.Records {
-		if _, ok := rtsm[r.Type]; !ok { // Create map for a unseen type
+		if _, ok := rtsm[r.Type]; !ok { // Create map for an unseen type
 			rtsm[r.Type] = make(map[string]int)
 		}
 		if _, ok := rt[r.Type]; !ok {
@@ -583,7 +585,7 @@ func (h *HealthData) DescribeRecordsSourceNameByTypes() {
 			rtsm[r.Type][r.SourceName]++
 		}
 	}
-	// Sort SourceName with highest types first
+	// Sort SourceName with the highest types first
 	snc := make(KeyCounts, 0, len(rt))
 	for k, v := range rt {
 		snc = append(snc, KeyCount{Key: k, Count: v})
@@ -636,7 +638,7 @@ func (h *HealthData) DescribeRecordsTable(w io.Writer, sep string) {
 		}
 	}
 
-	tms, err := maps2SortedSlice(tm) // Sort from highest count of MDKeys to lowest #
+	tms, err := maps2SortedSlice(tm) // Sort from the highest count of MDKeys to lowest #
 	if err != nil {
 		return
 	}

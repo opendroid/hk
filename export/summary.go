@@ -7,7 +7,6 @@ import (
 )
 
 // RecordsSummary returns a summary of HealthData in a sorted slice.
-//
 func (h *HealthData) RecordsSummary() NameTypeKeyCounts {
 	if h == nil {
 		return nil
@@ -102,7 +101,7 @@ func (h *HealthData) RecordsSources() KeyCounts {
 	return rs
 }
 
-// RecordsSources returns summary of all Record by SourceName
+// RecordsTypes returns summary of all Record by SourceName
 func (h *HealthData) RecordsTypes() KeyCounts {
 	if h == nil {
 		return nil

@@ -13,7 +13,7 @@ const (
 	ElevationAscended WorkoutMetadataKey = "HKElevationAscended"
 	// IndoorWorkout <MetadataEntry key="HKIndoorWorkout" value="1"/> or "0"
 	IndoorWorkout WorkoutMetadataKey = "HKIndoorWorkout"
-	//  TimeZone <MetadataEntry key="HKTimeZone" value="America/Los_Angeles"/>
+	// TimeZone <MetadataEntry key="HKTimeZone" value="America/Los_Angeles"/>
 	TimeZone WorkoutMetadataKey = "HKTimeZone"
 	// Humidity  <MetadataEntry key="HKWeatherHumidity" value="10000 %"/>
 	Humidity WorkoutMetadataKey = "HKWeatherHumidity"
@@ -29,24 +29,24 @@ var WorkoutMetadataKeysKnown = WorkoutMetadataKeys{AverageMETs, ElevationAscende
 // WorkOutActivityType all activity types seen
 type WorkOutActivityType string
 
-// WorkOutActivityTypes
+// WorkOutActivityTypes all activity types seen
 type WorkOutActivityTypes []WorkOutActivityType
 
 const (
-	// Elliptical
+	// Elliptical Workout
 	Elliptical = "HKWorkoutActivityTypeElliptical"
-	// Hiking
+	// Hiking Workout
 	Hiking = "HKWorkoutActivityTypeHiking"
-	// Other
+	// Other	Workout
 	Other = "HKWorkoutActivityTypeOther"
-	// Walking
+	// Walking Workout
 	Walking = "HKWorkoutActivityTypeWalking"
 )
 
 // WorkOutActivityTypesKnown analyzed so far
 var WorkOutActivityTypesKnown = WorkOutActivityTypes{Elliptical, Hiking, Other, Walking}
 
-// RecordMetadataKey
+// RecordMetadataKey Metadata keys
 type RecordMetadataKey string
 type RecordMetadataKeys []RecordMetadataKey
 
@@ -59,7 +59,7 @@ const (
 	DaytimeHR RecordMetadataKey = "Daytime HR"
 	// DeepSleep record example <MetadataEntry key="Deep Sleep" value="8053"/>
 	DeepSleep RecordMetadataKey = "Deep Sleep"
-	// DevicePlacementSide, example <Record type="HKQuantityTypeIdentifierWalkingAsymmetryPercentage" ..>
+	// DevicePlacementSide example <Record type="HKQuantityTypeIdentifierWalkingAsymmetryPercentage" ..>
 	//    <MetadataEntry key="HKMetadataKeyDevicePlacementSide" value="2"/>
 	DevicePlacementSide RecordMetadataKey = "HKMetadataKeyDevicePlacementSide"
 	// EditSlots record example  <MetadataEntry key="Edit Slots" value="0415,0630,0500,0445,0530,0615,0430,0515,0545"/>

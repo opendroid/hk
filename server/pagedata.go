@@ -13,7 +13,7 @@ type NameActiveHREF struct {
 	HREF   string
 }
 
-// NavPrimary data used to diplay "navprimary" elements
+// NavPrimary data used to display "navprimary" elements
 type NavPrimary struct {
 	Active string // Name of active CSS class in primary navigation links
 	State  string // Show "login" or "data" <if available>

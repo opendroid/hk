@@ -7,7 +7,7 @@ import (
 	"github.com/opendroid/hk/logger"
 	"go.uber.org/zap"
 	"html/template"
-	"io/ioutil"
+	"io"
 	"math"
 	"net/http"
 )
@@ -15,8 +15,8 @@ import (
 // vc are View Controllers for the handlers
 // Save the health data in a map
 var (
-	html *template.Template
-	file string
+	html      *template.Template
+	xmlHDFile string
 )
 
 // init initializes the templates
@@ -159,7 +159,7 @@ func errorsPage(w http.ResponseWriter, _ *http.Request) {
 	displayErrorMessage(w, umNoError)
 }
 
-// displayErrorMessage helper to display a error message
+// displayErrorMessage helper to display an error message
 func displayErrorMessage(w http.ResponseWriter, info string) {
 	data := getErrorPageData(info)
 
@@ -193,7 +193,7 @@ func numWithComma(n int) string {
 }
 
 // googleUserInfo returns user data from Google
-func googleUserInfo(state, code string) (*gUserInfo, error) {
+func googleUserInfo(state, code string) (*GoogleUserInfo, error) {
 	if state == "" {
 		return nil, fmt.Errorf("invalid oauth state")
 	}
@@ -206,11 +206,11 @@ func googleUserInfo(state, code string) (*gUserInfo, error) {
 		return nil, fmt.Errorf("userinfo error: %s", err.Error())
 	}
 	defer func() { _ = r.Body.Close() }()
-	data, err := ioutil.ReadAll(r.Body)
+	data, err := io.ReadAll(r.Body)
 	if err != nil {
 		return nil, fmt.Errorf("parse error: %s", err.Error())
 	}
-	var userInfo gUserInfo
+	var userInfo GoogleUserInfo
 	if err := json.Unmarshal(data, &userInfo); err != nil {
 		return nil, fmt.Errorf("unmarshal error: %s", err.Error())
 	}

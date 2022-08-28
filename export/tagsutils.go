@@ -26,7 +26,7 @@ func yyyymmdd(t string) string {
 	if t == "" {
 		return t
 	}
-	// a new 't' overrides incoming t. Look scope
+	// a new "t" overrides incoming t. Look scope
 	if t, err := time.Parse("2006-01-02 15:04:05 -0700", t); err != nil {
 		return fmt.Sprintf("%v", err)
 	} else {
@@ -83,7 +83,7 @@ func maps2SortedSlice(sim map[string]int) (KeyCounts, error) {
 	if len(sim) <= 0 {
 		return nil, fmt.Errorf("nothing to process")
 	}
-	// Convert map to []KeyCounts so we can sort and print highest to lowest
+	// Convert map to []KeyCounts, so we can sort and print highest to lowest
 	kv := make(KeyCounts, 0, len(sim))
 	for k, v := range sim {
 		kv = append(kv, KeyCount{Key: k, Count: v})
@@ -92,7 +92,7 @@ func maps2SortedSlice(sim map[string]int) (KeyCounts, error) {
 	return kv, nil
 }
 
-// printStringInts a map with highest count to lowest count.
+// printStringInts a map with the highest count to the lowest count.
 func printStringInts(m string, sim map[string]int) {
 	if len(sim) <= 0 {
 		return
@@ -118,7 +118,7 @@ func writeSortedRows(w io.Writer, c1 string, c2 string, sim map[string]int, sep 
 	if len(sim) <= 0 {
 		return
 	}
-	// Convert map to []KeyCounts so we can sort and print highest to lowest
+	// Convert map to []KeyCounts, so we can sort and print highest to lowest
 	kv, err := maps2SortedSlice(sim)
 	if err != nil {
 		return
@@ -229,7 +229,7 @@ func recordKeys(rs []Record) []string {
 }
 
 // recordSources returns all unique sourceName in the HK record data.
-// AppleWatch provide millions of HKQuantityTypeIdentifierHeartRate records.
+// Apple Watch provide millions of HKQuantityTypeIdentifierHeartRate records.
 func recordSources(rs []Record) []string {
 	if rs == nil {
 		return nil

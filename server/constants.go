@@ -67,7 +67,7 @@ const (
 	umNotProcessed = "Sorry your data is not processed yet."
 )
 
-//  Context keys used in context request.
+// Context keys used in context request.
 type contextKey int
 
 const (

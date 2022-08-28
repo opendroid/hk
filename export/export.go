@@ -3,13 +3,13 @@ package export
 
 import (
 	"encoding/xml"
-	"io/ioutil"
+	"os"
 )
 
 // Parse Apple HK exported XML fileName and returns pointer to HealthData, or error if any
 func Parse(fileName string) (*HealthData, error) {
 	// Read XML file
-	health, err := ioutil.ReadFile(fileName)
+	health, err := os.ReadFile(fileName)
 	if err != nil {
 		return nil, err
 	}

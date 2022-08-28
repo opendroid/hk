@@ -23,7 +23,7 @@ type WalkerData struct {
 	DistanceWalkingRunning []WalkingDataElement `json:"distance_walking_running"`
 }
 
-// Get Walker data and send back
+// WalkerData Get Walker data and send back
 func (h *HealthData) WalkerData() *WalkerData {
 	if h == nil {
 		return nil
@@ -47,7 +47,7 @@ func (h *HealthData) WalkerData() *WalkerData {
 		}
 	}
 	a, _ := maps2SortedSlice(skipped)
-	logger.Info("Skipped", zap.Array("skipped", a))
+	logger.Info("WalkerData: skipping multi day data", zap.Array("skipped", a))
 	var wd WalkerData                            // Prepare data
 	wd.StepCount = make([]WalkingDataElement, 0) // Create underlying data slice for Steps
 	wd.DistanceWalkingRunning = make([]WalkingDataElement, 0)
@@ -60,13 +60,13 @@ func (h *HealthData) WalkerData() *WalkerData {
 func saveWalkElementValue(m map[string]WalkingDataElement, r *Record) {
 	date := strings.Split(r.StartDate, " ") // Extract "2019-10-23" from "2019-10-23 19:10:11 -0800"
 	if len(date) == 0 {
-		logger.Warn("Illegal date", zap.String("method", "saveStepCount"), zap.String("date", r.StartDate))
+		logger.Warn("saveWalkElementValue: Illegal date", zap.String("method", "saveStepCount"), zap.String("date", r.StartDate))
 		return
 	}
 	d := date[0]                                // Valid date extracted
 	num, err := strconv.ParseFloat(r.Value, 32) // Convert value to a number
 	if err != nil {
-		logger.Error("strconv error",
+		logger.Error("saveWalkElementValue: strconv error",
 			zap.String("method", "saveStepCount"),
 			zap.String("value", r.Value), zap.String("info", err.Error()))
 	}
@@ -78,7 +78,7 @@ func saveWalkElementValue(m map[string]WalkingDataElement, r *Record) {
 	}
 	// Update collected value so far
 	if v.Unit != r.Unit { // For now log and continue
-		logger.Warn("Non matching unit", zap.String("method", "saveStepCount"),
+		logger.Warn("saveWalkElementValue: Non matching unit", zap.String("method", "saveStepCount"),
 			zap.String("found", r.Unit), zap.String("new", v.Unit))
 	}
 	if !strings.Contains(v.SourceName, r.SourceName) {
@@ -97,7 +97,7 @@ func mapToWalkingDataElementSlice(wd []WalkingDataElement, m map[string]WalkingD
 	return wd
 }
 
-// Get all GetRecords
+// GetRecords Get all GetRecords
 func (h *HealthData) GetRecords(tag RecordType, date string) []Record {
 	if h == nil {
 		return nil

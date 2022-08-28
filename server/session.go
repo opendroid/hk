@@ -55,13 +55,15 @@ func (s *sessionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		zap.String("accept", r.Header.Get("Accept-Encoding")),
 		zap.String("IP", r.RemoteAddr),
 		zap.Bool("new", newSession),
+		zap.Bool("auth", isAuthenticated(user)),
 		zap.Int64("ms", end.Milliseconds()))
 	// r.Header.Get("Accept-Encoding")
 }
 
 // newUserCookie
-//  To encrypt or decrypt read
-//  https://www.thepolyglotdeveloper.com/2018/02/encrypt-decrypt-data-golang-application-crypto-packages/
+//
+//	To encrypt or decrypt read
+//	https://www.thepolyglotdeveloper.com/2018/02/encrypt-decrypt-data-golang-application-crypto-packages/
 func newUserCookie() *http.Cookie {
 	return &http.Cookie{
 		Name:     userCookieKey,

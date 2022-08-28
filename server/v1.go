@@ -25,7 +25,7 @@ func jsonErrorResponse(w http.ResponseWriter, msg string, status int) {
 	_, _ = w.Write(e)
 }
 
-// recordsData API return a JSON body for a records category of data. One of "Sources", "Types" or "All"
+// recordsData API return a JSON body for a record category of data. One of "Sources", "Types" or "All"
 func recordsData(cat RecordsDataCategory) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")

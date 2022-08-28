@@ -37,10 +37,9 @@ func init() {
 	}
 }
 
-// gUserInfo user data for UserInfo API call
+// GoogleUserInfo user data for UserInfo API call
 // https://any-api.com/googleapis_com/oauth2/docs/userinfo/oauth2_userinfo_get
-// TODO: save "code" to
-type gUserInfo struct {
+type GoogleUserInfo struct {
 	Authenticated bool   // true if user is Authenticated. Set locally
 	ID            string `json:"id,omitempty"`
 	Email         string `json:"email,omitempty"`

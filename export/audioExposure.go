@@ -49,7 +49,7 @@ func (h *HealthData) AudioExposure() *AudioExposure {
 }
 
 // recordTime converts a Record format to time object.
-// Safer to convert timestamp to Unix MS so it can be manipulated by various browsers.
+// Safer to convert timestamp to Unix MS, so it can be manipulated by various browsers.
 // See waring in https://developers.google.com/chart/interactive/docs/datesandtimes
 // eg: https://stackoverflow.com/questions/60308048/why-chart-js-charts-are-not-plotting-data-in-safari-works-in-chrome
 func recordTime(ts string) int64 {

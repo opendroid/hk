@@ -9,7 +9,7 @@ import (
 
 // Start the http server
 func Start(port int, f string) {
-	file = f
+	xmlHDFile = f
 	mux := http.NewServeMux()
 
 	// Static content handlers
@@ -45,7 +45,7 @@ func Start(port int, f string) {
 	mux.HandleFunc("/summary-exposure", execTemplate(summaryExposureNav, "summary-exposure.gohtml"))
 	mux.HandleFunc("/summary-walks", execTemplate(summaryWalksNav, "summary-walks.gohtml"))
 
-	// v1 records APIs. The input "user" is a HTTP cookie
+	// v1 records APIs. The input "user" is HTTP cookie
 	mux.HandleFunc("/v1/recordsSources", recordsData(recordsSource))
 	mux.HandleFunc("/v1/recordsTypes", recordsData(recordsTypes))
 	mux.HandleFunc("/v1/recordsAll", recordsData(recordsAll))

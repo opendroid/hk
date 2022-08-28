@@ -1,4 +1,4 @@
-.idea
+.idea/
 
 # Test binary, build with `go test -c`
 *.test
@@ -7,3 +7,4 @@
 *.out
 
 .DS_Store
+data/

@@ -6,7 +6,7 @@ import (
 )
 
 // Yyyymmdd For unit testing, not exported as part of package
-var Yyyymmdd func(string) string = yyyymmdd
+var Yyyymmdd = yyyymmdd // func(string) string
 
 // dateTest convenience struct
 type dateTest struct {
