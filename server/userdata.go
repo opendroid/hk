@@ -125,7 +125,6 @@ func saveHDtoGZ(hd *export.HealthData, file, uID string) {
 	}
 	end := time.Since(start)
 	logger.Debug("saveHDtoGZ", zap.String("user", uID), zap.Int64("ms", end.Milliseconds()))
-	return
 }
 
 // readHDFromFile read data from a xmlHDFile
