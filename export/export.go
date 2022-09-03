@@ -1,4 +1,4 @@
-// Package export provided parsing and analysis methods for Apple Health Expored Data.
+// Package export provided parsing and analysis methods for Apple Health Exports Data.
 package export
 
 import (

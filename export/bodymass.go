@@ -23,7 +23,7 @@ type BodyMassComposition struct {
 	FatPercentage []BodyMassElement `json:"fat_percent"`
 }
 
-// BodyMass get the body mass data
+// BodyMassData get the body mass data
 func (h *HealthData) BodyMassData() *BodyMassComposition {
 	if h == nil {
 		return nil

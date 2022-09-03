@@ -4,3 +4,5 @@ package export
 func ValidateRecordFlag(_ string) bool {
 	return false
 }
+
+var _ = ValidateRecordFlag // silence unused warning
