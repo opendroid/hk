@@ -73,3 +73,12 @@ type contextKey int
 const (
 	contextKeyUserID contextKey = iota // User UUID is stored in this scoped request
 )
+
+const (
+	tempDir         = "/tmp" // Temp directory
+	tempFilePattern = "temp-*.gz"
+)
+
+var (
+	tempFileName string // Temporary gz file name
+)

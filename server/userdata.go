@@ -3,7 +3,6 @@ package server
 import (
 	"compress/gzip"
 	"encoding/gob"
-	"errors"
 	"github.com/opendroid/hk/export"
 	"github.com/opendroid/hk/logger"
 	"go.uber.org/zap"
@@ -34,24 +33,30 @@ func init() {
 
 // processHealthData parses the user data from xmlHDFile and update it in users data table
 func processHealthData(uID string) {
-	gobFileName := "/Users/ajayt/code/src/github.com/opendroid/hk/data/persist/at.gz"
-	_, err := os.Stat(gobFileName)
-	var health *export.HealthData
-	if errors.Is(err, os.ErrNotExist) { // Process xml and save gob to a xmlHDFile
+
+	if tempFileName == "" { // create temp file name
+		f, err := os.CreateTemp(tempDir, tempFilePattern)
+		if err != nil { // TODO: what we should do here?
+			logger.Error("error creating temp file", zap.String("user", uID), zap.String("error", err.Error()))
+			return
+		}
+		defer func() { _ = f.Close() }()
+		tempFileName = f.Name()
 		start := time.Now()
-		health, err = export.Parse(xmlHDFile)
+		health, err := export.Parse(xmlHDFile)
 		if err != nil {
 			logger.Info("Error parsing xmlHDFile", zap.String("user", uID), zap.String("error", err.Error()))
 			return
 		}
 		end := time.Since(start)
 		logger.Debug("Analysis done", zap.String("user", uID), zap.Int64("ms", end.Milliseconds()))
-		saveHDtoGZ(health, gobFileName, uID)
-	} else { // read from gob xmlHDFile
-		health, err = readHDFromFile(gobFileName, uID)
-		if err != nil {
-			return
-		}
+		saveHDtoGZ(health, tempFileName, uID)
+	} else {
+		logger.Debug("using cache", zap.String("user", uID))
+	}
+	health, err := readHDFromFile(tempFileName, uID)
+	if err != nil {
+		return
 	}
 
 	// Save data to memory
@@ -108,11 +113,11 @@ func isAuthenticated(uID string) bool {
 }
 
 // saveHDtoGZ saves the health data to a xmlHDFile. See example: https://go.dev/play/p/8g1CJEgVVCw
-func saveHDtoGZ(hd *export.HealthData, file, uID string) {
+func saveHDtoGZ(hd *export.HealthData, fName, uID string) {
 	start := time.Now()
-	gout, err := os.Create(file)
+	gout, err := os.Create(fName)
 	if err != nil {
-		logger.Error("GOB Create", zap.String("user", uID), zap.String("error", err.Error()))
+		logger.Error("GOB Create", zap.String("user", uID), zap.String("error", err.Error()), zap.String("file", fName))
 		return
 	}
 	defer func() { _ = gout.Close() }()
@@ -120,11 +125,11 @@ func saveHDtoGZ(hd *export.HealthData, file, uID string) {
 	defer func() { _ = gz.Close() }()
 	enc := gob.NewEncoder(gz)
 	if err := enc.Encode(hd); err != nil {
-		logger.Error("GOB Write", zap.String("user", uID), zap.String("error", err.Error()))
+		logger.Error("GOB Write", zap.String("user", uID), zap.String("error", err.Error()), zap.String("file", fName))
 		return
 	}
 	end := time.Since(start)
-	logger.Debug("saveHDtoGZ", zap.String("user", uID), zap.Int64("ms", end.Milliseconds()))
+	logger.Debug("saveHDtoGZ", zap.String("user", uID), zap.Int64("ms", end.Milliseconds()), zap.String("file", fName))
 }
 
 // readHDFromFile read data from a xmlHDFile
